@@ -2,7 +2,6 @@ package com.envirosense.springsecurity.model;
 
 public enum UserProfileType {
 	USER("USER"),
-	DBA("DBA"),
 	ADMIN("ADMIN");
 	
 	String userProfileType;

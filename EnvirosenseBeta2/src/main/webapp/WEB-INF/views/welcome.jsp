@@ -11,6 +11,8 @@
 	<div class="success">
 		Greeting : ${greeting}
 		This is the main page.
+                <br>
+                <a href="<c:url value="/admin" />">ADMIN Page</a>
 
 	</div>
 </body>

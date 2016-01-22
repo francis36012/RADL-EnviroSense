@@ -28,7 +28,7 @@ public class HelloWorldRestController {
 	UserService userService;
          //-------------------Retrieve All Users--------------------------------------------------------
      
-      @RequestMapping(value = "/user/", method = RequestMethod.GET)
+      @RequestMapping(value = "/getuser/", method = RequestMethod.GET)
       public ResponseEntity<List<User>> listAllUsers() {
           List<User> users = userService.findAllUsers();
           if(users.isEmpty()){
@@ -40,7 +40,7 @@ public class HelloWorldRestController {
 
       //-------------------Retrieve Single User--------------------------------------------------------
 
-      @RequestMapping(value = "/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+      @RequestMapping(value = "/getuser/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
       public ResponseEntity<User> getUser(@PathVariable("id") int id) {
           System.out.println("Fetching User with id " + id);
           User user = userService.findById(id);

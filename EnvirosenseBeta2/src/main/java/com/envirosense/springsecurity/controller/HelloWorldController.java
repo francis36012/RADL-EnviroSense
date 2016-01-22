@@ -30,9 +30,9 @@ public class HelloWorldController {
 	UserService userService;
 
 	
-	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/", "/index" }, method = RequestMethod.GET)
 	public String homePage(ModelMap model) {
-		model.addAttribute("greeting", "Hi, live data will be displayed here");
+		model.addAttribute("greeting", "Main page. Live data will be displayed here");
 		return "welcome";
 	}
 
@@ -42,11 +42,11 @@ public class HelloWorldController {
 		return "admin";
 	}
 
-	@RequestMapping(value = "/db", method = RequestMethod.GET)
-	public String dbaPage(ModelMap model) {
-		model.addAttribute("user", getPrincipal());
-		return "dba";
-	}
+//	@RequestMapping(value = "/db", method = RequestMethod.GET)
+//	public String dbaPage(ModelMap model) {
+//		model.addAttribute("user", getPrincipal());
+//		return "dba";
+//	}
 
 	@RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
 	public String accessDeniedPage(ModelMap model) {
