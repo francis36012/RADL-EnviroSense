@@ -28,6 +28,7 @@ public class HelloWorldController {
 	
 	@Autowired
 	UserService userService;
+
 	
 	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
 	public String homePage(ModelMap model) {
@@ -126,5 +127,7 @@ public class HelloWorldController {
 	public List<UserProfile> initializeProfiles() {
 		return userProfileService.findAll();
 	}
+      
+      
 
 }

@@ -1,9 +1,8 @@
 package com.envirosense.springsecurity.dao;
 
 import java.io.Serializable;
-
 import java.lang.reflect.ParameterizedType;
-
+import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -28,6 +27,11 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 	@SuppressWarnings("unchecked")
 	public T getByKey(PK key) {
 		return (T) getSession().get(persistentClass, key);
+	}
+      
+      @SuppressWarnings("unchecked")
+	public List<T> getAllUsers() {
+		return (List<T>) getSession().createCriteria(persistentClass).list();
 	}
 
 	public void persist(T entity) {

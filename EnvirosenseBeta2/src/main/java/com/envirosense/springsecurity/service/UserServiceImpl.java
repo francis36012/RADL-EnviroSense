@@ -2,6 +2,7 @@ package com.envirosense.springsecurity.service;
 
 import com.envirosense.springsecurity.dao.UserDao;
 import com.envirosense.springsecurity.model.User;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -31,4 +32,8 @@ public class UserServiceImpl implements UserService{
 	public User findBySso(String sso) {
 		return dao.findBySSO(sso);
 	}
+
+      public List<User> findAllUsers() {
+            return dao.findAllUsers();
+      }
 }

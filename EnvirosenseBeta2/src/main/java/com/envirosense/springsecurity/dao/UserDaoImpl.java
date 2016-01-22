@@ -1,6 +1,7 @@
 package com.envirosense.springsecurity.dao;
 
 import com.envirosense.springsecurity.model.User;
+import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -22,4 +23,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 		return (User) crit.uniqueResult();
 	}
 
+      public List<User> findAllUsers() {
+            return getAllUsers();
+      }
 }

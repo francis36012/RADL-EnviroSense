@@ -1,6 +1,7 @@
 package com.envirosense.springsecurity.service;
 
 import com.envirosense.springsecurity.model.User;
+import java.util.List;
 
 public interface UserService {
 
@@ -9,5 +10,7 @@ public interface UserService {
 	User findById(int id);
 	
 	User findBySso(String sso);
+      
+      List<User> findAllUsers();
 	
 }
