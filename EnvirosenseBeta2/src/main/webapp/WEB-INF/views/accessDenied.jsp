@@ -10,6 +10,6 @@
 <body>
 	Dear <strong>${user}</strong>, You are not authorized to access this page.
 	<br/>
-	<a href="<c:url value="/welcome" />">Go to home</a> OR <a href="<c:url value="/logout" />">Logout</a>
+	<a href="<c:url value="/" />">Go to home</a> OR <a href="<c:url value="/logout" />">Logout</a>
 </body>
 </html>
