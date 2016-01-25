@@ -11,7 +11,7 @@ public interface UserDao {
 	
 	User findBySSO(String sso);
       
-      List<User> findAllUsers();
+      List<User> findAll();
 	
 }
 

@@ -23,7 +23,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 		return (User) crit.uniqueResult();
 	}
 
-      public List<User> findAllUsers() {
-            return getAllUsers();
+      public List<User> findAll() {
+            return getAll();
       }
 }
