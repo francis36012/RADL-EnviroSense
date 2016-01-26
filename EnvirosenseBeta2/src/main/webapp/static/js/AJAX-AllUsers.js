@@ -50,11 +50,11 @@ function readyStateChange(xmlHttp)
 
 	 if (xmlHttp.status == 200)
 	 {
-		document.getElementById('ajaxContainer').innerHTML = "<img src='http://www.arabianbusiness.com/skins/ab.main/gfx/loading_spinner.gif' style='width: 10%; margin: 0 45%;' />";
+		var dataLocation = document.getElementById('ajaxContainer');
+		dataLocation.innerHTML = "<img src='http://www.arabianbusiness.com/skins/ab.main/gfx/loading_spinner.gif' style='width: 10%; margin: 0 45%;' />";
 
 		if (xmlHttp.readyState == 4)
 		{
-			var dataLocation = document.getElementById('ajaxContainer');
 			var outputJSON = JSON.parse(xmlHttp.responseText);
 			var dataList = [];
 			
