@@ -16,19 +16,16 @@ DROP TABLE IF EXISTS role;
 CREATE TABLE role (
 	id BIGINT AUTO_INCREMENT,
 	role VARCHAR(60) NOT NULL,
-	CONSTRAINT pk_role PRIMARY KEY (role_id)
+	CONSTRAINT pk_role PRIMARY KEY (id)
 );
 
 DROP TABLE IF EXISTS user_role;
 CREATE TABLE user_role (
-	user_role_id BIGINT AUTO_INCREMENT,
 	role_id BIGINT NOT NULL,
 	user_email VARCHAR(60) NOT NULL,
-	CONSTRAINT pk_user_role PRIMARY KEY (user_role_id),
+	CONSTRAINT PRIMARY KEY (role_id, user_email),
 	CONSTRAINT fk_urole_email FOREIGN KEY (user_email) REFERENCES user(email),
 	CONSTRAINT fk_urole_id FOREIGN KEY (role_id) REFERENCES role(id),
-	UNIQUE KEY uk_email_role(role_id, user_email),
-	KEY fk_urole_email_idx (user_email)
 );
 
 DROP TABLE IF EXISTS room;

@@ -30,3 +30,6 @@ VALUES('breno.brezinski@edu.sait.ca', 'ROLE_USER');
 INSERT INTO envirosense.user_role(user_email, role)
 VALUES('francis.agyapong@edu.sait.ca', 'ROLE_USER');
 
+INSERT INTO ROLES(role) values('ADMIN');
+INSERT INTO ROLES(role) values('USER');
+
