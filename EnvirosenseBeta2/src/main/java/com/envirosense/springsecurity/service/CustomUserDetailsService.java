@@ -25,7 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String ssoId)
 			throws UsernameNotFoundException {
 		User user = userService.findBySso(ssoId);
-		System.out.println("User : "+user);
+		System.out.println("User : " + user);
 		if(user==null){
 			System.out.println("User not found");
 			throw new UsernameNotFoundException("Username not found"); 
@@ -39,7 +39,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		
 		for(UserProfile userProfile : user.getUserProfiles()){
-			System.out.println("UserProfile : "+userProfile);
+			System.out.println("UserProfile : " + userProfile);
 			authorities.add(new SimpleGrantedAuthority("ROLE_"+userProfile.getType()));
 		}
 		System.out.print("authorities :"+authorities);

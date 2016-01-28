@@ -48,9 +48,9 @@ public class User {
 	private String state=State.ACTIVE.getState();
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "APP_USER_USER_PROFILE", 
-             joinColumns = { @JoinColumn(name = "USER_ID") }, 
-             inverseJoinColumns = { @JoinColumn(name = "USER_PROFILE_ID") })
+	@JoinTable(name = "APP_USER_USER_PROFILE",
+			joinColumns = { @JoinColumn(name = "USER_ID") },
+			inverseJoinColumns = { @JoinColumn(name = "USER_PROFILE_ID") })
 	private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
 
 	public int getId() {
@@ -151,6 +151,4 @@ public class User {
 				+ ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", email=" + email + ", state=" + state + ", userProfiles=" + userProfiles +"]";
 	}
-
-	
 }
