@@ -1,0 +1,25 @@
+apply plugin: "java"
+apply plugin: "war"
+
+repositories {
+	mavenCentral()
+    jcenter()
+}
+
+dependencies {
+	compile "org.springframework:spring-core:4.2.3.RELEASE"
+	compile "org.springframework:spring-context:4.2.3.RELEASE"
+	compile "org.springframework:spring-web:4.2.3.RELEASE"
+	compile "org.springframework:spring-webmvc:4.2.3.RELEASE"
+	compile "org.springframework.data:spring-data-jpa:1.9.2.RELEASE"
+
+	compile "org.hibernate:hibernate-core:5.0.6.Final"
+	compile "org.hibernate:hibernate-entitymanager:5.0.6.Final"
+	compile "mysql:mysql-connector-java:5.1.38"
+
+	compile "javax.servlet:javax.servlet-api:3.1.0"
+	compile "javax.servlet:jstl:1.2"
+
+    compile "org.slf4j:slf4j-api:1.7.13"
+    testCompile "junit:junit:4.12"
+}
