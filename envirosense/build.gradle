@@ -23,3 +23,18 @@ dependencies {
     compile "org.slf4j:slf4j-api:1.7.13"
     testCompile "junit:junit:4.12"
 }
+
+def applicationName = "envirosense"
+def applicationContext = "envirosense"
+
+task glassfishDeploy(type: Exec, dependsOn: 'war') {
+	workingDir "$System.env.GLASSFISH_HOME" + "${File.separator}" + "bin"
+
+	if (System.properties["os.name"].toLowerCase().contains("windows")) {
+		commandLine "cmd", "/c", "asadmin.bat"
+	} else {
+		commandLine "./asadmin"
+	}
+
+	args "deploy", "--contextroot", "${applicationContext}", "--name", "${applicationName}", "--force", "${war.archivePath}"
+}
