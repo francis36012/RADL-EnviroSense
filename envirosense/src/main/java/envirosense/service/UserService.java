@@ -17,17 +17,19 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserService {
-    
+
     @Autowired
     UserRepository userRepository;
-    
-    public List<User> getUsers()
-    {
+
+    public List<User> getUsers() {
         return userRepository.findAll();
     }
     
-    public void add(User user)
-    {
-       userRepository.save(user);
+    public User getUserByEmail(String email) {
+        return userRepository.findOne(email);
+    }
+
+    public void add(User user) {
+        userRepository.save(user);
     }
 }

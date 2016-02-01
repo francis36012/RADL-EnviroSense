@@ -14,6 +14,6 @@ import org.springframework.stereotype.Repository;
  * @author Daniel
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, String>{
-    
+public interface UserRepository extends JpaRepository<User, String> {
+
 }

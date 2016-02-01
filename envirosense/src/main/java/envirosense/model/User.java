@@ -21,36 +21,36 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "user")
 public class User {
-    
+
     @Id
     @Column(name = "email")
     private String email;
-    
+
     @Column(name = "firstname", nullable = false)
     private String firstname;
-    
+
     @Column(name = "lastname", nullable = false)
     private String lastname;
-    
+
     @Column(name = "phone", nullable = false)
     private String phone;
-    
+
     @Column(name = "slack_id", nullable = false)
     private String slackId;
-    
+
     @Column(name = "password", nullable = false)
     private String password;
-   
+
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
-    
+
     /*
     @JoinTable(name = "user_role", joinColumns = {
         @JoinColumn(name = "user_email", referencedColumnName = "email")}, inverseJoinColumns = {
         @JoinColumn(name = "role_id", referencedColumnName = "id")})
     @ManyToMany
     private List<Role> roles;
-*/
+     */
     public String getEmail() {
         return email;
     }
@@ -106,7 +106,7 @@ public class User {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
-/*
+    /*
     public List<Role> getRoles() {
         return roles;
     }
@@ -114,6 +114,6 @@ public class User {
     public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
-   */
-    
+     */
+
 }
