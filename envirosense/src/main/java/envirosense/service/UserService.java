@@ -1,35 +1,50 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package envirosense.service;
 
 import envirosense.model.User;
-import envirosense.repository.UserRepository;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
- *
+ * Interface for the Services of a User
  * @author Daniel Chau
  */
-@Service
-public class UserService {
-
-    @Autowired
-    UserRepository userRepository;
-
-    public List<User> getUsers() {
-        return userRepository.findAll();
-    }
+public interface UserService {
     
-    public User getUserByEmail(String email) {
-        return userRepository.findOne(email);
-    }
+    /**
+     * Get a list of all the users
+     * @return a list of all the User objects
+     */
+    List<User> getAllUsers();
 
-    public void add(User user) {
-        userRepository.save(user);
-    }
+    /**
+     * Find a user by email
+     * @param email the email of the user to find
+     * @return the User object that is found
+     */
+    User getUser(String email);
+
+    /**
+     * Determines if the user exists according to the email
+     * @param user the User object to search
+     * @return true if the email exists, false if the email does not exist
+     */
+    boolean isUserExist(User user);
+
+    /**
+     * Adds a user to the database only if the user's email does not exist
+     * @param user the user object to add
+     */
+    void addUser(User user);
+    
+    /**
+     * Remove a user from the database using specified by the email address of the user
+     * @param email the email address of the user to remove
+     */
+    void deleteUser(String email);
+    
+    /**
+     * Update a user with new information only if the user's email address exists
+     * @param user the user, with the email address as a key, to update
+     */
+    void updateUser(User user);
+
 }

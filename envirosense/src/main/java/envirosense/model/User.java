@@ -15,8 +15,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
- *
- * @author Daniel
+ * Standard User Object
+ * @author Daniel Chau
  */
 @Entity
 @Table(name = "user")
