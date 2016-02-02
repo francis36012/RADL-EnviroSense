@@ -15,21 +15,21 @@ INSERT INTO envirosense.user(email, firstname, lastname, phone, slack_id, passwo
 values('francis.agyapong@edu.sait.ca', 'Francis', 'Agyapong', '+11111111111', 'francis36012', password('password'), 1);
 
 -- Roles
-INSERT INTO envirosense.user_role(user_email, role)
-VALUES('sergio.diaz.chavez@edu.sait.ca', 'ROLE_USER');
+INSERT INTO role(role) values('ADMIN');
+INSERT INTO role(role) values('USER');
 
-INSERT INTO envirosense.user_role(user_email, role)
-VALUES('daniel.chau@edu.sait.ca', 'ROLE_USER');
+INSERT INTO envirosense.user_role(user_email, user_role)
+VALUES('sergio.diaz.chavez@edu.sait.ca', 'USER');
 
-INSERT INTO envirosense.user_role(user_email, role)
-VALUES('jediah.dizon@edu.sait.ca', 'ROLE_USER');
+INSERT INTO envirosense.user_role(user_email, user_role)
+VALUES('daniel.chau@edu.sait.ca', 'USER');
 
-INSERT INTO envirosense.user_role(user_email, role)
-VALUES('breno.brezinski@edu.sait.ca', 'ROLE_USER');
+INSERT INTO envirosense.user_role(user_email, user_role)
+VALUES('jediah.dizon@edu.sait.ca', 'USER');
 
-INSERT INTO envirosense.user_role(user_email, role)
-VALUES('francis.agyapong@edu.sait.ca', 'ROLE_USER');
+INSERT INTO envirosense.user_role(user_email, user_role)
+VALUES('breno.brezinski@edu.sait.ca', 'USER');
 
-INSERT INTO ROLES(role) values('ADMIN');
-INSERT INTO ROLES(role) values('USER');
+INSERT INTO envirosense.user_role(user_email, user_role)
+VALUES('francis.agyapong@edu.sait.ca', 'USER');
 

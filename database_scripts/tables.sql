@@ -1,6 +1,5 @@
 DROP TABLE IF EXISTS user;
 CREATE TABLE user (
-	id BIGINT AUTO_INCREMENT,
 	email VARCHAR(60) NOT NULL,
 	firstname VARCHAR(30) NOT NULL,
 	lastname VARCHAR(30) NOT NULL,
@@ -8,24 +7,22 @@ CREATE TABLE user (
 	slack_id VARCHAR(40) NOT NULL,
 	password VARCHAR(100) NOT NULL,
 	enabled BIT NOT NULL DEFAULT 1,
-	CONSTRAINT pk_user PRIMARY KEY (id),
-	CONSTRAINT uk_user_email UNIQUE KEY (email)
+	CONSTRAINT pk_user PRIMARY KEY (email)
 );
 
 DROP TABLE IF EXISTS role;
 CREATE TABLE role (
-	id BIGINT AUTO_INCREMENT,
 	role VARCHAR(60) NOT NULL,
-	CONSTRAINT pk_role PRIMARY KEY (id)
+	CONSTRAINT pk_role PRIMARY KEY (role)
 );
 
 DROP TABLE IF EXISTS user_role;
 CREATE TABLE user_role (
-	role_id BIGINT NOT NULL,
+	user_role VARCHAR(60) NOT NULL,
 	user_email VARCHAR(60) NOT NULL,
-	CONSTRAINT PRIMARY KEY (role_id, user_email),
+	CONSTRAINT PRIMARY KEY (user_role, user_email),
 	CONSTRAINT fk_urole_email FOREIGN KEY (user_email) REFERENCES user(email),
-	CONSTRAINT fk_urole_id FOREIGN KEY (role_id) REFERENCES role(id),
+	CONSTRAINT fk_urole_id FOREIGN KEY (user_role) REFERENCES role(role)
 );
 
 DROP TABLE IF EXISTS room;
@@ -50,7 +47,7 @@ CREATE TABLE sensor (
 DROP TABLE IF EXISTS event;
 CREATE TABLE event (
 	id BIGINT AUTO_INCREMENT,
-	owner_email VARCHAR(30) NOT NULL,
+	owner_email VARCHAR(60) NOT NULL,
 	message VARCHAR(150) NOT NULL,
 	is_active BIT NOT NULL,
 	use_slack BIT NOT NULL,
@@ -73,32 +70,32 @@ CREATE TABLE ev_condition (
 DROP TABLE IF EXISTS temperature;
 CREATE TABLE temperature (
 	sensor_id BIGINT NOT NULL,
-	data DECIMAL(3, 2) NOT NULL,
-	date DATE NOT NULL,
+	data DECIMAL(5, 2) NOT NULL,
+	timestamp TIMESTAMP NOT NULL,
 	CONSTRAINT fk_temperature_sensor FOREIGN KEY (sensor_id) REFERENCES sensor(id)
 );
 
 DROP TABLE IF EXISTS humidity;
 CREATE TABLE humidity (
 	sensor_id BIGINT NOT NULL,
-	data DECIMAL(3, 2) NOT NULL,
-	date DATE NOT NULL,
+	data DECIMAL(5, 2) NOT NULL,
+	timestamp TIMESTAMP NOT NULL,
 	CONSTRAINT fk_humidity_sensor FOREIGN KEY (sensor_id) REFERENCES sensor(id)
 );
 
 DROP TABLE IF EXISTS motion;
 CREATE TABLE motion (
 	sensor_id BIGINT NOT NULL,
-	data DECIMAL(3, 2) NOT NULL,
-	date DATE NOT NULL,
+	data DECIMAL(5, 2) NOT NULL,
+	timestamp TIMESTAMP NOT NULL,
 	CONSTRAINT fk_motion_sensor FOREIGN KEY (sensor_id) REFERENCES sensor(id)
 );
 
 DROP TABLE IF EXISTS door;
 CREATE TABLE door (
 	sensor_id BIGINT NOT NULL,
-	data DECIMAL(3, 2) NOT NULL,
-	date DATE NOT NULL,
+	data DECIMAL(5, 2) NOT NULL,
+	timestamp TIMESTAMP NOT NULL,
 	CONSTRAINT fk_door_sensor FOREIGN KEY (sensor_id) REFERENCES sensor(id)
 );
 
@@ -106,7 +103,7 @@ DROP TABLE IF EXISTS ra_bluetooth;
 CREATE TABLE ra_bluetooth (
 	sensor_id BIGINT NOT NULL,
 	name VARCHAR(60) NOT NULL,
-	date DATE NOT NULL,
+	timestamp TIMESTAMP NOT NULL,
 	CONSTRAINT fk_bluetooth_sensor FOREIGN KEY (sensor_id) REFERENCES sensor(id)
 );
 
