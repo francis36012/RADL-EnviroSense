@@ -53,6 +53,7 @@ public class User {
 	 * The Slack ID (or username) of a user
 	 * Used for sending notifications to the user through Slack
 	 */
+	@Column(name = "slack_id")
 	private String slackId;
 
 	/**
