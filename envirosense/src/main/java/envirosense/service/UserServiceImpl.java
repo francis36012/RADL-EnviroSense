@@ -25,36 +25,8 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-
-    @Override
-    public User getUser(String email) {
-        return userRepository.findOne(email);
-    }
-
-    @Override
-    public boolean isUserExist(User user) {
-        return getUser(user.getEmail()) != null;
-    }
-
-    @Override
-    public void addUser(User user) {
-        if (!isUserExist(user)) {
-            userRepository.save(user);
-        }
-    }
-
-    @Override
-    public void deleteUser(String email) {
-        userRepository.delete(email);
-    }
-
-    @Override
-    public void updateUser(User user) {
-        if (isUserExist(user)) {
-            userRepository.save(user);
-        }
+    public boolean login(String username, String password) {
+        User user = userRepository.findByEmailAndPassword(username, password);
+        return user != null;
     }
 }
