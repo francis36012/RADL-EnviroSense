@@ -9,7 +9,6 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class HomeController
 {
-
 	@RequestMapping(value = {"/", "/index", "/home"}, method = RequestMethod.GET)
 	public ModelAndView homePage()
 	{

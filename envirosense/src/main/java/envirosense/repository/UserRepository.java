@@ -6,6 +6,9 @@
 package envirosense.repository;
 
 import envirosense.model.User;
+
+import java.util.Set;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +18,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
-
+	public User findByEmailAndPassword(String email, String password);
+	public Set<User> findByEnabledTrue();
+	public Set<User> findByEnabledFalse();
 }
