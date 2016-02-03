@@ -59,7 +59,7 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter
 	@Resource
 	private Environment env;
 
-	@Bean
+	@Bean(name = "dataSource")
 	public DataSource dataSource()
 	{
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
