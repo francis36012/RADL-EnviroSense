@@ -12,6 +12,9 @@ dependencies {
 	compile "org.springframework:spring-web:4.2.3.RELEASE"
 	compile "org.springframework:spring-webmvc:4.2.3.RELEASE"
 	compile "org.springframework.data:spring-data-jpa:1.9.2.RELEASE"
+	compile "org.springframework.security:spring-security-core:4.0.3.RELEASE"
+	compile "org.springframework.security:spring-security-config:4.0.3.RELEASE"
+	compile "org.springframework.security:spring-security-web:4.0.3.RELEASE"
 
 	compile "org.hibernate:hibernate-core:5.0.6.Final"
 	compile "org.hibernate:hibernate-entitymanager:5.0.6.Final"
@@ -25,6 +28,8 @@ dependencies {
 	compile "com.fasterxml.jackson.core:jackson-annotations:2.7.0"
 
     compile "org.slf4j:slf4j-api:1.7.13"
+    compile "org.slf4j:slf4j-simple:1.7.13"
+
     testCompile "junit:junit:4.12"
 }
 
