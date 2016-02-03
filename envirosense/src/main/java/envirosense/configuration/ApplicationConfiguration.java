@@ -46,7 +46,8 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter
 	private static final String PROPERTY_NAME_ENTITYMANAGER_PACKAGES_TO_SCAN = "entitymanager.packages.to.scan";
 
 	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+	public void addResourceHandlers(ResourceHandlerRegistry registry)
+	{
 		registry.addResourceHandler("/static/**").addResourceLocations("/static/");
 	}
 
