@@ -72,6 +72,7 @@ CREATE TABLE temperature (
 	sensor_id BIGINT NOT NULL,
 	data DECIMAL(5, 2) NOT NULL,
 	timestamp TIMESTAMP NOT NULL,
+	CONSTRAINT pk_temperature PRIMARY KEY (sensor_id, timestamp),
 	CONSTRAINT fk_temperature_sensor FOREIGN KEY (sensor_id) REFERENCES sensor(id)
 );
 
@@ -80,22 +81,25 @@ CREATE TABLE humidity (
 	sensor_id BIGINT NOT NULL,
 	data DECIMAL(5, 2) NOT NULL,
 	timestamp TIMESTAMP NOT NULL,
+	CONSTRAINT pk_humidity PRIMARY KEY (sensor_id, timestamp),
 	CONSTRAINT fk_humidity_sensor FOREIGN KEY (sensor_id) REFERENCES sensor(id)
 );
 
 DROP TABLE IF EXISTS motion;
 CREATE TABLE motion (
 	sensor_id BIGINT NOT NULL,
-	data DECIMAL(5, 2) NOT NULL,
+	data BIT(1) NOT NULL,
 	timestamp TIMESTAMP NOT NULL,
+	CONSTRAINT pk_motion PRIMARY KEY (sensor_id, timestamp),
 	CONSTRAINT fk_motion_sensor FOREIGN KEY (sensor_id) REFERENCES sensor(id)
 );
 
 DROP TABLE IF EXISTS door;
 CREATE TABLE door (
 	sensor_id BIGINT NOT NULL,
-	data DECIMAL(5, 2) NOT NULL,
+	data BIT(1) NOT NULL,
 	timestamp TIMESTAMP NOT NULL,
+	CONSTRAINT pk_door PRIMARY KEY (sensor_id, timestamp),
 	CONSTRAINT fk_door_sensor FOREIGN KEY (sensor_id) REFERENCES sensor(id)
 );
 
@@ -104,6 +108,7 @@ CREATE TABLE ra_bluetooth (
 	sensor_id BIGINT NOT NULL,
 	name VARCHAR(60) NOT NULL,
 	timestamp TIMESTAMP NOT NULL,
+	CONSTRAINT pk_rabluetooth PRIMARY KEY (sensor_id, timestamp),
 	CONSTRAINT fk_bluetooth_sensor FOREIGN KEY (sensor_id) REFERENCES sensor(id)
 );
 
