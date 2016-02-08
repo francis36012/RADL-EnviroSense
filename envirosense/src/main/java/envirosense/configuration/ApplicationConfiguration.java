@@ -13,6 +13,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -20,10 +24,6 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 
 @Configuration
 @EnableWebMvc
@@ -32,8 +32,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 		"envirosense.service"})
 @PropertySource("classpath:application.properties")
 @EnableJpaRepositories("envirosense.repository")
-public class ApplicationConfiguration extends WebMvcConfigurerAdapter
-{
+public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
 
 	private static final String PROPERTY_NAME_DATABASE_DRIVER = "db.driver";
 	private static final String PROPERTY_NAME_DATABASE_URL = "db.url";
@@ -46,14 +45,12 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter
 	private static final String PROPERTY_NAME_ENTITYMANAGER_PACKAGES_TO_SCAN = "entitymanager.packages.to.scan";
 
 	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry)
-	{
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/static/**").addResourceLocations("/static/");
 	}
 
 	@Override
-	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer)
-	{
+	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
 	}
 
@@ -61,8 +58,7 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter
 	private Environment env;
 
 	@Bean(name = "dataSource")
-	public DataSource dataSource()
-	{
+	public DataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName(env.getRequiredProperty(PROPERTY_NAME_DATABASE_DRIVER));
 		dataSource.setUrl(env.getRequiredProperty(PROPERTY_NAME_DATABASE_URL));
@@ -73,8 +69,7 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter
 	}
 
 	@Bean
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory()
-	{
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 		entityManagerFactoryBean.setDataSource(dataSource());
 		entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
@@ -86,8 +81,7 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter
 	}
 
 	@Bean
-	public JpaTransactionManager transactionManager()
-	{
+	public JpaTransactionManager transactionManager() {
 		JpaTransactionManager transactionManager = new JpaTransactionManager();
 		transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
 
@@ -95,8 +89,7 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter
 	}
 
 	@Bean
-	public InternalResourceViewResolver viewResolver()
-	{
+	public InternalResourceViewResolver viewResolver() {
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
 		resolver.setPrefix("/WEB-INF/views/");
 		resolver.setSuffix(".jsp");
@@ -106,8 +99,7 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter
 	}
 
 	@Bean
-	public ResourceBundleMessageSource messageSource()
-	{
+	public ResourceBundleMessageSource messageSource() {
 		ResourceBundleMessageSource source = new ResourceBundleMessageSource();
 		source.setBasename(env.getRequiredProperty("message.source.basename"));
 		source.setUseCodeAsDefaultMessage(true);
@@ -115,8 +107,7 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter
 		return source;
 	}
 
-	private Properties hibernateProperties()
-	{
+	private Properties hibernateProperties() {
 		Properties properties = new Properties();
 
 		properties.put(PROPERTY_NAME_HIBERNATE_DIALECT,

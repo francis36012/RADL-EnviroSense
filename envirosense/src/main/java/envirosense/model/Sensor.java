@@ -1,16 +1,16 @@
 package envirosense.model;
 
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Sensor
-{
+public class Sensor {
 	@Id
 	private long id;
 
@@ -21,10 +21,10 @@ public class Sensor
 	private String name;
 
 	@Enumerated(EnumType.STRING)
+	@Column(name = "sensor_type")
 	private SensorType sensorType;
 
-	public Sensor(long id, Room room, String name, SensorType sensorType)
-	{
+	public Sensor(long id, Room room, String name, SensorType sensorType) {
 		super();
 		this.id = id;
 		this.room = room;
@@ -32,47 +32,38 @@ public class Sensor
 		this.sensorType = sensorType;
 	}
 
-	protected Sensor()
-	{
+	protected Sensor() {
 	}
 
-	public long getId()
-	{
+	public long getId() {
 		return id;
 	}
 
-	public Room getRoom()
-	{
+	public Room getRoom() {
 		return room;
 	}
 
-	public String getName()
-	{
+	public String getName() {
 		return name;
 	}
 
-	public SensorType getSensorType()
-	{
+	public SensorType getSensorType() {
 		return sensorType;
 	}
 
-	public void setId(long id)
-	{
+	public void setId(long id) {
 		this.id = id;
 	}
 
-	public void setRoom(Room room)
-	{
+	public void setRoom(Room room) {
 		this.room = room;
 	}
 
-	public void setName(String name)
-	{
+	public void setName(String name) {
 		this.name = name;
 	}
 
-	public void setSensorType(SensorType sensorType)
-	{
+	public void setSensorType(SensorType sensorType) {
 		this.sensorType = sensorType;
 	}
 }

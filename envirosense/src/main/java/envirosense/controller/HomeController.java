@@ -7,11 +7,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class HomeController
-{
+public class HomeController {
 	@RequestMapping(value = {"/", "/index", "/home"}, method = RequestMethod.GET)
-	public ModelAndView homePage()
-	{
+	public ModelAndView homePage() {
 		return new ModelAndView("index");
 	}
 }

@@ -1,4 +1,4 @@
 /**
- * This package holds classes for fronted (UI and REST) controllers
+ * Defines UI controllers
  */
 package envirosense.controller;

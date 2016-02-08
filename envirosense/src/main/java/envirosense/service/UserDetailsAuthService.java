@@ -1,10 +1,6 @@
 package envirosense.service;
 
 
-import envirosense.model.User;
-import envirosense.repository.RoleRepository;
-import envirosense.repository.UserRepository;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,32 +12,27 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import envirosense.model.User;
+import envirosense.repository.RoleRepository;
+import envirosense.repository.UserRepository;
+
 @Service
-public class UserDetailsAuthService implements UserDetailsService
-{
+public class UserDetailsAuthService implements UserDetailsService {
 	@Autowired
 	UserRepository userRepository;
 	@Autowired
 	RoleRepository roleRepository;
 
 	@Override
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException
-	{
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		User user = userRepository.findOne(email);
 
-		if (user == null)
-		{
+		if (user == null) {
 			throw new UsernameNotFoundException(String.format("Email: %s not found", email));
 		}
-		return new org.springframework.security.core.userdetails.User(
-				user.getEmail(),
-				user.getPassword(),
-				user.getEnabled(),
-				true,
-				true,
-				true,
-				getGrantedAuthorities(user)
-		);
+		return new org.springframework.security.core.userdetails.User(user.getEmail(),
+				user.getPassword(), user.getEnabled(), true, true, true,
+				getGrantedAuthorities(user));
 	}
 
 	/**
@@ -50,8 +41,7 @@ public class UserDetailsAuthService implements UserDetailsService
 	 * @param user The user whose authorities are to be returned
 	 * @return A list of authorities for the specified user
 	 */
-	public List<GrantedAuthority> getGrantedAuthorities(User user)
-	{
+	public List<GrantedAuthority> getGrantedAuthorities(User user) {
 		List<GrantedAuthority> authorities = new ArrayList<>();
 
 		user.getRoles().stream().forEach((userRole) -> {
