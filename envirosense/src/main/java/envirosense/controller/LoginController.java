@@ -16,9 +16,5 @@ public class LoginController {
 	public ModelAndView login() {
 		return new ModelAndView("login");
 	}
-
-	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public ModelAndView logout() {
-		return new ModelAndView("redirect:/login?logout");
-	}
+    
 }
