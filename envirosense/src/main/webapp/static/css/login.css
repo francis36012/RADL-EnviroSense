@@ -1,0 +1,19 @@
+/* LOGIN ELEMENTS */
+#loginForm .form-group
+{
+	margin-bottom: -0.1em;
+}
+#loginForm .glyphicon
+{
+	font-size: 1.4em;
+}
+#loginForm .alert
+{
+	margin-top: 20px;
+}
+
+/* FORGOT PASSWORD */
+#forgotPassword .glyphicon
+{
+	font-size: 1.4em;
+}

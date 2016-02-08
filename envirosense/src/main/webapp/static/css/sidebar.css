@@ -1,0 +1,72 @@
+
+/* SIDEBAR ELEMENTS */
+#sidebar-wrapper
+{
+	background-image: url("../images/Backgrounds/Background - Noise 3.png") !important;
+	//box-shadow: inset -1em 0em 1.5em -1em rgba(0, 0, 0, 0.7);
+	
+	overflow-x: hidden;
+}
+#sidebar-wrapper .sidebar-nav
+{
+	margin-top: 1em;
+}
+#sidebar-wrapper .sidebar-nav li:last-child
+{
+	font-weight: lighter;
+	font-size: 0.6em;
+}
+
+#sidebar-wrapper .sidebar-nav li
+{
+	text-align: right;
+}
+#sidebar-wrapper .sidebar-nav li a
+{
+	padding-right: 25px;
+	
+	font-size: 2em;
+	font-weight: lighter; 
+	line-height: 2em;
+}
+#page-content-wrapper
+{
+	position: absolute !important;
+}
+
+/* PREVENT TOGGLE AT STRATUP */
+/*
+@media(min-width:768px) 
+{
+	#wrapper 
+	{
+		padding-right: 0;
+	}
+
+	#wrapper.toggled 
+	{
+		padding-right: 250px;
+	}
+
+	#sidebar-wrapper 
+	{
+		width: 0;
+	}
+
+	#wrapper.toggled #sidebar-wrapper 
+	{
+		width: 250px;
+	}
+
+	#page-content-wrapper 
+	{
+		position: absolute;
+	}
+
+	#wrapper.toggled #page-content-wrapper 
+	{
+		position: absolute;
+		margin-right: -250px;
+	}
+}
+*/
