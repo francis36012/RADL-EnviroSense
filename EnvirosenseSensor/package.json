@@ -1,0 +1,15 @@
+{
+  "name": "envirosense",
+  "version": "1.0.0",
+  "description": "Envirosense data collection system (RaspberryPi/GrovePi based)",
+  "main": "./Server/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mysql": "^2.10.2",
+    "socket.io": "^1.4.5"
+  }
+}
