@@ -1,36 +1,32 @@
-
 /* SIDEBAR ELEMENTS */
-#sidebar-wrapper
-{
-	background-image: url("../images/Backgrounds/Background - Noise 3.png") !important;
-	//box-shadow: inset -1em 0em 1.5em -1em rgba(0, 0, 0, 0.7);
-	
+#sidebar-wrapper {
+	background-image: url("../images/Backgrounds/Background - Noise 3.png")
+		!important; //
+	box-shadow: inset -1em 0em 1.5em -1em rgba(0, 0, 0, 0.7);
 	overflow-x: hidden;
 }
-#sidebar-wrapper .sidebar-nav
-{
+
+#sidebar-wrapper .sidebar-nav {
 	margin-top: 1em;
 }
-#sidebar-wrapper .sidebar-nav li:last-child
-{
+
+#sidebar-wrapper .sidebar-nav li:last-child {
 	font-weight: lighter;
 	font-size: 0.6em;
 }
 
-#sidebar-wrapper .sidebar-nav li
-{
+#sidebar-wrapper .sidebar-nav li {
 	text-align: right;
 }
-#sidebar-wrapper .sidebar-nav li a
-{
+
+#sidebar-wrapper .sidebar-nav li a {
 	padding-right: 25px;
-	
 	font-size: 2em;
-	font-weight: lighter; 
+	font-weight: lighter;
 	line-height: 2em;
 }
-#page-content-wrapper
-{
+
+#page-content-wrapper {
 	position: absolute !important;
 }
 

@@ -12,7 +12,6 @@
     </head>
 
     <body>
-
         <!--  Error check -->
         <c:if test="${param.error != null}">
             <div class="alert alert-danger">
@@ -29,8 +28,6 @@
         
         <c:url var="loginUrl" value="/login" />
         <form action="${loginUrl}" method="POST">
-
-
             <div>
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" placeholder="Email" required>

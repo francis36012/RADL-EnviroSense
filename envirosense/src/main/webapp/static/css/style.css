@@ -1,18 +1,14 @@
-body
-{
+body {
 	background-image: url("../images/Backgrounds/Background - Noise 2.png");
 	background-repeat: repeat;
-	
 	font-family: "Open Sans" !important;
 }
 
-body *
-{
+body * {
 	box-sizing: border-box;
 }
 
-#wrapper
-{
+#wrapper {
 	padding: 1.1em;
 	padding-top: 0;
 }

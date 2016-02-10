@@ -1,46 +1,39 @@
 /* OTHER ELEMENTS */
-img
-{
+img {
 	width: 100%;
 }
-.hidden
-{
+
+.hidden {
 	display: none;
 }
-textarea
-{
-	
+
+textarea {
 	width: 100%;
 	max-width: 100%;
 	min-width: 100%;
-
 }
-.centered
-{
+
+.centered {
 	width: 100%;
 	margin: auto;
 }
-.nopadding
-{
+
+.nopadding {
 	padding: 0 !important;
 	margin: 0 !important;
 }
 
 /* REMOVE BLUE GLOW */
-*:focus
-{
+*:focus {
 	outline: none;
 }
-textarea:focus,
-input:focus
-{
+
+textarea:focus, input:focus {
 	outline: none;
 }
-input,
-textarea 
-{
+
+input, textarea {
 	outline: none;
 	box-shadow: none !important;
 	border: 1px solid #ccc !important;
 }
-

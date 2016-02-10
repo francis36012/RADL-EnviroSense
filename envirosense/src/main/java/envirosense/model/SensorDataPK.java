@@ -1,10 +1,12 @@
 package envirosense.model;
 
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
- * This class is the <code>IdClass</code> for all sensor data classes 
+ * This class is the <code>IdClass</code> for all sensor data classes
+ * 
  * @author Francis Agyapong
  */
 public class SensorDataPK implements Serializable {
@@ -12,13 +14,13 @@ public class SensorDataPK implements Serializable {
 
 	/* The ID of the sensor that sent the data */
 	private long sensorId;
-	
+
 	/* The time and date when the data was sent */
 	private Timestamp timestamp;
 
-	
 	/**
 	 * Creates a new SensorData object using the specified arguments
+	 * 
 	 * @param sensorId The ID of the sensor data to be created
 	 * @param timestamp The time and date of the sensor data to be created
 	 */
@@ -26,7 +28,7 @@ public class SensorDataPK implements Serializable {
 		this.sensorId = sensorId;
 		this.timestamp = timestamp;
 	}
-	
+
 	public SensorDataPK() {
 	}
 

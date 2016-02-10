@@ -13,10 +13,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @IdClass(value = envirosense.model.SensorDataPK.class)
-public class Humidity implements Serializable {
+public class Humidity implements SensorData, Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@Column(name = "sensor_id")
 	private long sensorId;
@@ -25,7 +25,7 @@ public class Humidity implements Serializable {
 	// TODO: Extract these settings into a configurations file
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ", timezone = "America/Edmonton")
 	private Timestamp timestamp;
-	
+
 	private double data;
 
 	public Humidity(long sensorId, Timestamp timestamp, double data) {
@@ -33,7 +33,7 @@ public class Humidity implements Serializable {
 		this.timestamp = timestamp;
 		this.data = data;
 	}
-	
+
 	public Humidity() {
 	}
 
@@ -45,7 +45,7 @@ public class Humidity implements Serializable {
 		return timestamp;
 	}
 
-	public double getData() {
+	public Double getData() {
 		return data;
 	}
 

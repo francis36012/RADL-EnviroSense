@@ -9,12 +9,10 @@
 
 	<body>
 		<h1>Envirosense Welcome Page</h1>
-                
-                <c:url var="logoutURL" value="/logout" />
-                <form action="${logoutURL}" method="POST">
-                    <input type='submit' value="POST Logout">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                </form>
-
+		<c:url var="logoutURL" value="/logout" />
+		<form action="${logoutURL}" method="POST">
+			<input type='submit' value="POST Logout">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+		</form>
 	</body>
 </html>

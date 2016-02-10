@@ -19,6 +19,7 @@ import envirosense.service.TemperatureService;
 
 /**
  * A REST controller for mapping requests for temperature data.
+ * 
  * @author Francis Agyapong
  */
 @RestController
@@ -31,14 +32,15 @@ public class TemperatureDataController {
 	public ResponseEntity<List<Temperature>> allTemperatureData() {
 		return new ResponseEntity<>(temperatureDataService.getAll(), HttpStatus.OK);
 	}
-	
+
 	/**
-	 * End-point for getting temperature data for a specific room with a time a range.
-	 * Time stamp format is: yyyy-mm-dd hh:mm:ss.fff
+	 * End-point for getting temperature data for a specific room with a time a range. Time stamp format is:
+	 * yyyy-mm-dd hh:mm:ss.fff
 	 */
 	@RequestMapping(value = "/api/data/temperature/{roomId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Temperature>> byRoomBetween(@PathVariable("roomId") long roomId,
-		@RequestParam("start") Timestamp start, @RequestParam("end") Timestamp end) {
-		return new ResponseEntity<>(temperatureDataService.getByRoomIdBetween(roomId, start, end), HttpStatus.OK);
+			@RequestParam("start") Timestamp start, @RequestParam("end") Timestamp end) {
+		return new ResponseEntity<>(temperatureDataService.getByRoomIdBetween(roomId, start, end),
+				HttpStatus.OK);
 	}
 }

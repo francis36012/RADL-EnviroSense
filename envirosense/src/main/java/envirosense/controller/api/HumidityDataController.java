@@ -16,6 +16,7 @@ import envirosense.service.HumidityService;
 
 /**
  * A REST controller for mapping requests for humidity data.
+ * 
  * @author Francis Agyapong
  */
 @RestController

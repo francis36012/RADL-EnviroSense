@@ -8,13 +8,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
+@Table(name = "ra_bluetooth")
 @IdClass(value = envirosense.model.SensorDataPK.class)
-public class Temperature implements SensorData, Serializable {
-
+public final class ReelyActiveBluetooth implements SensorData, Serializable {
+	@Transient
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -22,19 +23,17 @@ public class Temperature implements SensorData, Serializable {
 	private long sensorId;
 
 	@Id
-	// TODO: Extract these settings into a configurations file
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ", timezone = "America/Edmonton")
-	private Timestamp timestamp;
+	Timestamp timestamp;
 
-	private double data;
+	private String ownerEmail;
 
-	public Temperature(long sensorId, Timestamp timestamp, double data) {
+	public ReelyActiveBluetooth(long sensorId, String ownerEmail, Timestamp timestamp) {
 		this.sensorId = sensorId;
+		this.ownerEmail = ownerEmail;
 		this.timestamp = timestamp;
-		this.data = data;
 	}
 
-	public Temperature() {
+	protected ReelyActiveBluetooth() {
 	}
 
 	public long getSensorId() {
@@ -45,8 +44,8 @@ public class Temperature implements SensorData, Serializable {
 		return timestamp;
 	}
 
-	public Double getData() {
-		return data;
+	public String getData() {
+		return ownerEmail;
 	}
 
 	public void setSensorId(long sensorId) {
@@ -57,7 +56,7 @@ public class Temperature implements SensorData, Serializable {
 		this.timestamp = timestamp;
 	}
 
-	public void setData(double data) {
-		this.data = data;
+	public void setData(String ownerEmail) {
+		this.ownerEmail = ownerEmail;
 	}
 }

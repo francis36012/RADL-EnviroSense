@@ -11,12 +11,15 @@ import javax.persistence.IdClass;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+/**
+ * @author Francis Agyapong
+ */
 @Entity
 @IdClass(value = envirosense.model.SensorDataPK.class)
-public class Door implements Serializable {
+public class Door implements SensorData, Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@Column(name = "sensor_id")
 	private long sensorId;
@@ -25,7 +28,7 @@ public class Door implements Serializable {
 	// TODO: Extract these settings into a configurations file
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ", timezone = "America/Edmonton")
 	private Timestamp timestamp;
-	
+
 	private boolean data;
 
 	public Door(long sensorId, Timestamp timestamp, boolean data) {
@@ -33,7 +36,7 @@ public class Door implements Serializable {
 		this.timestamp = timestamp;
 		this.data = data;
 	}
-	
+
 	public Door() {
 	}
 
@@ -45,7 +48,7 @@ public class Door implements Serializable {
 		return timestamp;
 	}
 
-	public boolean getData() {
+	public Boolean getData() {
 		return data;
 	}
 
