@@ -3,7 +3,7 @@ pid[0]=$!
 sleep 5
 python ./libs/Python/motion.py &
 pid[1]=$!
-../Envirosense/libs/C/temphum &
+../EnvirosenseSensor/libs/C/temphum &
 pid[2]=$!
 trap "kill ${pid[0]} ${pid[1]} ${pid[2]}; exit 1" INT
 wait
