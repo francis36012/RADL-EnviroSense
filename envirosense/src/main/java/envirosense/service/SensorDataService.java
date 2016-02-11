@@ -125,4 +125,19 @@ public class SensorDataService {
 		// TODO: implementation
 		return null;
 	}
+        
+        /**
+         * TODO: Documentation 
+         * 
+         * @param sensorType
+         * @param roomId
+         * @param startTime
+         * @param endtime
+         * @return 
+         */
+        public List<SensorData> findBySensorTypeAndRoomAndTimestampBetween(SensorType sensorType, 
+                long roomId, Timestamp startTime, Timestamp endtime) {
+		// TODO: implementation
+		return null;
+	}
 }
