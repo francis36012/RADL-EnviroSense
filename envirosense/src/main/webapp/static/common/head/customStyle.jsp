@@ -6,8 +6,6 @@
 <link rel="stylesheet" type="text/css" href="<c:url value='/static/css/sidebar.css'/>"/>
 <link rel="stylesheet" type="text/css" href="<c:url value='/static/css/pageheader.css'/>"/>
 <link rel="stylesheet" type="text/css" href="<c:url value='/static/css/slick.css'/>"/>
-<link rel="stylesheet" type="text/css" href="<c:url value='/static/css/other.css'/>"/>
 
 <!-- STYLE BY PAGE -->
 <link rel="stylesheet" type="text/css" href="<c:url value='/static/css/login.css'/>"/>
-		

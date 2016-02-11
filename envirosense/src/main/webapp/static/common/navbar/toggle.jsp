@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <div class="row">
 <div class="col-xs-12">
 	<a href="#menu-toggle" id="menu-toggle">
@@ -9,11 +12,4 @@
 </div>
 
 <!-- Toggle Script -->
-<script>
-$("#menu-toggle").click(
-function(e) 
-{
-	e.preventDefault();
-	$("#wrapper").toggleClass("toggled");
-});
-</script>
+<script type="text/javascript" src="<c:url value='/static/js/RunNavbar.js' />"></script>
