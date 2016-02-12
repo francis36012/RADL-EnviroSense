@@ -2,4 +2,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!-- Stylesheet : NAVBAR -->
-<link href="<c:url value='/static/external/Sidebar/css/simple-sidebar.css' />" rel="stylesheet">
+<link href="<c:url value='/static/external/Sidebar/simple-sidebar.css' />" rel="stylesheet"/>
