@@ -27,14 +27,14 @@ public class ReportController {
     SensorDataService sensorDataService;
 
     /**
-     * REST Controller to return a dataset of all sensor data in a given room for the given
-     * time/date range
+     * REST Controller to return a dataset of all sensor data in a given room
+     * for the given time/date range
      *
      * @param roomId The ID of the room
      * @param startDate The start date of the data to return
      * @param endDate The end date of the data to return
-     * @return A list of SensorData objects for all sensors in the specified room for the given
-     * time/date range
+     * @return A list of SensorData objects for all sensors in the specified
+     * room for the given time/date range
      */
     @RequestMapping(
             value = "/{roomId}/{startDate}/{endDate}",
@@ -52,14 +52,14 @@ public class ReportController {
     }
 
     /**
-     * REST Controller to return a dataset of all sensor data of a given sensor type for the given
-     * time/date range in all rooms
+     * REST Controller to return a dataset of all sensor data of a given sensor
+     * type for the given time/date range in all rooms
      *
      * @param sensorType The sensor type to retrieve data from
      * @param startDate the start date of the data to return
      * @param endDate the end date of the data to return
-     * @return A list of SensorData objects for all sensors of the specified type in all rooms for
-     * the given time/date range
+     * @return A list of SensorData objects for all sensors of the specified
+     * type in all rooms for the given time/date range
      */
     @RequestMapping(
             value = "/{sensorType}/{startDate}/{endDate}",
@@ -75,15 +75,16 @@ public class ReportController {
         }
         return new ResponseEntity<>(sensorData, HttpStatus.OK);
     }
-    
+
     /**
-     * REST Controller to return a dataset of sensor data from one specified sensor for the given
-     * time/date range
+     * REST Controller to return a dataset of sensor data from one specified
+     * sensor for the given time/date range
      *
      * @param sensorId The particular sensor to return data from
      * @param startDate the start date of the data to return
      * @param endDate the end date of the data to return
-     * @return A list of SensorData objects for the given sensor for the given time/date range
+     * @return A list of SensorData objects for the given sensor for the given
+     * time/date range
      */
     @RequestMapping(
             value = "/{sensorId}/{startDate}/{endDate}",
@@ -99,18 +100,32 @@ public class ReportController {
         }
         return new ResponseEntity<>(sensorData, HttpStatus.OK);
     }
+
     
-/*
+    /**
+     * REST Controller to return a dataset of the specified sensorType data in a given room
+     * for the given time/date range
+     *
+     * @param roomId The ID of the room
+     * @param sensorType The sensorType to retrieve data from
+     * @param startDate The start date of the data to return
+     * @param endDate The end date of the data to return
+     * @return A list of SensorData objects for the specified sensor type in the specified
+     * room for the given time/date range
+     */
     @RequestMapping(
-            value = "/{sensorType}/{roomId}/{startDate}/{endDate}",
+            value = "/{roomId}/{sensorType}/{startDate}/{endDate}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SensorData>> getDataBySensorTypeAndRoomId(
-            @PathVariable("sensorType") SensorType sensorType,
             @PathVariable("roomId") long roomId,
+            @PathVariable("sensorType") SensorType sensorType,
             @PathVariable("startDate") Timestamp startDate,
             @PathVariable("endDate") Timestamp endDate) {
-        //List<SensorData> sensorData = sensorDataService.
+        List<SensorData> sensorData = sensorDataService.findByRoomIdSensorTypeAndTimestamp(roomId, sensorType, startDate, endDate);
+        if (sensorData.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(sensorData, HttpStatus.OK);
     }
-*/
 }
