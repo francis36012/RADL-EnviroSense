@@ -47,24 +47,26 @@ CREATE TABLE sensor (
 DROP TABLE IF EXISTS event;
 CREATE TABLE event (
 	id BIGINT AUTO_INCREMENT,
-	owner_email VARCHAR(60) NOT NULL,
+	name VARCHAR(60) NOT NULL,
 	message VARCHAR(150) NOT NULL,
-	is_active BIT NOT NULL,
 	use_slack BIT NOT NULL,
 	use_email BIT NOT NULL,
 	use_phone BIT NOT NULL,
+	active BIT NOT NULL,
 	CONSTRAINT pk_event PRIMARY KEY (id),
-	CONSTRAINT fk_event_user FOREIGN KEY (owner_email) REFERENCES user(email)
+	CONSTRAINT uk_event_name UNIQUE KEY (name)
 );
 
-DROP TABLE IF EXISTS ev_condition;
-CREATE TABLE ev_condition (
+DROP TABLE IF EXISTS econdition;
+CREATE TABLE econdition (
 	id BIGINT AUTO_INCREMENT,
 	sensor_id BIGINT NOT NULL,
 	value VARCHAR(10) NOT NULL,
-	date DATE NOT NULL,
-	CONSTRAINT pk_evcondition PRIMARY KEY (id),
-	CONSTRAINT fk_evcondition_sensor FOREIGN KEY (sensor_id) REFERENCES sensor(id)
+	modifier VARCHAR(10) NOT NULL,
+	date_time DATE NOT NULL,
+	weekly_occurrences BIT(7) NOT NULL,
+	CONSTRAINT pk_econdition PRIMARY KEY (id),
+	CONSTRAINT fk_econdition_sensor FOREIGN KEY (sensor_id) REFERENCES sensor(id)
 );
 
 DROP TABLE IF EXISTS temperature;
@@ -119,7 +121,7 @@ CREATE TABLE sensor_condition (
 	condition_id BIGINT,
 	CONSTRAINT pk_sensor_condition PRIMARY KEY (sensor_id, condition_id),
 	CONSTRAINT fk_sc_sensor FOREIGN KEY (sensor_id) REFERENCES sensor(id),
-	CONSTRAINT fk_sc_condition FOREIGN KEY (condition_id) REFERENCES ev_condition(id)
+	CONSTRAINT fk_sc_econdition FOREIGN KEY (condition_id) REFERENCES econdition(id)
 );
 
 DROP TABLE IF EXISTS event_condition;
@@ -128,5 +130,14 @@ CREATE TABLE event_condition (
 	condition_id BIGINT,
 	CONSTRAINT pk_event_condition PRIMARY KEY (event_id, condition_id),
 	CONSTRAINT fk_ec_event FOREIGN KEY (event_id) REFERENCES event(id),
-	CONSTRAINT fk_ec_condition FOREIGN KEY (condition_id) REFERENCES ev_condition(id)
+	CONSTRAINT fk_ec_condition FOREIGN KEY (condition_id) REFERENCES econdition(id)
+);
+
+DROP TABLE IF EXISTS user_event;
+CREATE TABLE user_event (
+	user_email VARCHAR(60),
+	event_id BIGINT,
+	CONSTRAINT pk_user_event PRIMARY KEY (user_email, event_id),
+	CONSTRAINT fk_ue_user FOREIGN KEY (user_email) REFERENCES user(email),
+	CONSTRAINT fk_ue_event FOREIGN KEY (event_id) REFERENCES event(id)
 );
