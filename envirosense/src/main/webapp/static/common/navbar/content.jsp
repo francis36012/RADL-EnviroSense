@@ -7,13 +7,13 @@
 			<img src="<c:url value='/static/images/Elements/Logo/Logo - Medium.png' />" class="img-responsive" style="width: 33%; margin: 0 37%" />
 			<img src="<c:url value='/static/images/Elements/Divider.png' />" class="img-responsive" />
 		</li>
-		<li><a href="<c:url value='/views/index.jsp' />">Live Data</a></li>
+		<li><a href="<c:url value='/' />">Live Data</a></li>
 		<li><a href="#">Report</a></li>
 		<li><a href="<c:url value='/views/admin/events.jsp' />">Events</a></li>
 		<li><a href="#">Settings</a></li>
 		<li><a href="<c:url value='/views/admin/users.jsp' />">Accounts</a></li>
 		<li>
-			<form id="formLogout" class="form" action="<c:url value='/views/login.jsp' />" method="POST">
+			<form id="formLogout" class="form" action="<c:url value='/logout' />" method="POST">
 				<a href="<c:url value='javascript:{}' />" onclick="document.getElementById('formLogout').submit();">
 					Logout
 				</a>
