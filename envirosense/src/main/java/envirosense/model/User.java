@@ -68,10 +68,14 @@ public class User {
 	private boolean enabled;
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "user_role", joinColumns = {
-			@JoinColumn(name = "user_email")}, inverseJoinColumns = {
-					@JoinColumn(name = "user_role")})
+	@JoinTable(name = "user_role", joinColumns = {@JoinColumn(name = "user_email")},
+			   inverseJoinColumns = {@JoinColumn(name = "user_role")})
 	private Set<Role> roles;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "user_event", joinColumns = {@JoinColumn(name = "user_email")},
+			   inverseJoinColumns = {@JoinColumn(name = "event_id")})
+	private Set<Event> events;
 
 	/**
 	 * Creates a user object
