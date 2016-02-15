@@ -9,9 +9,9 @@
 		</li>
 		<li><a href="<c:url value='/' />">Live Data</a></li>
 		<li><a href="#">Report</a></li>
-		<li><a href="<c:url value='/views/admin/events.jsp' />">Events</a></li>
+		<li><a href="<c:url value='#' />">Events</a></li>
 		<li><a href="#">Settings</a></li>
-		<li><a href="<c:url value='/views/admin/users.jsp' />">Accounts</a></li>
+		<li><a href="<c:url value='#' />">Accounts</a></li>
 		<li>
 			<form id="formLogout" class="form" action="<c:url value='/logout' />" method="POST">
 				<a href="<c:url value='javascript:{}' />" onclick="document.getElementById('formLogout').submit();">

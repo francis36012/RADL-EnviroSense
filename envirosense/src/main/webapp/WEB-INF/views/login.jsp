@@ -21,7 +21,7 @@
 				<div class="col-xs-12 page-header">
 					<!-- HEADER -->
 					<div class="jumbotron text-center">
-						<img src="<c:url value='/static/images/Elements/Logo/Logo - Medium.png' />" class="img-responsive center-block" />
+						<img src="<c:url value='/static/images/Elements/Logo/Logo - Small.png' />" class="img-responsive center-block" />
 						<h1>
 						<strong>EnviroSense</strong>
 						</h1>
