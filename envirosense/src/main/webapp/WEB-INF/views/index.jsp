@@ -6,9 +6,10 @@
 	<head>
 		<c:import url="/static/common/head/favicon.jsp" />
 		<c:import url="/static/common/head/metaTags.jsp" />
+		<c:import url="/static/common/head/jquery.jsp" />
 		<c:import url="/static/common/head/bootstrap.jsp" />
 		<c:import url="/static/common/head/slick.jsp" />
-		<c:import url="/static/common/head/customStyle.jsp" />
+		<c:import url="/static/common/head/style.jsp" />
 		<c:import url="/static/common/head/navbar.jsp" />
 
 		<title>EnviroSense</title>
@@ -99,6 +100,12 @@
 								sensors through the use of an API.
 								</p>
 							</div>
+							
+							<form class="form" role="form">
+								<div class="form-group">									
+									<textarea class="form-control"></textarea>
+								</div>
+							</form>
 						</div>
 					</div>
 					</div>

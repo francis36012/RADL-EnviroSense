@@ -6,9 +6,9 @@
 	<head>
 		<c:import url="/static/common/head/favicon.jsp" />
 		<c:import url="/static/common/head/metaTags.jsp" />
+		<c:import url="/static/common/head/jquery.jsp" />
 		<c:import url="/static/common/head/bootstrap.jsp" />
-		<c:import url="/static/common/head/customStyle.jsp" />
-		
+		<c:import url="/static/common/head/style.jsp" />
 		<link rel="stylesheet" type="text/css" href="<c:url value='/static/css/pages/login.css'/>"/>
 		<title>EnviroSense</title>
 	</head>
@@ -21,7 +21,7 @@
 				<div class="col-xs-12 page-header">
 					<!-- HEADER -->
 					<div class="jumbotron text-center">
-						<img src="<c:url value='/static/images/Elements/Logo/Logo - Small.png' />" class="img-responsive center-block" />
+						<img src="<c:url value='/static/images/Elements/Logo/Logo - Medium.png' />" class="img-responsive center-block" />
 						<h1>
 						<strong>EnviroSense</strong>
 						</h1>

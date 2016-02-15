@@ -12,8 +12,8 @@
 		<c:import url="/static/common/head/slick.jsp" />
 		<c:import url="/static/common/head/style.jsp" />
 		<c:import url="/static/common/head/navbar.jsp" />
-		<link rel="stylesheet" type="text/css" href="<c:url value='/static/css/pages/users.css'/>"/>
-		<title>Manage Users</title>
+		<link rel="stylesheet" type="text/css" href="<c:url value='/static/css/pages/events.css'/>"/>
+		<title>Manage Events</title>
 	</head>
 	
 	<body>
@@ -27,17 +27,14 @@
 			<div class="row">
 			<div class="col-xs-12 col-md-6 col-md-offset-3">
 
-				<div class="row page-header">
+				<!-- SIDEBAR TOGGLE -->
+				<c:import url="/static/common/navbar/toggle.jsp" />
 
-					<!-- SIDEBAR TOGGLE -->
-					<div class="col-xs-3">
-						<c:import url="/static/common/navbar/toggle.jsp" />
-					</div>
-					
-					<div class="col-xs-6">
-						<h1>Users</h1>
-						<small>Let's play Sims.</small>
-					</div>
+				<div class="row page-header">
+				<div class="col-xs-12">
+					<h1>Manage Events</h1>
+					<small>Let's get notified.</small>
+				</div>
 			</div>
 			</div>
 			</div>
@@ -63,34 +60,31 @@
 					</div>
 					</div>
 					
-					
 					<div class="row">
 					<div class="col-xs-12">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<div class="text-center">All Users</div>
+							<div class="text-center">All Events</div>
 						</div>
 						<%
-							String[] allUsers = {
-								"Stephanie Kraus",
-								"Sergio Diaz",
-								"Francis Agyapong",
-								"Daniel Chau",
-								"Breno Brezinski",
-								"Jediah Dizon"
+							String[] allEvents = {
+								"Temperature Warning",
+								"Humidity Caution",
+								"Allergens Warning",
+								"Camera Alarm"
 							};
 
 							for(int index = 0;
-								index < allUsers.length;
+								index < allEvents.length;
 								index++)
 							{
-								String currentUser = allUsers[index];
+								String currentEvent = allEvents[index];
 						%>
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-xs-9">
-									<div class="usersList" id="<%= currentUser.replaceAll("\\s", "") %>">
-									<%= currentUser %>
+									<div class="eventsList" id="<%= currentEvent.replaceAll("\\s", "") %>">
+										<%= currentEvent %>
 									</div>
 								</div>
 									
@@ -116,7 +110,7 @@
 	<!-- Javascript : SLICK -->
 	<script src="<c:url value='/static/js/RunSlick.js' />"></script>
 	
-	<!-- Javascript : SLICK -->
+	<!-- Javascript : BOOTSTRAP SWITCH -->
 	<script src="<c:url value='/static/js/RunBootstrapSwitch.js' />"></script>
 	
 	</body>
