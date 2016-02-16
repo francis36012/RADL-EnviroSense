@@ -90,7 +90,7 @@ public class SensorDataService {
 	 * @param roomId
 	 * @return
 	 */
-	public List<SensorData> findFirst5ByRoomId(long roomId) {
+	public List<SensorData> findLastestByRoomId(long roomId) {
 		// TODO: implementation
 		return null;
 	}
@@ -101,7 +101,7 @@ public class SensorDataService {
 	 * @param sensorId
 	 * @return
 	 */
-	public List<SensorData> findFirst5BySensorId(long sensorId) {
+	public List<SensorData> findLatestBySensorId(long sensorId) {
 		// TODO: implementation
 		return null;
 	}
@@ -112,7 +112,7 @@ public class SensorDataService {
 	 * @param sensorType
 	 * @return
 	 */
-	public List<SensorData> findFirst5BySensorType(SensorType sensorType) {
+	public List<SensorData> findLatestBySensorType(SensorType sensorType) {
 		// TODO: complete implementation
 		switch (sensorType) {
 			case TE:

@@ -47,4 +47,25 @@ public interface TemperatureRepository extends JpaRepository<Temperature, Sensor
 	 */
 	@Query(value = "SELECT * FROM temperature t JOIN sensor s ON s.id = t.sensor_id WHERE s.id = ?1", nativeQuery = true)
 	List<Temperature> findBySensorId(long sensorId);
+
+	/**
+	 * Retrieves the latest temperature data from the room the specified ID.
+	 * @param roomId The ID of the room in which the data was read
+	 * @return A List of temperature data that satisfy the conditions given above.
+	 */
+	@Query(
+		value = "SELECT * FROM temperature t JOIN sensor s ON t.sensor_id = s.id WHERE s.room_id = ?1 ORDER BY timestamp DESC LIMIT 1;",
+		nativeQuery = true
+	)
+	List<Temperature> findLatestByRoomId(long roomId);
+	
+	/**
+	 * Retrieves the latest temperature data stored in the database.
+	 * @return A List of temperature data that satisfy the conditions given above.
+	 */
+	@Query(
+		value = "SELECT * FROM temperature t WHERE timestamp >= (SELECT max(timestamp) from temperature);",
+		nativeQuery = true
+	)
+	List<Temperature> findLatest();
 }

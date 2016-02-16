@@ -87,7 +87,7 @@ public class User {
 	 * @param slackId The slack ID (or username) of the user object to be created
 	 * @param password The password of the user object to be created
 	 * @param enabled A boolean flag indicating whether the user object to be created is enabled
-	 * @param roles
+	 * @param roles The roles associated with the user
 	 */
 	public User(String firstname, String lastname, String email, String phone, String slackId,
 			String password, boolean enabled, Set<Role> roles) {

@@ -46,4 +46,26 @@ public interface DoorRepository extends JpaRepository<Door, SensorDataPK> {
 	 */
 	@Query(value = "SELECT * FROM door d JOIN sensor s ON s.id = d.sensor_id WHERE s.id = ?1", nativeQuery = true)
 	List<Door> findBySensorId(long sensorId);
+	
+	
+	/**
+	 * Retrieves the latest door data from the room the specified ID.
+	 * @param roomId The ID of the room in which the data was read
+	 * @return A List of door data that satisfy the conditions given above.
+	 */
+	@Query(
+		value = "SELECT * FROM door d JOIN sensor s ON d.sensor_id = s.id WHERE s.room_id = ?1 ORDER BY timestamp DESC LIMIT 1;",
+		nativeQuery = true
+	)
+	List<Door> findLatestByRoomId(long roomId);
+	
+	/**
+	 * Retrieves the latest door data stored in the database.
+	 * @return A List of door data that satisfy the conditions given above.
+	 */
+	@Query(
+		value = "SELECT * FROM door d WHERE timestamp >= (SELECT max(timestamp) from door);",
+		nativeQuery = true
+	)
+	List<Door> findLatest();
 }

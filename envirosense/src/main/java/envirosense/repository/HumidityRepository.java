@@ -45,4 +45,25 @@ public interface HumidityRepository extends JpaRepository<Humidity, SensorDataPK
 	 */
 	@Query(value = "SELECT * FROM humidity h JOIN sensor s ON s.id = h.sensor_id WHERE s.id = ?1", nativeQuery = true)
 	List<Humidity> findBySensorId(long sensorId);
+
+	/**
+	 * Retrieves the latest humidity data from the room the specified ID.
+	 * @param roomId The ID of the room in which the data was read
+	 * @return A List of humidity data that satisfy the conditions given above.
+	 */
+	@Query(
+		value = "SELECT * FROM humidity h JOIN sensor s ON h.sensor_id = s.id WHERE s.room_id = ?1 ORDER BY timestamp DESC LIMIT 1;",
+		nativeQuery = true
+	)
+	List<Humidity> findLatestByRoomId(long roomId);
+	
+	/**
+	 * Retrieves the latest humidity data stored in the database.
+	 * @return A List of humidity data that satisfy the conditions given above.
+	 */
+	@Query(
+		value = "SELECT * FROM humidity h WHERE timestamp >= (SELECT max(timestamp) from humidity);",
+		nativeQuery = true
+	)
+	List<Humidity> findLatest();
 }

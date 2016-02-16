@@ -46,4 +46,25 @@ public interface MotionRepository extends JpaRepository<Motion, SensorDataPK> {
 	 */
 	@Query(value = "SELECT * FROM motion m JOIN sensor s ON s.id = m.sensor_id WHERE s.id = ?1", nativeQuery = true)
 	List<Motion> findBySensorId(long sensorId);
+
+	/**
+	 * Retrieves the latest motion data from the room the specified ID.
+	 * @param roomId The ID of the room in which the data was read
+	 * @return A List of motion data that satisfy the conditions given above.
+	 */
+	@Query(
+		value = "SELECT * FROM motion m JOIN sensor s ON m.sensor_id = s.id WHERE s.room_id = ?1 ORDER BY timestamp DESC LIMIT 1;",
+		nativeQuery = true
+	)
+	List<Motion> findLatestByRoomId(long roomId);
+	
+	/**
+	 * Retrieves the latest motion data stored in the database.
+	 * @return A List of motion data that satisfy the conditions given above.
+	 */
+	@Query(
+		value = "SELECT * FROM motion m WHERE timestamp >= (SELECT max(timestamp) from motion);",
+		nativeQuery = true
+	)
+	List<Motion> findLatest();
 }
