@@ -11,9 +11,13 @@ config.DB.LOCALHOST = 'localhost';
 config.DB.USERNAME = 'root';
 config.DB.PASSWORD = 'password';
 
-config.DB.INSERT_SENSOR_DATA = "INSERT INTO %s SET sensor_id = %s, data = %s, date = STR_TO_DATE(\'%s\','%Y %m %d %H %i %s')";
+config.DB.INSERT_SENSOR_DATA =      "INSERT INTO %s SET sensor_id = %s, data = %s, date = STR_TO_DATE(\'%s\','%Y %m %d %H %i %s')";
+config.DB.INSERT_SENSOR_DATA_SIMP = "INSERT INTO %s SET sensor_id = %s, data = %s, date = STR_TO_DATE(\'%s\','%a %b %d %Y %H:%i:%s GMT-0700 (MST)')";
+config.DB.GET_LOCAL_SENSOR_DATA = 'SELECT * FROM %s';
 
 config.ENVIROSENSE = {};
 config.ENVIROSENSE.ROOMID = 1;
+
+config.SENSORS = ["temperature", "humidity", "motion"];
 
 module.exports = config;

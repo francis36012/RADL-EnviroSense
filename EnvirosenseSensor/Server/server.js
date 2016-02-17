@@ -49,9 +49,10 @@ function getNewConnection(recoveryDB){
 		}
 		else {
 			console.log('Database connection successful!');
-			//CHECK LOCAL DB FOR DATA BEFORE!!!!!!
-			firstConnMade = true;
-			conn = tempConn;
+            conn = tempConn; 
+            if(!firstConnMade)
+                checkLocalDB();
+			firstConnMade = true;			  
             if(recoveryDB === 1){
                 console.log("Attempting reconnection to main DB");
                 setTimeout(getNewConnection(), 2000);
@@ -71,6 +72,51 @@ function getNewConnection(recoveryDB){
 		}
 	});
 }
+
+//****************CHECK LOCAL DB FUNCTION************
+function checkLocalDB(){
+    var c = mysql.createConnection({
+			host	: config.DB.LOCALHOST,
+			user	: config.DB.USERNAME,
+			password: config.DB.PASSWORD,
+			database: config.DB.DB_NAME,
+			port	: config.DB.PORT 
+		});
+        
+   c.connect(function(err){
+		if(err){
+			console.log('Database connection error: ',  err);
+		}
+		else {
+			console.log('Local DB connection successful! (Checking for data)');
+            config.SENSORS.forEach(function(sensor){
+                c.query(util.sprintf(config.DB.GET_LOCAL_SENSOR_DATA, sensor), function(err, result){
+                    if(err) {
+                        console.log('Query error: ', err);
+                        throw err
+                    }
+                    if(result.length > 0){ //Data found for the first sensor
+                        //Loop through each data row for the sensor
+                        //console.log(result);
+                        result.forEach(function (row){
+                            console.log(util.sprintf(config.DB.INSERT_SENSOR_DATA_SIMP, sensor, parseInt(row['sensor_id']), parseFloat(row['data']).toFixed(2), row['date']));
+                            conn.query(util.sprintf(config.DB.INSERT_SENSOR_DATA_SIMP, sensor, parseInt(row['sensor_id']), parseFloat(row['data']).toFixed(2), row['date']));
+                        });                        
+                    }
+                });
+            });
+            console.log('Local DB scan finsished!');
+		}
+	});
+
+	c.on('error', function(err){
+		console.log('Database connection error: ', err);
+		throw err;
+	});     
+    
+}
+//****************CHECK LOCAL DB FUNCTION END************
+
 //***********DB FUNCTIONALITY END********//
 
 var cServer = net.createServer(function(client) {
