@@ -71,8 +71,9 @@ int main(int argc, char *argv[]) {
 
 	char buffer[256];
 	char buffer2[256];
-
+    
 	portno= 8124;
+    
 	sockfd = socket(AF_INET, SOCK_STREAM, 0);
 	if (sockfd < 0)
 		error("ERROR opening socket");
@@ -89,8 +90,6 @@ int main(int argc, char *argv[]) {
 	serv_addr.sin_port = htons(portno);
 	if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0)
 		error("ERROR connecting");
-	
-
 
 	while(1){
 		unsigned short temp = i2c_read(0x40, 0, 20000);
@@ -105,11 +104,9 @@ int main(int argc, char *argv[]) {
 		if (temp != 0xffff && hum != 0xffff) {
 			
 			sprintf(buffer, "Temp/Hum %.2f %.2f Time %s", temp * (160.0/65536.0) - 40, hum * (100.0/65536.0), c_time_string);
-			//sprintf(buffer, "Temperature %.3f Time %s", temp * (160.0/65536.0) - 40, c_time_string); 
-			//sprintf(buffer2,   "Humidity %.3f Time %s", hum *  (100.0/65536.0),      c_time_string);
 
 			n = write(sockfd,buffer,strlen(buffer));
-			//n2 = write(sockfd,buffer2,strlen(buffer2));
+            
 			if (n < 0)
 				error("ERROR writing to socket");
 		}

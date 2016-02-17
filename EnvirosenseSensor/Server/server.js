@@ -1,3 +1,4 @@
+'use strict'
 var net 	= require('net'),
 	config	= require('../config.js'),
     util	= require('../util.js'),
@@ -5,59 +6,72 @@ var net 	= require('net'),
 
 require('buffer');
 
-var months = {Jan: '01', Feb: '02', Mar: 03, Apr: 04, May: 05, Jun: 06, Jul: 07, Aug: 08, Sep: 09, Oct: 10, Nov: 11, Dec: 12};
-var sensorData = {type: null, id: 0, data: 0, timeStamp: null};
-var conn;
+var months = {Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06', Jul: '07', Aug: '08', Sep: '09', Oct: '10', Nov: '11', Dec: '12'},
+    sensorData = {type: null, id: 0, data: null, timeStamp: null},
+    conn,
+    tempConn,
+    firstConnMade = false;
 
+//***********DB FUNCTIONALITY***********//
 
-//*********************************** DATABASE CODE HERE
+//Gets a new DB connection
 function getNewConnection(recoveryDB){
 
-	if(recoveryDB === 1){
-		conn = mysql.createConnection({
+	if(recoveryDB === 1){  //If 1 is passed as argument, local (Pi) DB connection is being attempted
+        console.log('Attempting to use emergency (internal) DB');
+		tempConn = mysql.createConnection({
 			host	: config.DB.LOCALHOST,
 			user	: config.DB.USERNAME,
 			password: config.DB.PASSWORD,
 			database: config.DB.DB_NAME,
 			port	: config.DB.PORT 
 		});
-		console.log('Attempting to use emergency (internal) DB');
-	} else {
-		conn = mysql.createConnection({
+		
+	} else {   //Main DB connection is being attempted
+        console.log('Attempting to use standard (external) DB');
+		tempConn = mysql.createConnection({
 			host	: config.DB.HOST,
 			user	: config.DB.USERNAME,
 			password: config.DB.PASSWORD,
 			database: config.DB.DB_NAME,
 			port	: config.DB.PORT 
 		});
-		console.log('Attempting to use standard (external) DB');
+		
 	}
-	conn.connect(function(err){
+    
+	tempConn.connect(function(err){
 		if(err){
-			console.log('Database connection error: ' + err);
-			//setTimeout(getNewConnection, 1000);
+			console.log('Database connection error: ',  err);
+			if(!firstConnMade)   //If this error ocurred during first DB connection attempt, kill the process
+				process.exit(1);
+            console.log("Attempting reconnection to main DB");
+            setTimeout(getNewConnection(), 2000);
 		}
-		else{
+		else {
 			console.log('Database connection successful!');
 			//CHECK LOCAL DB FOR DATA BEFORE!!!!!!
+			firstConnMade = true;
+			conn = tempConn;
+            if(recoveryDB === 1){
+                console.log("Attempting reconnection to main DB");
+                setTimeout(getNewConnection(), 2000);
+            }
 		}
 	});
 
-	conn.on('error', function(err){
-		console.log('Database erro: ', err);
+	tempConn.on('error', function(err){
+		console.log('Database connection error: ', err);
 		if(err.code === 'PROTOCOL_CONNECTION_LOST'){
 			console.log('Database connection lost! Starting recovery DB');
 			
-			getNewConnection(1);
-
-			//setTimeout(getNewConnection, 1000);
-
+			getNewConnection(1);			
+			
 		} else {
 			throw err;
 		}
 	});
 }
-//*********************************** DATABASE CODE HERE
+//***********DB FUNCTIONALITY END********//
 
 var cServer = net.createServer(function(client) {
 	console.log('Client connected ' + client.remoteAddress);
@@ -75,7 +89,7 @@ var cServer = net.createServer(function(client) {
 		var src = arrData[0];	//Gets the data sender
 
 
-		//Data from Temperature sensor
+		//Data from Temperature/Motion sensor
 		if(src == 'Temp/Hum'){
 			//arrData[1]: Temperature (C)
 			//arrData[2]: Humidity %
@@ -104,29 +118,40 @@ var cServer = net.createServer(function(client) {
 					arrTime[2];			//Second 	
 				console.log(sensorData);
 				//Insert sensor data
-			var query = conn.query(util.sprintf(config.DB.INSERT_SENSOR_DATA, sensorData.type, sensorData.id, sensorData.data, sensorData.timeStamp), function(err){
-				if(err) console.log('Error inserting data: ' + err);
+			conn.query(util.sprintf(config.DB.INSERT_SENSOR_DATA, sensorData.type, sensorData.id, sensorData.data, sensorData.timeStamp), function(err){
+				if(err){ 
+					console.log('Error inserting data: ' + err);
+					if(err == 'Error: Connection lost: The server closed the connection.')
+						getNewConnection(1);
+				}
 				else	console.log('Data inserted');
 			});
 			
 			sensorData.type = 'humidity';
 			sensorData.id = 789;
 			sensorData.data = parseFloat(arrData[2]).toFixed(2);
-			sensorData.timeStamp = arrData[8].substr(0,4) +	//Year 
+            
+			sensorData.timeStamp = arrData[8].substr(0,4) +  //Year 
 					' ' +  		
-					months[arrData[5]] + 		//Month
+					months[arrData[5]] +                     //Month
 					' ' +
-					util.zeroFill(arrData[6]) +	//Day
+					util.zeroFill(arrData[6]) +	             //Day
 					' ' +
-					arrTime[0] + 			//Hour
+					arrTime[0] + 			                 //Hour
 					' ' + 
-					arrTime[1] +			//Minute
+					arrTime[1] +			                 //Minute
 					' ' +
-					arrTime[2];			//Second 	
+					arrTime[2];			                     //Second 	
 				console.log(sensorData);
 				//Insert sensor data
-			var query = conn.query(util.sprintf(config.DB.INSERT_SENSOR_DATA, sensorData.type, sensorData.id, sensorData.data, sensorData.timeStamp), function(err){
-				if(err) console.log('Error inserting data: ' + err);
+			conn.query(util.sprintf(config.DB.INSERT_SENSOR_DATA, sensorData.type, sensorData.id, sensorData.data, sensorData.timeStamp), function(err){
+				
+				if(err){ 
+					console.log('Error inserting data: ' + err);
+					if(err == 'Error: Connection lost: The server closed the connection.')
+						getNewConnection(1);
+				}
+				
 				else	console.log('Data inserted');
 			});
 			}
@@ -159,8 +184,12 @@ var cServer = net.createServer(function(client) {
 							arrData[4];	//Second
 				console.log(sensorData);
 				//Insert sensor data
-				var query = conn.query(util.sprintf(config.DB.INSERT_SENSOR_DATA, sensorData.type, sensorData.id, sensorData.data, sensorData.timeStamp), function(err){
-					if(err) console.log('Error inserting data: ' + err);
+				conn.query(util.sprintf(config.DB.INSERT_SENSOR_DATA, sensorData.type, sensorData.id, sensorData.data, sensorData.timeStamp), function(err){
+					if(err){ 
+						console.log('Error inserting data: ' + err);
+						if(err == 'Error: Connection lost: The server closed the connection.')
+							getNewConnection(1);
+					}
 					else	console.log('Data inserted');
 				});
 			}
@@ -173,8 +202,9 @@ var cServer = net.createServer(function(client) {
 });
 
 
-cServer.listen(8124, function(){
+cServer.listen(config.netServer.PORT, function(){
 	console.log('NODE.JS server bound on port 8124');
+    getNewConnection();
 });
 
-getNewConnection();
+
