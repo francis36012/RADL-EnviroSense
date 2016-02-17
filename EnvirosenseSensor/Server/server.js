@@ -120,7 +120,6 @@ function checkLocalDB(){
 		console.log('Database connection error: ', err);
 		throw err;
 	});     
-    
 }
 //****************CHECK LOCAL DB FUNCTION END************
 
@@ -256,7 +255,7 @@ var cServer = net.createServer(function(client) {
 
 
 cServer.listen(config.netServer.PORT, function(){
-	console.log('NODE.JS server bound on port 8124');
+	console.log('NODE.JS server bound on port ', config.netServer.PORT);
     getNewConnection();
 });
 
