@@ -35,8 +35,7 @@ function getNewConnection(recoveryDB){
 			password: config.DB.PASSWORD,
 			database: config.DB.DB_NAME,
 			port	: config.DB.PORT 
-		});
-		
+		});		
 	}
     
 	tempConn.connect(function(err){
@@ -93,14 +92,22 @@ function checkLocalDB(){
                 c.query(util.sprintf(config.DB.GET_LOCAL_SENSOR_DATA, sensor), function(err, result){
                     if(err) {
                         console.log('Query error: ', err);
-                        throw err
+                        throw err;
                     }
                     if(result.length > 0){ //Data found for the first sensor
                         //Loop through each data row for the sensor
-                        //console.log(result);
                         result.forEach(function (row){
-                            console.log(util.sprintf(config.DB.INSERT_SENSOR_DATA_SIMP, sensor, parseInt(row['sensor_id']), parseFloat(row['data']).toFixed(2), row['date']));
-                            conn.query(util.sprintf(config.DB.INSERT_SENSOR_DATA_SIMP, sensor, parseInt(row['sensor_id']), parseFloat(row['data']).toFixed(2), row['date']));
+                            conn.query(util.sprintf(config.DB.INSERT_SENSOR_DATA_SIMP, sensor, parseInt(row['sensor_id']), parseFloat(row['data']).toFixed(2), row['date']), function(err){
+                                if(err){
+                                   console.log('Query error: ', err);
+                                    throw err;
+                                }
+                                else{
+                                    //Delete processed row from local DB table
+                                    c.query(util.sprintf(config.DB.REMOVE_SENSOR_DATA, sensor, parseInt(row['sensor_id']), row['date']));
+                                }
+                            });
+                            //TRUNCATE TABLES IN LOCAL DB!!!
                         });                        
                     }
                 });
@@ -153,15 +160,15 @@ var cServer = net.createServer(function(client) {
 			sensorData.data = parseFloat(arrData[1]).toFixed(2);
 			sensorData.timeStamp = arrData[8].substr(0,4) +	//Year
 					' ' +  		
-					months[arrData[5]] + 		//Month
+					months[arrData[5]] + 		 //Month
 					' ' +
-					util.zeroFill(arrData[6]) +	//Day
+					util.zeroFill(arrData[6]) +	 //Day
 					' ' +
-					arrTime[0] + 			//Hour
+					arrTime[0] + 			     //Hour
 					' ' +
-					arrTime[1] +			//Minute
+					arrTime[1] +			     //Minute
 					' ' +
-					arrTime[2];			//Second 	
+					arrTime[2];			         //Second 	
 				console.log(sensorData);
 				//Insert sensor data
 			conn.query(util.sprintf(config.DB.INSERT_SENSOR_DATA, sensorData.type, sensorData.id, sensorData.data, sensorData.timeStamp), function(err){
@@ -217,17 +224,17 @@ var cServer = net.createServer(function(client) {
 				sensorData.type = arrData[0];
 				sensorData.id = 456;
 				sensorData.data = 1;
-				sensorData.timeStamp = arrData[7] +	//Year
+				sensorData.timeStamp = arrData[7] +	 //Year
 							' ' +
-							arrData[6] + 	//Month
+							arrData[6] + 	         //Month
 							' ' + 
-							arrData[5] +	//Day
+							arrData[5] +	         //Day
 							' ' +
-							arrData[2] +	//Hour
+							arrData[2] +	         //Hour
+							' ' + 
+							arrData[3] + 	         //Minute
 							' ' +
-							arrData[3] + 	//Minute
-							' ' +
-							arrData[4];	//Second
+							arrData[4];	             //Second
 				console.log(sensorData);
 				//Insert sensor data
 				conn.query(util.sprintf(config.DB.INSERT_SENSOR_DATA, sensorData.type, sensorData.id, sensorData.data, sensorData.timeStamp), function(err){
