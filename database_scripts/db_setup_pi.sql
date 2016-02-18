@@ -1,7 +1,7 @@
 DROP DATABASE IF EXISTS envirosense;
 CREATE DATABASE envirosense;
 
-DROP USER IF EXISTS 'esdev'@'localhost';
+DROP USER 'esdev'@'localhost';
 
 CREATE USER 'esdev'@'localhost' IDENTIFIED BY 'password';
 
