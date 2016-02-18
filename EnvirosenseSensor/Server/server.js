@@ -14,6 +14,26 @@ var months = {Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06', 
 
 //***********DB FUNCTIONALITY***********//
 
+
+function getSensors(){
+    conn.query(config.DB.GET_LOCAL_SENSORS, function(err, result){
+        if(err) {
+            console.log('Query error: ', err);
+            throw err;
+        }
+
+        //Loop through each data row
+        result.forEach(function (row){
+            console.log(row);
+                config.THIS_PI.SENSORS_IDS[row['sensor_type']] = row['id'];
+        });
+        
+        checkLocalDB();                        
+        
+    });
+}
+
+
 //Gets a new DB connection
 function getNewConnection(recoveryDB){
 
@@ -49,8 +69,9 @@ function getNewConnection(recoveryDB){
 		else {
 			console.log('Database connection successful!');
             conn = tempConn; 
-            if(!firstConnMade)
-                checkLocalDB();
+            if(!firstConnMade){
+                getSensors();
+            }
 			firstConnMade = true;			  
             if(recoveryDB === 1){
                 console.log("Attempting reconnection to main DB");
@@ -88,7 +109,7 @@ function checkLocalDB(){
 		}
 		else {
 			console.log('Local DB connection successful! (Checking for data)');
-            config.SENSORS.forEach(function(sensor){
+            config.THIS_PI.SENSOR_TABLES.forEach(function(sensor){
                 c.query(util.sprintf(config.DB.GET_LOCAL_SENSOR_DATA, sensor), function(err, result){
                     if(err) {
                         console.log('Query error: ', err);
@@ -97,17 +118,18 @@ function checkLocalDB(){
                     if(result.length > 0){ //Data found for the first sensor
                         //Loop through each data row for the sensor
                         result.forEach(function (row){
-                            conn.query(util.sprintf(config.DB.INSERT_SENSOR_DATA_SIMP, sensor, parseInt(row['sensor_id']), parseFloat(row['data']).toFixed(2), row['date']), function(err){
+                            console.log(row);
+                            console.log(util.sprintf(config.DB.INSERT_SENSOR_DATA_SIMP, sensor, row['sensor_id'], row['data'], row['timestamp']));
+                            conn.query(util.sprintf(config.DB.INSERT_SENSOR_DATA_SIMP, sensor, row['sensor_id'], row['data'], row['timestamp']), function(err){
                                 if(err){
                                    console.log('Query error: ', err);
                                     throw err;
                                 }
                                 else{
                                     //Delete processed row from local DB table
-                                    c.query(util.sprintf(config.DB.REMOVE_SENSOR_DATA, sensor, parseInt(row['sensor_id']), row['date']));
+                                    c.query(util.sprintf(config.DB.REMOVE_SENSOR_DATA, sensor, row['sensor_id'], row['timestamp']));
                                 }
                             });
-                            //TRUNCATE TABLES IN LOCAL DB!!!
                         });                        
                     }
                 });
@@ -155,7 +177,7 @@ var cServer = net.createServer(function(client) {
 			var arrTime = arrData[7].split(':');
 
 			sensorData.type = 'temperature';
-			sensorData.id = 123;
+			sensorData.id = config.THIS_PI.SENSORS_IDS['TE'];
 			sensorData.data = parseFloat(arrData[1]).toFixed(2);
 			sensorData.timeStamp = arrData[8].substr(0,4) +	//Year
 					' ' +  		
@@ -180,7 +202,7 @@ var cServer = net.createServer(function(client) {
 			});
 			
 			sensorData.type = 'humidity';
-			sensorData.id = 789;
+			sensorData.id = config.THIS_PI.SENSORS_IDS['HU'];;
 			sensorData.data = parseFloat(arrData[2]).toFixed(2);
             
 			sensorData.timeStamp = arrData[8].substr(0,4) +  //Year 
@@ -221,7 +243,7 @@ var cServer = net.createServer(function(client) {
 
 			if(arrData[1] == 'Y'){
 				sensorData.type = arrData[0];
-				sensorData.id = 456;
+				sensorData.id = config.THIS_PI.SENSORS_IDS['MO'];;
 				sensorData.data = 1;
 				sensorData.timeStamp = arrData[7] +	 //Year
 							' ' +
@@ -255,7 +277,7 @@ var cServer = net.createServer(function(client) {
 
 
 cServer.listen(config.netServer.PORT, function(){
-	console.log('NODE.JS server bound on port ', config.netServer.PORT);
+	console.log('NODE.JS server bound on port', config.netServer.PORT);
     getNewConnection();
 });
 
