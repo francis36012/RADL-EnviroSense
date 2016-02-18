@@ -90,7 +90,7 @@ CREATE TABLE humidity (
 DROP TABLE IF EXISTS motion;
 CREATE TABLE motion (
 	sensor_id BIGINT NOT NULL,
-	data BIT(1) NOT NULL,
+	data BOOLEAN NOT NULL,
 	timestamp TIMESTAMP NOT NULL,
 	CONSTRAINT pk_motion PRIMARY KEY (sensor_id, timestamp),
 	CONSTRAINT fk_motion_sensor FOREIGN KEY (sensor_id) REFERENCES sensor(id)
@@ -99,7 +99,7 @@ CREATE TABLE motion (
 DROP TABLE IF EXISTS door;
 CREATE TABLE door (
 	sensor_id BIGINT NOT NULL,
-	data BIT(1) NOT NULL,
+	data BOOLEAN NOT NULL,
 	timestamp TIMESTAMP NOT NULL,
 	CONSTRAINT pk_door PRIMARY KEY (sensor_id, timestamp),
 	CONSTRAINT fk_door_sensor FOREIGN KEY (sensor_id) REFERENCES sensor(id)
