@@ -22,10 +22,8 @@ public interface DoorRepository extends JpaRepository<Door, SensorDataPK> {
 	 */
 	List<Door> findByTimestampBetween(Timestamp start, Timestamp end);
 
-	// TODO: Try converting the query into a spring data JPA query.
 	/**
 	 * Retrieves all door data that was read from the specified room with the specified time range.
-	 * <br/>
 	 * 
 	 * @param roomId The room in which the data was read
 	 * @param start The time and date to start checking (inclusive)
@@ -37,7 +35,16 @@ public interface DoorRepository extends JpaRepository<Door, SensorDataPK> {
 			+ "(d.timestamp >= ?2 AND d.timestamp <= ?3)", nativeQuery = true)
 	List<Door> findByRoomIdAndTimestampBetween(long roomId, Timestamp start, Timestamp end);
 	
-	// TODO: Try converting the query into a spring data JPA query.
+	/**
+	 * Retrieves all door data that was read by the specified sensor in the specified time range
+	 * 
+	 * @param sensorId The ID of the sensor that read the data being retrieved
+	 * @param start The time and date to start checking (inclusive)
+	 * @param end The time and date to end checking (inclusive)
+	 * @return A list of door data that satisfy the conditions explained above.
+	 */
+	List<Door> findBySensorIdAndTimestampBetween(long sensorId, Timestamp start, Timestamp end);
+
 	/**
 	 * Retrieves all door data that was read by the sensor with the ID specified
 	 * 
@@ -58,13 +65,23 @@ public interface DoorRepository extends JpaRepository<Door, SensorDataPK> {
 		nativeQuery = true
 	)
 	List<Door> findLatestByRoomId(long roomId);
-	
+
 	/**
 	 * Retrieves the latest door data stored in the database.
 	 * @return A List of door data that satisfy the conditions given above.
 	 */
 	@Query(
-		value = "SELECT * FROM door d WHERE timestamp >= (SELECT max(timestamp) from door);",
+		value = "SELECT sensor_id, data, MAX(timestamp) AS timestamp FROM door WHERE sensor_id = ?1",
+		nativeQuery = true
+	)
+	List<Door> findLatestBySensorId(long sensorId);
+	
+	/**
+	 * Retrieves the latest door data from all rooms stored in the database.
+	 * @return A List of door data that satisfy the conditions given above.
+	 */
+	@Query(
+		value = "SELECT sensor_id, data, MAX(timestamp) AS timestamp FROM door d JOIN sensor s ON d.sensor_id = s.id GROUP BY s.room_id",
 		nativeQuery = true
 	)
 	List<Door> findLatest();

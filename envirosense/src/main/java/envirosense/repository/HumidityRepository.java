@@ -23,8 +23,6 @@ public interface HumidityRepository extends JpaRepository<Humidity, SensorDataPK
 
 	/**
 	 * Retrieves all humidity data that was read from the specified room with the specified time range.
-	 * <br/>
-	 * <b>NOTE:</b> Try converting the query into a spring data JPA query.
 	 * 
 	 * @param roomId The room in which the data was read
 	 * @param start The time and date to start checking (inclusive)
@@ -36,7 +34,16 @@ public interface HumidityRepository extends JpaRepository<Humidity, SensorDataPK
 			+ "(h.timestamp >= ?2 AND h.timestamp <= ?3)", nativeQuery = true)
 	List<Humidity> findByRoomIdAndTimestampBetween(long roomId, Timestamp start, Timestamp end);
 
-	// TODO: Try converting the query into a spring data JPA query.
+	/**
+	 * Retrieves all humidity data that was read by the specified sensor in the specified time range
+	 * 
+	 * @param sensorId The ID of the sensor that read the data being retrieved
+	 * @param start The time and date to start checking (inclusive)
+	 * @param end The time and date to end checking (inclusive)
+	 * @return A list of humidity data that satisfy the conditions explained above.
+	 */
+	List<Humidity> findBySensorIdAndTimestampBetween(long sensorId, Timestamp start, Timestamp end);
+
 	/**
 	 * Retrieves all humidity data that was read by the sensor with the ID specified
 	 * 
@@ -56,13 +63,23 @@ public interface HumidityRepository extends JpaRepository<Humidity, SensorDataPK
 		nativeQuery = true
 	)
 	List<Humidity> findLatestByRoomId(long roomId);
+
+	/**
+	 * Retrieves the latest humidity data stored in the database.
+	 * @return A List of humidity data that satisfy the conditions given above.
+	 */
+	@Query(
+		value = "SELECT sensor_id, data, MAX(timestamp) AS timestamp FROM humidity WHERE sensor_id = ?1",
+		nativeQuery = true
+	)
+	List<Humidity> findLatestBySensorId(long sensorId);
 	
 	/**
 	 * Retrieves the latest humidity data stored in the database.
 	 * @return A List of humidity data that satisfy the conditions given above.
 	 */
 	@Query(
-		value = "SELECT * FROM humidity h WHERE timestamp >= (SELECT max(timestamp) from humidity);",
+		value = "SELECT sensor_id, data, MAX(timestamp) AS timestamp FROM humidity h JOIN sensor s ON h.sensor_id = s.id GROUP BY s.room_id",
 		nativeQuery = true
 	)
 	List<Humidity> findLatest();
