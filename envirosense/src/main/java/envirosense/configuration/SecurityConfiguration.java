@@ -11,6 +11,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.csrf.CsrfFilter;
+
+import com.allanditzel.springframework.security.web.csrf.CsrfTokenResponseHeaderBindingFilter;
 
 import envirosense.service.UserDetailsAuthService;
 
@@ -65,6 +68,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.and()
 		.exceptionHandling()
 			.accessDeniedPage("/403");
+		
+		// Make the CSRF token available in the response header
+		CsrfTokenResponseHeaderBindingFilter csrfTokenFilter = new CsrfTokenResponseHeaderBindingFilter();    
+	    http.addFilterAfter(csrfTokenFilter, CsrfFilter.class);
 	}
 	
 	public void configure(WebSecurity web) throws Exception {
