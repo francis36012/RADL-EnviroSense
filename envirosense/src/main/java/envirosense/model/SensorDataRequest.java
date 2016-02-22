@@ -16,6 +16,9 @@ public class SensorDataRequest {
 		this.data = data;
 		this.sensorType = sensorType;
 	}
+	
+	public SensorDataRequest() {
+	}
 
 	public long getSensorId() {
 		return sensorId;
