@@ -89,7 +89,7 @@
 								</div>
 									
 								<div class="col-xs-3">
-									<input type="checkbox" name="dataStatus" data-size="small" data-on-color="success" />
+									<input type="checkbox" name="dataStatus" data-size="mini" data-on-color="success" />
 								</div>
 							</div>
 						</div>

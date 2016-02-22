@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!-- Stylesheet : SLICK -->
-<link rel="stylesheet" type="text/css" href="<c:url value='/static/external/Slick/slick/slick.css '/>"/>
+<link rel="stylesheet" type="text/css" href="<c:url value='/static/external/Slick/slick/slick.css'/>"/>
 <link rel="stylesheet" type="text/css" href="<c:url value='/static/external/Slick/slick/slick-theme.css' />"/>
 
 <!-- Javascript : SLICK -->

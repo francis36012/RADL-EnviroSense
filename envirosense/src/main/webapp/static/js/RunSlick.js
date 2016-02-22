@@ -116,6 +116,22 @@ function userClick(user) {
 
 function createUserSlide(userInfo)
 {
+	var rowDiv = createElement("div", ["row"], null);
+	var colDiv = createElement("div", ["col-xs-12"], null);
+	var panelDiv = createElement("div", ["panel", "panel-default"], null);
+	var panelHead = createElement("div", ["panel-heading", "text-center"], null);
+	var panelBody = createElement("div", ["panel-body"], null);
+	var form = createElement("form", ["form"], [["role", "form"]]);
+	var fieldset = createElement("fieldset", ["input-group-vertical"], null);
+	var div1 = createElement("div", ["form-group"], null);
+	var firstName = createElement("input", ["form-control", "input-lg", "nopadding"], ["value", userInfo[0]]);
+	var firstNameLabel = createElement("div", ["text-right", "text-muted"], null);
+	var lastName = createElement("input", ["form-control", "input-lg", "nopadding"], [["value", userInfo[1]]]);
+	var lastNameLabel = createElement("div", ["text-right", "text-muted"], null);
+	var email = createElement("div", ["form-control", "input-lg", "nopadding"], [["value", userInfo[2]]]);
+	var emailLabel = createElement("div", ["text-right", "text-muted"], null);
+	
+	/*
 	var rowDiv = document.createElement("div");
 	rowDiv.classList.add("row");
 	
@@ -176,7 +192,11 @@ function createUserSlide(userInfo)
 	emailLabel.classList.add("text-right");
 	emailLabel.classList.add("text-muted");
 	emailLabel.innerHTML = "Email";
+	*/
 	
+	firstNameLabel.innerHTML = "First Name";
+	lastNameLabel.innerHTML = "Last Name";
+	emailLabel.innerHTML = "Email";
 	
 	div1.appendChild(firstName);
 	div1.appendChild(firstNameLabel);
@@ -251,6 +271,21 @@ function eventClick(event) {
 }
 
 function createEventSlide(eventInfo) {
+	
+	var rowDiv = createNode("div", ["row"], null);
+	var colDiv = createNode("div", ["col-xs-12"], null);
+	var panelDiv = createNode("div", ["panel", "panel-default"], null);
+	var panelHead = createNode("div", ["panel-heading", "text-center"], null);
+	var panelBody = createNode("div", ["panel-body"], null);
+	var form = createNode("form", ["form"], [["role", "form"]]);
+	var fieldset = createNode("fieldset", ["input-group-vertical"], null);
+	var div1 = createNode("div", ["form-group"], null);
+	var eventName = createNode("input", ["form-control", "input-lg"], [["value", eventInfo[0] + " " + eventInfo[1]]]);
+	var descriptionDiv = createNode("div", ["well", "well-sm"], null);
+	var eventDescription = createNode("div", ["text-muted"], null);
+	
+	
+	/*
 	var rowDiv = document.createElement("div");
 	rowDiv.classList.add("row");
 	
@@ -291,6 +326,10 @@ function createEventSlide(eventInfo) {
 	var eventDescription = document.createElement("div");
 	eventDescription.classList.add("text-muted");
 	eventDescription.innerHTML = eventInfo[2];
+	*/
+
+	panelHead.innerHTML = eventInfo[0];
+	eventDescription.innerHTML = eventInfo[2];
 	
 	descriptionDiv.appendChild(eventDescription);
 	div1.appendChild(eventName);
@@ -306,4 +345,33 @@ function createEventSlide(eventInfo) {
 	rowDiv.appendChild(colDiv);
 	
 	return rowDiv;
+}
+
+function createNode(tagName, className, attributeValues)
+{
+	var newElement = document.createElement(tagName);
+	
+	if (className !== null) {
+		for(var index = 0;
+			index < className.length;
+			index++) {
+				newElement.classList.add(className[index]);
+			}
+	}
+	
+	if (attributeValues !== null)
+	{
+		for(var outerIndex = 0;
+			outerIndex < attributeValues.length;
+			outerIndex++) {
+				
+				for(var innerIndex = 0;
+					innerIndex < attributeValues[outerIndex].length;
+					innerIndex++) {
+				newElement.setAttribute(attributeValues[outerIndex][0], attributeValues[outerIndex][innerIndex]);
+			}
+		}
+	}
+	
+	return newElement;
 }
