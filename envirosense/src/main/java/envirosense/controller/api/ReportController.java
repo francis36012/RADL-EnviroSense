@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Daniel Chau
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/report")
 public class ReportController {
 
     @Autowired
