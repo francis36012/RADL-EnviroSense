@@ -37,7 +37,7 @@ public class ReportController {
      * room for the given time/date range
      */
     @RequestMapping(
-            value = "/{roomId}/{startDate}/{endDate}",
+            value = "/room/{roomId}/{startDate}/{endDate}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SensorData>> getDataByRoomId(
@@ -62,7 +62,7 @@ public class ReportController {
      * type in all rooms for the given time/date range
      */
     @RequestMapping(
-            value = "/{sensorType}/{startDate}/{endDate}",
+            value = "/type/{sensorType}/{startDate}/{endDate}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SensorData>> getDataBySensorType(
@@ -87,7 +87,7 @@ public class ReportController {
      * time/date range
      */
     @RequestMapping(
-            value = "/{sensorId}/{startDate}/{endDate}",
+            value = "/sensorId/{sensorId}/{startDate}/{endDate}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SensorData>> getDataBySensorId(
