@@ -50,8 +50,14 @@ public class SensorDataService {
 	 * @return Data read in the room with the specified ID
 	 */
 	public List<SensorData> findByRoomId(long roomId) {
-		// TODO: implementation
-		return null;
+		List<SensorData> results = new ArrayList<>();
+		
+		results.addAll(temperatureRepository.findByRoomId(roomId));
+		results.addAll(humidityRepository.findByRoomId(roomId));
+		results.addAll(doorRepository.findByRoomId(roomId));
+		results.addAll(motionRepository.findByRoomId(roomId));
+
+		return results;
 	}
 
 	/**

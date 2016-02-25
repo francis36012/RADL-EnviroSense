@@ -54,6 +54,16 @@ public interface HumidityRepository extends JpaRepository<Humidity, SensorDataPK
 	List<Humidity> findBySensorId(long sensorId);
 
 	/**
+	 * Retrieves all temperature data that was read in the room with the ID specified
+	 * 
+	 * @param sensorId The ID of the room in which the data was read
+	 * @return A list of temperature data that satisfy the conditions outlined above
+	 */
+	@Query(value = "SELECT * FROM humidity h JOIN sensor s ON s.id = h.sensor_id WHERE s.room_id = ?1", nativeQuery = true)
+	List<Humidity> findByRoomId(long roomId);
+
+
+	/**
 	 * Retrieves the latest humidity data from the room the specified ID.
 	 * @param roomId The ID of the room in which the data was read
 	 * @return A List of humidity data that satisfy the conditions given above.

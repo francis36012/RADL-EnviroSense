@@ -1,11 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties. To change this template file,
- * choose Tools | Templates and open the template in the editor.
- */
 package envirosense.service;
 
 
+import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,10 +23,64 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	Md5PasswordEncoder passwordEncoder;
+	
+	@Override
+	public User save(User user) {
+		return userRepository.save(user);
+	}
+	
+	public List<User> save(List<User> users) {
+		return userRepository.save(users);
+	}
+	
+	/**
+	 * 
+	 * @param user
+	 * @param newPassword
+	 * @return
+	 */
+	@Override
+	public User resetPassword(User user, String newPassword) {
+		User dbUser = userRepository.findOne(user.getEmail());
+		
+		if (dbUser != null) {
+			// TODO: Encode the password string
+			dbUser.setPassword(newPassword);
+			dbUser = userRepository.save(dbUser);
+		}
+		return dbUser;
+	}
 
 	@Override
-	public boolean login(String username, String password) {
-		User user = userRepository.findByEmailAndPassword(username, password);
-		return user != null;
+	public void delete(User user) {
+		userRepository.delete(user);
+	}
+
+	@Override
+	public Set<User> findAllActive() {
+		return userRepository.findByEnabledTrue();
+	}
+
+	@Override
+	public Set<User> finalAllInactive() {
+		return userRepository.findByEnabledFalse();
+	}
+
+	@Override
+	public Set<User> findByFirstname(String firstname) {
+		return userRepository.findByFirstname(firstname);
+	}
+
+	@Override
+	public Set<User> findByLastname(String lastname) {
+		return userRepository.findByLastname(lastname);
+	}
+
+	@Override
+	public User findByEmail(String email) {
+		return userRepository.findOne(email);
 	}
 }

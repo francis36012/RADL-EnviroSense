@@ -1,6 +1,8 @@
 package envirosense.service;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +32,33 @@ public class EventService {
 	public boolean removeEvent(Event event) throws IllegalArgumentException {
 		eventRepository.delete(event);
 		return true;
+	}
+	
+	public List<Event> findAll() {
+		return eventRepository.findAll();
+	}
+
+	public List<Event> findByName(String name) {
+		return eventRepository.findByName(name);
+	}
+
+	public List<Event> findByActiveTrue() {
+		return eventRepository.findByActiveTrue();
+	}
+
+	public List<Event> findByActiveFalse() {
+		return eventRepository.findByActiveFalse();
+	}
+	
+	public List<Event> findByUserEmail(String email) {
+		return null;
+	}
+
+	public List<Event> findByUserEmailActive(String email) {
+		return null;
+	}
+
+	public List<Event> findByUserEmailInactive(String email) {
+		return null;
 	}
 }

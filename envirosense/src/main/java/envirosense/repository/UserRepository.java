@@ -1,7 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties. To change this template file,
- * choose Tools | Templates and open the template in the editor.
- */
 package envirosense.repository;
 
 
@@ -13,15 +9,36 @@ import org.springframework.stereotype.Repository;
 import envirosense.model.User;
 
 /**
- * Repository for Users
+ * Repository for retrieving users from the database
  * 
  * @author Daniel Chau
  */
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
-	public User findByEmailAndPassword(String email, String password);
 
+	/**
+	 * Returns all active users
+	 * @return All active users
+	 */
 	public Set<User> findByEnabledTrue();
 
+	/**
+	 * Returns all inactive users
+	 * @return All inactive users
+	 */
 	public Set<User> findByEnabledFalse();
+
+	/**
+	 * Returns all users whose first name match the first name provided
+	 * @param firstname The first name to check form
+	 * @return All users whose first name match the first name provided
+	 */
+	public Set<User> findByFirstname(String firstname);
+
+	/**
+	 * Returns all users whose last name match the last name provided
+	 * @param firstname The last name to check form
+	 * @return All users whose last name match the last name provided
+	 */
+	public Set<User> findByLastname(String lastname);
 }

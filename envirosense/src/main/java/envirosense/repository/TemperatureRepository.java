@@ -47,13 +47,22 @@ public interface TemperatureRepository extends JpaRepository<Temperature, Sensor
 	List<Temperature> findBySensorIdAndTimestampBetween(long sensorId, Timestamp start, Timestamp end);
 
 	/**
-	 * Retrieves all motion data that was read by the sensor with the ID specified
+	 * Retrieves all temperature data that was read by the sensor with the ID specified
 	 * 
 	 * @param sensorId The ID of the sensor that read the data to be returned
-	 * @return A list of motion data that satisfy the conditions outlined above
+	 * @return A list of temperature data that satisfy the conditions outlined above
 	 */
 	@Query(value = "SELECT * FROM temperature t JOIN sensor s ON s.id = t.sensor_id WHERE s.id = ?1", nativeQuery = true)
 	List<Temperature> findBySensorId(long sensorId);
+
+	/**
+	 * Retrieves all temperature data that was read in the room with the ID specified
+	 * 
+	 * @param sensorId The ID of the room in which the data was read
+	 * @return A list of temperature data that satisfy the conditions outlined above
+	 */
+	@Query(value = "SELECT * FROM temperature t JOIN sensor s ON s.id = t.sensor_id WHERE s.room_id = ?1", nativeQuery = true)
+	List<Temperature> findByRoomId(long roomId);
 
 	/**
 	 * Retrieves the latest temperature data from the room the specified ID.
