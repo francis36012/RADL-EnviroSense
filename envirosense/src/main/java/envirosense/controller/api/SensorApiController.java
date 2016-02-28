@@ -16,11 +16,12 @@ import envirosense.model.Sensor;
 import envirosense.service.SensorService;
 
 @RestController
+@RequestMapping("/api/sensor")
 public class SensorApiController {
 	@Autowired
 	SensorService sensorService;
 
-	@RequestMapping(value = "/api/sensor/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Sensor>> allSensors() {
 		List<Sensor> sensors = sensorService.findAll();
 		if (sensors.isEmpty()) {
@@ -29,7 +30,7 @@ public class SensorApiController {
 		return new ResponseEntity<>(sensors, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/api/sensor/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Sensor> sensor(@PathVariable("id") long id) {
 		Sensor sensor = sensorService.findOne(id);
 		if (sensor == null) {
@@ -38,7 +39,7 @@ public class SensorApiController {
 		return new ResponseEntity<>(sensor, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/api/sensor/{type}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/{type}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Sensor>> sensor(@PathVariable("type") String type) {
 		List<Sensor> sensors = sensorService.findByType(type);
 		if (sensors.isEmpty()) {

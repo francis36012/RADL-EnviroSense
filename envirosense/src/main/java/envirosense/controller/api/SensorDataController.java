@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import envirosense.model.SensorData;
-import envirosense.model.SensorDataRequest;
 import envirosense.model.SensorType;
 import envirosense.service.SensorDataService;
 
 @RestController
+@RequestMapping("/api/data")
 public class SensorDataController {
 	
 	@Autowired
@@ -30,10 +30,10 @@ public class SensorDataController {
 	 * @param result The result of binding the request body to the parameter type
 	 * @return
 	 */
-	@RequestMapping( value = "/api/data/new", method = RequestMethod.POST,
+	@RequestMapping( value = "/new", method = RequestMethod.POST,
 		consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE
 	)
-	public ResponseEntity<String> newData(@RequestBody List<SensorDataRequest> data, BindingResult result) {
+	public ResponseEntity<String> newData(@RequestBody List<SensorData> data, BindingResult result) {
 		if (result.hasErrors()) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
@@ -46,7 +46,7 @@ public class SensorDataController {
 	 * @return
 	 */
 	@RequestMapping(
-		value = "/api/data/live/room/{roomId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE
+		value = "/live/room/{roomId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE
 	)
 	public ResponseEntity<List<SensorData>> getLatestByRoom(@PathVariable("roomId") long roomId) {
 		List<SensorData> data = dataService.findLastestByRoomId(roomId);
@@ -61,7 +61,7 @@ public class SensorDataController {
 	 * @param sensorType
 	 * @return
 	 */
-	@RequestMapping(value = "/api/data/live/sensortype/{sensorType}", method = RequestMethod.GET,
+	@RequestMapping(value = "/live/sensortype/{sensorType}", method = RequestMethod.GET,
 		produces = MediaType.APPLICATION_JSON_VALUE
 	)
 	public ResponseEntity<List<SensorData>> getLatestBySensorType(@PathVariable("sensorType") SensorType sensorType) {

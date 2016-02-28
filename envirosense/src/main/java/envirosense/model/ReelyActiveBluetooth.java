@@ -14,7 +14,7 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "ra_bluetooth")
 @IdClass(value = envirosense.model.SensorDataPK.class)
-public final class ReelyActiveBluetooth implements SensorData, Serializable {
+public final class ReelyActiveBluetooth implements Serializable {
 	@Transient
 	private static final long serialVersionUID = 1L;
 

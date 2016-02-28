@@ -27,7 +27,7 @@ public class EventController {
 	
 	@RequestMapping(value = "/events", method = RequestMethod.GET)
 	public ModelAndView userAllEvents(Principal principal) {
-		ModelAndView mv = new ModelAndView("events");
+		ModelAndView mv = new ModelAndView("admin/events");
 		final String user = principal.getName();
 		
 		mv.addObject("events", eventService.findByUserEmail(user));

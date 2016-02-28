@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @IdClass(envirosense.model.SensorDataPK.class)
-public class Motion implements SensorData, Serializable {
+public class Motion implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -36,17 +36,14 @@ public class Motion implements SensorData, Serializable {
 	public Motion() {
 	}
 
-	@Override
 	public long getSensorId() {
 		return sensorId;
 	}
 
-	@Override
 	public Timestamp getTimestamp() {
 		return timestamp;
 	}
 
-	@Override
 	public Object getData() {
 		return data;
 	}

@@ -13,7 +13,6 @@ import envirosense.model.Humidity;
 import envirosense.model.Motion;
 import envirosense.model.Sensor;
 import envirosense.model.SensorData;
-import envirosense.model.SensorDataRequest;
 import envirosense.model.SensorType;
 import envirosense.model.Temperature;
 import envirosense.repository.DoorRepository;
@@ -52,10 +51,10 @@ public class SensorDataService {
 	public List<SensorData> findByRoomId(long roomId) {
 		List<SensorData> results = new ArrayList<>();
 		
-		results.addAll(temperatureRepository.findByRoomId(roomId));
-		results.addAll(humidityRepository.findByRoomId(roomId));
-		results.addAll(doorRepository.findByRoomId(roomId));
-		results.addAll(motionRepository.findByRoomId(roomId));
+		results.addAll(mapTemperatureData(temperatureRepository.findByRoomId(roomId)));
+		results.addAll(mapHumidityData(humidityRepository.findByRoomId(roomId)));
+		results.addAll(mapDoorData(doorRepository.findByRoomId(roomId)));
+		results.addAll(mapMotionData(motionRepository.findByRoomId(roomId)));
 
 		return results;
 	}
@@ -132,10 +131,10 @@ public class SensorDataService {
 	public List<SensorData> findLastestByRoomId(long roomId) {
 		List<SensorData> results = new ArrayList<>();
 		
-		results.addAll(temperatureRepository.findLatestByRoomId(roomId));
-		results.addAll(humidityRepository.findLatestByRoomId(roomId));
-		results.addAll(doorRepository.findLatestByRoomId(roomId));
-		results.addAll(motionRepository.findLatestByRoomId(roomId));
+		results.addAll(mapTemperatureData(temperatureRepository.findLatestByRoomId(roomId)));
+		results.addAll(mapHumidityData(humidityRepository.findLatestByRoomId(roomId)));
+		results.addAll(mapDoorData(doorRepository.findLatestByRoomId(roomId)));
+		results.addAll(mapMotionData(motionRepository.findLatestByRoomId(roomId)));
 
 		return results;
 	}
@@ -328,13 +327,13 @@ public class SensorDataService {
 	 * 
 	 * @param data The data to be saved.
 	 */
-	public void save(List<SensorDataRequest> data) {
+	public void save(List<SensorData> data) {
 		List<Temperature> temperatureData = new ArrayList<>();
 		List<Humidity> humidityData = new ArrayList<>();
 		List<Door> doorData = new ArrayList<>();
 		List<Motion> motionData = new ArrayList<>();
 
-		for (SensorDataRequest d : data) {
+		for (SensorData d : data) {
 			switch (d.getSensorType()) {
 				case DR:
 					doorData.add(new Door(d.getSensorId(), d.getTimestamp(), (Boolean)d.getData()));
@@ -367,7 +366,7 @@ public class SensorDataService {
 	private List<SensorData> mapTemperatureData(List<Temperature> data) {
 		List<SensorData> mapped = new ArrayList<>();
 		data.stream().forEach((d) -> {
-			mapped.add(d);
+			mapped.add(new SensorData(d.getSensorId(), d.getData(), d.getTimestamp(), SensorType.TE));
 		});
 		return mapped;
 	}
@@ -375,7 +374,7 @@ public class SensorDataService {
 	private List<SensorData> mapHumidityData(List<Humidity> data) {
 		List<SensorData> mapped = new ArrayList<>();
 		data.stream().forEach((d) -> {
-			mapped.add(d);
+			mapped.add(new SensorData(d.getSensorId(), d.getData(), d.getTimestamp(), SensorType.HU));
 		});
 		return mapped;
 	}
@@ -383,7 +382,7 @@ public class SensorDataService {
 	private List<SensorData> mapDoorData(List<Door> data) {
 		List<SensorData> mapped = new ArrayList<>();
 		data.stream().forEach((d) -> {
-			mapped.add(d);
+			mapped.add(new SensorData(d.getSensorId(), d.getData(), d.getTimestamp(), SensorType.DR));
 		});
 		return mapped;
 	}
@@ -391,7 +390,7 @@ public class SensorDataService {
 	private List<SensorData> mapMotionData(List<Motion> data) {
 		List<SensorData> mapped = new ArrayList<>();
 		data.stream().forEach((d) -> {
-			mapped.add(d);
+			mapped.add(new SensorData(d.getSensorId(), d.getData(), d.getTimestamp(), SensorType.MO));
 		});
 		return mapped;
 	}

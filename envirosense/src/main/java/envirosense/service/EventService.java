@@ -14,13 +14,23 @@ public class EventService {
 	@Autowired
 	EventRepository eventRepository;
 	
-	public boolean enableEvent(final Event event) {
+	public boolean enableEvent(long id) {
+		Event event = eventRepository.getOne(id);
+		if (event == null) {
+			return false;
+		}
 		event.setActive(true);
+		eventRepository.save(event);
 		return true;
 	}
 	
-	public boolean disableEvent(final Event event) {
+	public boolean disableEvent(long id) {
+		Event event = eventRepository.getOne(id);
+		if (event == null) {
+			return false;
+		}
 		event.setActive(false);
+		eventRepository.save(event);
 		return true;
 	}
 	
@@ -29,7 +39,11 @@ public class EventService {
 		return eventRepository.save(event);
 	}
 	
-	public boolean removeEvent(Event event) throws IllegalArgumentException {
+	public boolean removeEvent(long id) {
+		Event event = eventRepository.getOne(id);
+		if (event == null) {
+			return false;
+		}
 		eventRepository.delete(event);
 		return true;
 	}
@@ -51,14 +65,14 @@ public class EventService {
 	}
 	
 	public List<Event> findByUserEmail(String email) {
-		return null;
+		return eventRepository.findByUserEmail(email);
 	}
 
 	public List<Event> findByUserEmailActive(String email) {
-		return null;
+		return eventRepository.findByUserEmailActive(email);
 	}
 
 	public List<Event> findByUserEmailInactive(String email) {
-		return null;
+		return eventRepository.findByUserEmailInactive(email);
 	}
 }

@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @IdClass(value = envirosense.model.SensorDataPK.class)
-public class Humidity implements SensorData, Serializable {
+public class Humidity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
