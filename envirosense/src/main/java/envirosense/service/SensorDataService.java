@@ -212,9 +212,15 @@ public class SensorDataService {
 	 * @param endTime The time and date to end checking (inclusive)
 	 * @return A list of sensor data that satisfy the conditions explained above.
 	 */
-	public List<SensorData> findByRoomIdAndTimestampBetween(long roomId, Timestamp startTime, Timestamp endtime) {
-		// TODO: implementation
-		return null;
+	public List<SensorData> findByRoomIdAndTimestampBetween(long roomId, Timestamp startTime, Timestamp endTime) {
+		List<SensorData> result = new ArrayList<>();
+
+		result.addAll(mapTemperatureData(temperatureRepository.findByRoomIdAndTimestampBetween(roomId, startTime, endTime)));
+		result.addAll(mapHumidityData(humidityRepository.findByRoomIdAndTimestampBetween(roomId, startTime, endTime)));
+		result.addAll(mapDoorData(doorRepository.findByRoomIdAndTimestampBetween(roomId, startTime, endTime)));
+		result.addAll(mapMotionData(motionRepository.findByRoomIdAndTimestampBetween(roomId, startTime, endTime)));
+
+		return result;
 	}
 
 	/**
