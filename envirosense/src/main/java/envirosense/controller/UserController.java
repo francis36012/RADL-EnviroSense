@@ -1,7 +1,7 @@
 package envirosense.controller;
 
 import envirosense.model.User;
-import envirosense.service.UserServiceImpl;
+import envirosense.service.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserController {
 
     @Autowired
-    UserServiceImpl userService;
+    UserService userService;
 
     /**
      * Save or update a user to the database

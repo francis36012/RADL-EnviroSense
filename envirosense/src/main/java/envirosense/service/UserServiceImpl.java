@@ -36,18 +36,12 @@ public class UserServiceImpl implements UserService {
 		return userRepository.save(users);
 	}
 	
-	/**
-	 * 
-	 * @param user
-	 * @param newPassword
-	 * @return
-	 */
 	@Override
 	public User resetPassword(User user, String newPassword) {
 		User dbUser = userRepository.findOne(user.getEmail());
 		
 		if (dbUser != null) {
-			// TODO: Encode the password string
+			//TODO: Encode the password string
 			dbUser.setPassword(newPassword);
 			dbUser = userRepository.save(dbUser);
 		}
