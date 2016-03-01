@@ -41,8 +41,7 @@ public class UserServiceImpl implements UserService {
 		User dbUser = userRepository.findOne(user.getEmail());
 		
 		if (dbUser != null) {
-			//TODO: Encode the password string
-			dbUser.setPassword(newPassword);
+			dbUser.setPassword(passwordEncoder.encodePassword(newPassword, null));
 			dbUser = userRepository.save(dbUser);
 		}
 		return dbUser;
