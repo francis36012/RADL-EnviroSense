@@ -16,7 +16,7 @@ function getDataBySensorType() {
 	xmlHttp.onreadystatechange = function() {
 		readyStateChangeBySensorType(xmlHttp);
 	};
-	xmlHttp.open("GET", "http://localhost:8080/envirosense/api/report/type/TE/2015-01-01 00:00:00/2016-03-01 00:00:00", true);
+	xmlHttp.open("GET", "/envirosense/api/report/type/TE/2015-01-01 00:00:00/2016-03-01 00:00:00", true);
 	xmlHttp.send();
 }
 

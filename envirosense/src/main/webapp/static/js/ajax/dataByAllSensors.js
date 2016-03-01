@@ -9,7 +9,7 @@ function getDataByAllSensors() {
 	xmlHttp.onreadystatechange = function() {
 		readyStateChangeByAllSensors(xmlHttp);
 	};
-	xmlHttp.open("GET", "http://localhost:8080/envirosense/api/sensor/all", true);
+	xmlHttp.open("GET", "/envirosense/api/sensor/all", true);
 	xmlHttp.send();
 }
 
