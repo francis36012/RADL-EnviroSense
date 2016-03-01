@@ -66,25 +66,12 @@
 						<div class="panel-heading">
 							<div class="text-center">All Events</div>
 						</div>
-						<%
-							String[] allEvents = {
-								"Temperature Warning",
-								"Humidity Caution",
-								"Allergens Warning",
-								"Camera Alarm"
-							};
-
-							for(int index = 0;
-								index < allEvents.length;
-								index++)
-							{
-								String currentEvent = allEvents[index];
-						%>
+						<c:forEach items="${events}" var="currentEvent">
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-xs-9">
-									<div class="eventsList" id="<%= currentEvent.replaceAll("\\s", "") %>">
-										<%= currentEvent %>
+									<div class="eventsList" id='<c:out value="${currentEvent.getId()}"/>'>
+										<c:out value="${currentEvent.getName()}"/>
 									</div>
 								</div>
 									
@@ -93,10 +80,7 @@
 								</div>
 							</div>
 						</div>
-						<%
-							}
-						%>
-
+						</c:forEach>
 					</div>
 					</div>
 					</div>
