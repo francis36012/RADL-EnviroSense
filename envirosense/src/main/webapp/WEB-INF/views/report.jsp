@@ -41,7 +41,6 @@
 			<div class="row">
 			<div class="col-xs-12 nopadding">
 				<div class="single-items">
-					
 					<div class="row">
 					<div class="col-xs-12">
 					<div class="panel panel-default">
@@ -50,26 +49,10 @@
 						</div>
 						
 						<div class="panel-body">
-							<div class="row">
-							<div class="col-xs-12">
-								<div class="btn-group-vertical btn-block">
-									
-								<input type="button" class="btn btn-success" name="all" value="All Sensors" onclick="runAjax(this)"/>
-								<input type="button" class="btn btn-success" name="type" value="Sensor Type" onclick="runAjax(this)" />
-							
-								</div>
-							</div>
-							</div>
-							
-							<hr />
-							
-							<div class="row">
-							<div class="col-xs-12">
-								<div class="alert alert-warning">
-									Requires internet connectivity to access 
-									Google Charts API.
-								</div>
-							</div>
+							<div class="well well-sm">
+								This panel will contain sort functions
+								that will sort the data in the other
+								panels.
 							</div>
 						</div>
 					</div>
@@ -78,7 +61,7 @@
 					
 				<%
 				for (int index = 0;
-					index < 0;
+					index < 5;
 					index++)
 				{
 				%>
@@ -88,7 +71,6 @@
 						<div class="panel-heading">
 							<div class="text-center">Room <%= index + 1 %></div>
 						</div>
-						
 						
 						<div class="panel-body">
 							<div class="row">
@@ -129,7 +111,21 @@
 							</div>
 							
 							<hr />
+
+							<div class="well well-sm">
+								<p>
+								This panel will contain data from the
+								sensors through the use of an API.
+								</p>
+							</div>
 							
+							<div class="row">
+								<div class="col-xs-12">
+									<div id="ajaxContainer">
+										
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 					</div>
@@ -137,28 +133,20 @@
 				<%
 				}
 				%>
-				</div>
+				</div>			
 			</div>
 			</div>
 		</div>
 		</div>
 	</div>
+	
 	<!-- Javascript : SLICK -->
 	<script src="<c:url value='/static/js/RunSlick.js' />"></script>
 	
 	<!-- Javascript : Google Charts -->
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	
-	<!--Javasciprt : Utilities -->
-	<script src="<c:url value='/static/js/utilities.js' />"></script>
-	
-	<!--Javasciprt : AJAX By Sensor Type -->
-	<script src="<c:url value='/static/js/ajax/dataBySensorType.js' />"></script>
-	
-	<!--Javasciprt : AJAX By All Sensors -->
-	<script src="<c:url value='/static/js/ajax/dataByAllSensors.js' />"></script>
-	
-	<!--Javasciprt : AJAX Controller -->
-	<script src="<c:url value='/static/js/ajax/ajaxController.js' />"></script>
+	<!--Javasciprt : AJAX -->
+	<script src="<c:url value='/static/js/report.js' />"></script>
 	</body>
 </html>

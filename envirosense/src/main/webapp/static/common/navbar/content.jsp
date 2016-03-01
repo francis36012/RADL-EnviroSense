@@ -17,7 +17,7 @@
 				<a href="<c:url value='javascript:{}' />" onclick="document.getElementById('formLogout').submit();">
 					Logout
 				</a>
-				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />		
+				<input type="hidden" name="<c:out value='${_csrf.parameterName}' />" value="${_csrf.token}" />		
 			</form>
 		</li>
 	</ul>

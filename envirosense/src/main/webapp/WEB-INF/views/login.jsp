@@ -36,7 +36,7 @@
 					<form id="loginForm" action="<c:url value='/login' />" method="POST">
 						<fieldset class="input-group-vertical">
 							<div class="form-group">
-								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+								<input type="hidden" name="<c:out value='${_csrf.parameterName}' />" value="${_csrf.token}" />
 								<input type="email" class="form-control" name="email" placeholder="Email" required />
 							</div>
 
@@ -87,7 +87,7 @@
 					<div id="forgotPassword" class="collapse">
 						<br />
 						<!-- Forgot Password -->
-						<form id="formResetPassword" action="<c:url value='/resetPassword' />" method="POST">
+						<form id="formResetPassword" action="<c:url value='/resetPassword' />" method="GET">
 							<fieldset class="input-group-vertical">
 								<div class="input-group form-group">
 									<input type="email" class="form-control" name="forgotPassword" placeholder="Email" autocomplete="on" />

@@ -3,7 +3,7 @@ $('.single-items').slick({
 	infinite: false,
 	arrows: false,
 	speed: 250,
-	initialSlide: 1
+	initialSlide: 0
 });
 
 var usersElement = document.getElementsByClassName("usersList");
