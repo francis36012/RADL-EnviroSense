@@ -54,8 +54,8 @@
 							<div class="col-xs-12">
 								<div class="btn-group-vertical btn-block">
 									
-								<input type="button" class="btn btn-success" name="all" value="All Sensors" onclick="runAjax(this)"/>
-								<input type="button" class="btn btn-success" name="type" value="Sensor Type" onclick="runAjax(this)" />
+								<input type="button" class="btn btn-default" name="all" value="All Sensors" onclick="runAjax(this)"/>
+								<input type="button" class="btn btn-default" name="type" value="Sensor Type" onclick="runAjax(this)" />
 							
 								</div>
 							</div>

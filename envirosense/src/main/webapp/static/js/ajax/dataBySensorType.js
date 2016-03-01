@@ -166,6 +166,8 @@ function loadDataBySensorType(jsonObject, domElement) {
 		}
 	};
 	
+	domElement.innerHTML += "<img src='/envirosense/static/images/Elements/Spinner.gif' class='loading img-responsive' style='width: 10%; margin: 5% 45%' />";
+	
 	var sensorId = domElement.getElementsByClassName("sensorId")[0];
 	var sensorName = domElement.getElementsByClassName("sensorName")[0];
 	var sensorType = domElement.getElementsByClassName("sensorType")[0];
@@ -174,8 +176,9 @@ function loadDataBySensorType(jsonObject, domElement) {
 	sensorId.innerHTML = "ID: " + jsonElement.id;
 	sensorName.innerHTML = "Name: " + "My Temperature";
 	sensorType.innerHTML = "Temperature";
-	sensorTime.innerHTML = "";
 	generateChartBySensorType(jsonObject, sensorTime);
+	
+	domElement.removeChild(domElement.getElementsByClassName("loading")[0]);
 }
 
 function generateChartBySensorType(jsonObject, domElement) {

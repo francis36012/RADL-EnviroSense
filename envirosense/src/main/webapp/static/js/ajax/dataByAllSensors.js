@@ -124,6 +124,8 @@ function loadDataByAllSensors(jsonObject, domElement) {
 		"name" : jsonObject["name"],
 		"sensorType" : jsonObject["sensorType"]
 	};
+
+	domElement.innerHTML += "<img src='/envirosense/static/images/Elements/Spinner.gif' class='loading img-responsive' style='width: 10%; margin: 5% 45%' />";
 	
 	var sensorId = domElement.getElementsByClassName("sensorId")[0];
 	var sensorName = domElement.getElementsByClassName("sensorName")[0];
@@ -140,4 +142,6 @@ function loadDataByAllSensors(jsonObject, domElement) {
 	roomId.innerHTML = "ID: " + jsonElement.room.id + "<br />";
 	roomName.innerHTML = "Name: " + jsonElement.room.name + "<br />";
 	roomDescription.innerHTML = jsonElement.room.description;
+	
+	domElement.removeChild(domElement.getElementsByClassName("loading")[0]);
 }

@@ -10,6 +10,7 @@ var refreshInterval;
  */
 function stopAjax() {
 	clearInterval(refreshInterval);
+	refreshInterval = null;
 }
 
 function runAjax(domElement) {
@@ -21,10 +22,9 @@ function runAjax(domElement) {
 		 * that called that function will be able to finish his tasks before
 		 * we clear out the resources it's using.
 		 */
-	   sleep(1000);
-	   clearPanels();
-
+		sleep(1000);
 	}
+	clearPanels();
 	
 	var dataChoice = domElement.name;
 	switch(dataChoice) {
