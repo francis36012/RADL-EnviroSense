@@ -15,12 +15,12 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 	public List<Event> findByActiveTrue();
 	public List<Event> findByActiveFalse();
 
-	@Query("SELECT e FROM Event e WHERE ?1 MEMBER OF e.owners")
+	@Query("SELECT e FROM Event e INNER JOIN e.owners o WHERE o.email = ?1")
 	public List<Event> findByUserEmail(String email);
 	
-	@Query("SELECT e FROM Event e WHERE ?1 MEMBER OF e.owners AND active = true")
+	@Query("SELECT e FROM Event e INNER JOIN e.owners o WHERE o.email = ?1 AND e.active = true")
 	public List<Event> findByUserEmailActive(String email);
 
-	@Query("SELECT e FROM Event e WHERE ?1 MEMBER OF e.owners AND active = false")
+	@Query("SELECT e FROM Event e INNER JOIN e.owners o WHERE o.email = ?1 AND e.active = false")
 	public List<Event> findByUserEmailInactive(String email);
 }
