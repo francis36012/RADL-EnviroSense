@@ -92,6 +92,10 @@ public class Event implements Serializable {
 	public Set<User> getOwners() {
 		return owners;
 	}
+	
+	public Set<Condition> getConditions() {
+		return conditions;
+	}
 
 	public void setId(long id) {
 		this.id = id;

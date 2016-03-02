@@ -41,4 +41,25 @@ public interface UserRepository extends JpaRepository<User, String> {
 	 * @return All users whose last name match the last name provided
 	 */
 	public Set<User> findByLastname(String lastname);
+
+	/**
+	 * Returns the user with the specified email.
+	 * @param email The email of the user to return
+	 * @return A user object whose email matches (case insensitive) the one specified
+	 */
+	public User findByEmailIgnoreCase(String email);
+
+	/**
+	 * Returns all users whose last name match the last name provided
+	 * @param firstname The last name to check form
+	 * @return All users whose last name match (case insensitive) the last name provided
+	 */
+	public Set<User> findByLastnameIgnoreCase(String lastname);
+
+	/**
+	 * Returns all users whose first name match the first name provided
+	 * @param firstname The first name to check form
+	 * @return All users whose first name match (case insensitive) the first name provided
+	 */
+	public Set<User> findByFirstnameIgnoreCase(String firstname);
 }

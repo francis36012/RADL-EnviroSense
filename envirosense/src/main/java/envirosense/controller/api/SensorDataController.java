@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import envirosense.model.SensorData;
 import envirosense.model.SensorType;
+import envirosense.service.EventHandler;
 import envirosense.service.SensorDataService;
 
 @RestController
@@ -24,6 +25,9 @@ public class SensorDataController {
 	
 	@Autowired
 	SensorDataService dataService;
+	
+	@Autowired
+	EventHandler eventHandler;
 
 	/**
 	 * @param data The body of this request (must be a list of sensor data)
@@ -37,6 +41,7 @@ public class SensorDataController {
 		if (result.hasErrors()) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
+		eventHandler.run(data);
 		dataService.save(data);
 		return new ResponseEntity<>(null, HttpStatus.OK);
 	}

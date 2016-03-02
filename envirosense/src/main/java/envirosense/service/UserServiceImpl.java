@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User resetPassword(User user, String newPassword) {
-		User dbUser = userRepository.findOne(user.getEmail());
+		User dbUser = userRepository.findByEmailIgnoreCase(user.getEmail());
 		
 		if (dbUser != null) {
 			dbUser.setPassword(passwordEncoder.encodePassword(newPassword, null));
@@ -64,16 +64,16 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Set<User> findByFirstname(String firstname) {
-		return userRepository.findByFirstname(firstname);
+		return userRepository.findByFirstnameIgnoreCase(firstname);
 	}
 
 	@Override
 	public Set<User> findByLastname(String lastname) {
-		return userRepository.findByLastname(lastname);
+		return userRepository.findByLastnameIgnoreCase(lastname);
 	}
 
 	@Override
 	public User findByEmail(String email) {
-		return userRepository.findOne(email);
+		return userRepository.findByEmailIgnoreCase(email);
 	}
 }

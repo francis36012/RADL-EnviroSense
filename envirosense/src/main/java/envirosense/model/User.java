@@ -272,10 +272,12 @@ public class User {
 			return false;
 		User other = (User)obj;
 		if (email == null) {
-			if (other.email != null)
+			if (other.email != null) {
 				return false;
-		} else if (!email.equals(other.email))
+			}
+		} else if (!email.equals(other.email)) {
 			return false;
+		}
 		return true;
 	}
 }

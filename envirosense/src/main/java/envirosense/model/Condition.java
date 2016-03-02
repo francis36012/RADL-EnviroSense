@@ -5,6 +5,8 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,7 +26,8 @@ public class Condition implements Serializable {
 	
 	private String value;
 	
-	private String modifier;
+	@Enumerated(EnumType.STRING)
+	private ConditionModifier modifier;
 	
 	@Column(name = "date_time")
 	private Date dateTime;
@@ -32,7 +35,7 @@ public class Condition implements Serializable {
 	@Column(name = "weekly_occurrences")
 	private boolean weeklyOccurrences[] = new boolean[7];
 
-	public Condition(long id, Sensor sensor, String value, String modifier, Date dateTime,
+	public Condition(long id, Sensor sensor, String value, ConditionModifier modifier, Date dateTime,
 			boolean[] weeklyOccurrences) {
 		super();
 		this.id = id;
@@ -58,7 +61,7 @@ public class Condition implements Serializable {
 		return value;
 	}
 
-	public String getModifier() {
+	public ConditionModifier getModifier() {
 		return modifier;
 	}
 
@@ -82,7 +85,7 @@ public class Condition implements Serializable {
 		this.value = value;
 	}
 
-	public void setModifier(String modifier) {
+	public void setModifier(ConditionModifier modifier) {
 		this.modifier = modifier;
 	}
 
@@ -92,5 +95,73 @@ public class Condition implements Serializable {
 
 	public void setWeeklyOccurrences(boolean[] weeklyOccurrences) {
 		this.weeklyOccurrences = weeklyOccurrences;
+	}
+
+	// TODO: Refactor this method
+	public boolean evaluate(Object data) {
+		
+		if (data == null) {
+			return false;
+		}
+
+		SensorType sType = sensor.getSensorType();
+		
+		if (sType == SensorType.TE || sType == SensorType.HU) {
+			double incomingData = 0;
+			double conditionData = 0;
+			
+			try {
+				incomingData = (double)data;
+				conditionData = Double.parseDouble(value);
+				
+			} catch (ClassCastException | NumberFormatException ex) {
+				return false;
+			}
+
+			switch (modifier) {
+				case EQ:
+					return (incomingData == conditionData);
+				case NE:
+					return (incomingData != conditionData);
+				case GE:
+					return (incomingData > conditionData);
+				case GT:
+					return (incomingData >= conditionData);
+				case LT:
+					return (incomingData < conditionData);
+				case LE:
+					return (incomingData <= conditionData);
+				default:
+					return false;
+			}
+		} else if ((sType == SensorType.DR) || (sType == SensorType.MO)) {
+
+			boolean incomingData = false;
+			boolean conditionData = false;
+			
+			try {
+				incomingData = (boolean)data;
+				conditionData = Boolean.parseBoolean(value);
+				
+			} catch (ClassCastException ex) {
+				return false;
+			}
+
+			switch (modifier) {
+				case EQ:
+					return (incomingData == conditionData);
+				case NE:
+					return (incomingData != conditionData);
+				default:
+					return false;
+			}
+		} else if (sType == SensorType.RA) {
+			// TODO: Implementation
+		} else if (sType == SensorType.PA) {
+			// TODO: Implementation
+		} else if (sType == SensorType.UK) {
+			return false;
+		}
+		return false;
 	}
 }

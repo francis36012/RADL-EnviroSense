@@ -47,4 +47,32 @@ public class SensorDataPK implements Serializable {
 	public void setSensorId(long sensorId) {
 		this.sensorId = sensorId;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int)(sensorId ^ (sensorId >>> 32));
+		result = prime * result + ((timestamp == null) ? 0 : timestamp.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SensorDataPK other = (SensorDataPK)obj;
+		if (sensorId != other.sensorId)
+			return false;
+		if (timestamp == null) {
+			if (other.timestamp != null)
+				return false;
+		} else if (!timestamp.equals(other.timestamp))
+			return false;
+		return true;
+	}
 }

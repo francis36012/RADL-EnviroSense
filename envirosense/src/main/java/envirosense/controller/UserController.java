@@ -31,7 +31,7 @@ public class UserController {
     @RequestMapping(value = {"/save/{user}"}, method = RequestMethod.POST)
     public ModelAndView saveUser(@PathVariable("user") User user) {
         userService.save(user);
-        return new ModelAndView("users");
+        return new ModelAndView("admin/users");
     }
 
     /**
@@ -43,7 +43,7 @@ public class UserController {
     @RequestMapping(value = {"/saveAll/{users}"}, method = RequestMethod.POST)
     public ModelAndView saveUsers(@PathVariable("users") List<User> users) {
         userService.save(users);
-        return new ModelAndView("users");
+        return new ModelAndView("admin/users");
     }
 
     /**
@@ -55,7 +55,7 @@ public class UserController {
     @RequestMapping(value = {"/delete/{user}"}, method = RequestMethod.POST)
     public ModelAndView deleteUser(@PathVariable("user") User user) {
         userService.delete(user);
-        return new ModelAndView("users");
+        return new ModelAndView("admin/users");
     }
 
     /**
@@ -74,7 +74,7 @@ public class UserController {
             @PathVariable("user") User user,
             @PathVariable("encryptedPassword") String newPassword) {
         userService.resetPassword(user, newPassword);
-        return new ModelAndView("users");
+        return new ModelAndView("admin/users");
     }
 
     /**
@@ -85,7 +85,7 @@ public class UserController {
      */
     @RequestMapping(value = "/email/{email}", method = RequestMethod.GET)
     public ModelAndView getUserByEmail(@PathVariable("email") String email) {
-        ModelAndView mv = new ModelAndView("users");
+        ModelAndView mv = new ModelAndView("admim/users");
         mv.addObject("users", userService.findByEmail(email));
         return mv;
     }
@@ -98,7 +98,7 @@ public class UserController {
      */
     @RequestMapping(value = "/firstName/{name}", method = RequestMethod.GET)
     public ModelAndView getUserByFirstName(@PathVariable("name") String name) {
-        ModelAndView mv = new ModelAndView("users");
+        ModelAndView mv = new ModelAndView("admin/users");
         mv.addObject("users", userService.findByFirstname(name));
         return mv;
     }
@@ -111,8 +111,8 @@ public class UserController {
      */
     @RequestMapping(value = "/lastName/{name}", method = RequestMethod.GET)
     public ModelAndView getUserByLastName(@PathVariable("name") String name) {
-        ModelAndView mv = new ModelAndView("users");
-        mv.addObject("users", userService.findByLastname(name));
+        ModelAndView mv = new ModelAndView("admin/users");
+        mv.addObject("admin/users", userService.findByLastname(name));
         return mv;
     }
 
@@ -123,7 +123,7 @@ public class UserController {
      */
     @RequestMapping(value = "/active", method = RequestMethod.GET)
     public ModelAndView getActiveUsers() {
-        ModelAndView mv = new ModelAndView("users");
+        ModelAndView mv = new ModelAndView("admin/users");
         mv.addObject("users", userService.findAllActive());
         return mv;
     }
@@ -135,7 +135,7 @@ public class UserController {
      */
     @RequestMapping(value = "/inactive", method = RequestMethod.GET)
     public ModelAndView getInactiveUsers() {
-        ModelAndView mv = new ModelAndView("users");
+        ModelAndView mv = new ModelAndView("admin/users");
         mv.addObject("users", userService.finalAllInactive());
         return mv;
     }
