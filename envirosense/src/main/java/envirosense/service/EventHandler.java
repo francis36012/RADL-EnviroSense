@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.Calendar;
 import java.util.List;
 
 import envirosense.model.Condition;
@@ -34,16 +35,22 @@ public class EventHandler {
 
 	public void run(List<SensorData> data) {
 		List<Event> events = eventRepository.findByActiveTrue();
-		for (Event e : events) {
-			boolean allConditionsValid = true;
-			for (Condition c : e.getConditions()) {
-				if (!c.evaluate(null)) {
-					allConditionsValid = false;
+		for (SensorData d : data) {
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(d.getTimestamp());
+
+			for (Event e : events) {
+				boolean allConditionsValid = true;
+				for (Condition c : e.getConditions()) {
+					// TODO: Use data
+					if (!c.evaluate(d.getData(), calendar)) {
+						allConditionsValid = false;
+					}
 				}
-			}
-			if (allConditionsValid) {
-				for (User u : e.getOwners()) {
-					sendNotification(u, e);
+				if (allConditionsValid) {
+					for (User u : e.getOwners()) {
+						sendNotification(u, e);
+					}
 				}
 			}
 		}

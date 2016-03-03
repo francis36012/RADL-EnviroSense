@@ -2,6 +2,7 @@ package envirosense.model;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -97,8 +98,16 @@ public class Condition implements Serializable {
 		this.weeklyOccurrences = weeklyOccurrences;
 	}
 
-	// TODO: Refactor this method
-	public boolean evaluate(Object data) {
+	/**
+	 * This method takes an object that holds some sensor data and a calendar object, evaluates this
+	 * condition with the provided arguments and returns a boolean.
+	 * 
+	 * @param data The sensor data to compare with this condition's value.
+	 * @param calendar The date that the data specified was read
+	 * @return <code>true</code> If a comparison of the data and the date (and time) matched,
+	 * <code>false</code> if otherwise.
+	 */
+	public boolean evaluate(Object data, Calendar calendar) {
 		
 		if (data == null) {
 			return false;
@@ -113,11 +122,14 @@ public class Condition implements Serializable {
 			try {
 				incomingData = (double)data;
 				conditionData = Double.parseDouble(value);
-				
 			} catch (ClassCastException | NumberFormatException ex) {
 				return false;
 			}
-
+			
+			if (!timeEqual(calendar)) {
+				return false;
+			}
+			
 			switch (modifier) {
 				case EQ:
 					return (incomingData == conditionData);
@@ -142,8 +154,11 @@ public class Condition implements Serializable {
 			try {
 				incomingData = (boolean)data;
 				conditionData = Boolean.parseBoolean(value);
-				
 			} catch (ClassCastException ex) {
+				return false;
+			}
+
+			if (!timeEqual(calendar)) {
 				return false;
 			}
 
@@ -161,6 +176,56 @@ public class Condition implements Serializable {
 			// TODO: Implementation
 		} else if (sType == SensorType.UK) {
 			return false;
+		}
+		return false;
+	}
+
+	/**
+	 * Takes an integer representing the day of the week returned from Calendar.get and compares
+	 * it with the day of the week in this condition's date.
+	 * @param dayOfWeek The day of the week to check
+	 * @return <code>true</code> If the specified integer represents the day of the week in this condition's
+	 * date, <code>false</code> if otherwise.
+	 */
+	private boolean dayInCondition(int dayOfWeek) {
+		switch (dayOfWeek) {
+			case Calendar.SUNDAY:
+				return weeklyOccurrences[0];
+			case Calendar.MONDAY:
+				return weeklyOccurrences[1];
+			case Calendar.TUESDAY:
+				return weeklyOccurrences[2];
+			case Calendar.WEDNESDAY:
+				return weeklyOccurrences[3];
+			case Calendar.THURSDAY:
+				return weeklyOccurrences[4];
+			case Calendar.FRIDAY:
+				return weeklyOccurrences[5];
+			case Calendar.SATURDAY:
+				return weeklyOccurrences[6];
+			default:
+				return false;
+		}
+	}
+	
+	/**
+	 * Takes a calendar object and checks to see if it's greater than or equal to this condition's
+	 * date, and if the hour and the minute of both times match.
+	 * @param now The calendar object that is to be compared to this condition's date
+	 * @return <code>true</code> if the condition described holds, <code>false</code> if otherwise.
+	 */
+	private boolean timeEqual(Calendar now) {
+		Calendar conditionTime = Calendar.getInstance();
+		conditionTime.setTime(dateTime);
+		
+		int currentDay = now.get(Calendar.DAY_OF_WEEK);
+		
+		if (now.compareTo(conditionTime) >= 0) {
+			if ((now.get(Calendar.HOUR_OF_DAY) == conditionTime.get(Calendar.HOUR_OF_DAY)) &&
+			    (now.get(Calendar.MINUTE) == conditionTime.get(Calendar.MINUTE)) &&
+			    (dayInCondition(currentDay))) {
+				return true;
+			}
 		}
 		return false;
 	}
