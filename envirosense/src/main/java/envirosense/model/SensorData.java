@@ -11,18 +11,21 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  */
 public class SensorData {
 	
-	private long id;
+	private long sensorId;
 	private Object data;
-	private SensorType type;
+	private SensorType sensorType;
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ", timezone = "America/Edmonton")
 	private Timestamp timestamp;
 
 	public SensorData(long id, Object data, Timestamp timestamp, SensorType type) {
-		this.id = id;
+		this.sensorId = id;
 		this.data = data;
 		this.timestamp = timestamp;
-		this.type = type;
+		this.sensorType = type;
+	}
+	
+	public SensorData() {
 	}
 	
 	/**
@@ -46,7 +49,7 @@ public class SensorData {
 	 * @return The ID of the sensor that read the data
 	 */
 	public long getSensorId() {
-		return id;
+		return sensorId;
 	}
 	
 	/**
@@ -54,6 +57,38 @@ public class SensorData {
 	 * @return The sensor type of the sensor that read the data
 	 */
 	public SensorType getSensorType() {
-		return type; 
+		return sensorType; 
+	}
+
+	/**
+	 * Sets the ID of the sensor that read the data
+	 * @param sensorId The ID of the sensor that read the data
+	 */
+	public void setSensorId(long sensorId) {
+		this.sensorId = sensorId;
+	}
+
+	/**
+	 * Sets the data that was read
+	 * @param data The data that was read
+	 */
+	public void setData(Object data) {
+		this.data = data;
+	}
+
+	/**
+	 * Sets the type of sensor that read the data
+	 * @param sensorType The type of sensor that read the data
+	 */
+	public void setSensorType(SensorType sensorType) {
+		this.sensorType = sensorType;
+	}
+
+	/**
+	 * Sets the timestamp for when the data was read
+	 * @param timestamp The time and date when the data was read
+	 */
+	public void setTimestamp(Timestamp timestamp) {
+		this.timestamp = timestamp;
 	}
 }
