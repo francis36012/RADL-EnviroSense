@@ -33,18 +33,20 @@ public class Condition implements Serializable {
 	@Column(name = "date_time")
 	private Date dateTime;
 
-	@Column(name = "weekly_occurrences")
-	private boolean weeklyOccurrences[] = new boolean[7];
+	@ManyToOne(targetEntity = ConditionTime.class)
+	@JoinColumn(name = "condition_time_id")
+	private ConditionTime conditionTime;
 
 	public Condition(long id, Sensor sensor, String value, ConditionModifier modifier, Date dateTime,
-			boolean[] weeklyOccurrences) {
+		ConditionTime conditionTime
+	) {
 		super();
 		this.id = id;
 		this.sensor = sensor;
 		this.value = value;
 		this.modifier = modifier;
 		this.dateTime = dateTime;
-		this.weeklyOccurrences = weeklyOccurrences;
+		this.conditionTime = conditionTime;
 	}
 	
 	public Condition() {
@@ -70,8 +72,8 @@ public class Condition implements Serializable {
 		return dateTime;
 	}
 
-	public boolean[] getWeeklyOccurrences() {
-		return weeklyOccurrences;
+	public ConditionTime getConditionTime() {
+		return conditionTime;
 	}
 
 	public void setId(long id) {
@@ -94,8 +96,8 @@ public class Condition implements Serializable {
 		this.dateTime = dateTime;
 	}
 
-	public void setWeeklyOccurrences(boolean[] weeklyOccurrences) {
-		this.weeklyOccurrences = weeklyOccurrences;
+	public void setWeeklyOccurrences(ConditionTime conditionTime) {
+		this.conditionTime = conditionTime;
 	}
 
 	/**
@@ -190,19 +192,19 @@ public class Condition implements Serializable {
 	private boolean dayInCondition(int dayOfWeek) {
 		switch (dayOfWeek) {
 			case Calendar.SUNDAY:
-				return weeklyOccurrences[0];
+				return conditionTime.isSunday();
 			case Calendar.MONDAY:
-				return weeklyOccurrences[1];
+				return conditionTime.isMonday();
 			case Calendar.TUESDAY:
-				return weeklyOccurrences[2];
+				return conditionTime.isTuesday();
 			case Calendar.WEDNESDAY:
-				return weeklyOccurrences[3];
+				return conditionTime.isWednesday();
 			case Calendar.THURSDAY:
-				return weeklyOccurrences[4];
+				return conditionTime.isThursday();
 			case Calendar.FRIDAY:
-				return weeklyOccurrences[5];
+				return conditionTime.isFriday();
 			case Calendar.SATURDAY:
-				return weeklyOccurrences[6];
+				return conditionTime.isSaturday();
 			default:
 				return false;
 		}
@@ -215,16 +217,53 @@ public class Condition implements Serializable {
 	 * @return <code>true</code> if the condition described holds, <code>false</code> if otherwise.
 	 */
 	private boolean timeEqual(Calendar now) {
-		Calendar conditionTime = Calendar.getInstance();
-		conditionTime.setTime(dateTime);
+		Calendar cTime = Calendar.getInstance();
+		cTime.setTime(conditionTime.getDateTime());
 		
 		int currentDay = now.get(Calendar.DAY_OF_WEEK);
 		
-		if (now.compareTo(conditionTime) >= 0) {
-			if ((now.get(Calendar.HOUR_OF_DAY) == conditionTime.get(Calendar.HOUR_OF_DAY)) &&
-			    (now.get(Calendar.MINUTE) == conditionTime.get(Calendar.MINUTE)) &&
-			    (dayInCondition(currentDay))) {
+		if (now.compareTo(cTime) >= 0 && dayInCondition(currentDay)) {
+			if (conditionTime.isAllHours()) {
 				return true;
+			}
+			switch (conditionTime.getTimeCheck()) {
+				case EQ:
+					if ((now.get(Calendar.HOUR_OF_DAY) == cTime.get(Calendar.HOUR_OF_DAY)) &&
+						(now.get(Calendar.MINUTE) == cTime.get(Calendar.MINUTE))) {
+						return true;
+					}
+					return false;
+				case GE:
+					if ((now.get(Calendar.HOUR_OF_DAY) >= cTime.get(Calendar.HOUR_OF_DAY)) &&
+						(now.get(Calendar.MINUTE) >= cTime.get(Calendar.MINUTE))) {
+						return true;
+					}
+					return false;
+				case GT:
+					if ((now.get(Calendar.HOUR_OF_DAY) > cTime.get(Calendar.HOUR_OF_DAY)) &&
+						(now.get(Calendar.MINUTE) > cTime.get(Calendar.MINUTE))) {
+						return true;
+					}
+					return false;
+				case LE:
+					if ((now.get(Calendar.HOUR_OF_DAY) <= cTime.get(Calendar.HOUR_OF_DAY)) &&
+						(now.get(Calendar.MINUTE) <= cTime.get(Calendar.MINUTE))) {
+						return true;
+					}
+					return false;
+				case LT:
+					if ((now.get(Calendar.HOUR_OF_DAY) < cTime.get(Calendar.HOUR_OF_DAY)) &&
+						(now.get(Calendar.MINUTE) < cTime.get(Calendar.MINUTE))) {
+						return true;
+					}
+					return false;
+				case NE:
+					if ((now.get(Calendar.HOUR_OF_DAY) != cTime.get(Calendar.HOUR_OF_DAY)) &&
+						(now.get(Calendar.MINUTE) != cTime.get(Calendar.MINUTE))) {
+						return true;
+					}
+				default:
+					return false;
 			}
 		}
 		return false;
