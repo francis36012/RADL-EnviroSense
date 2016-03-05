@@ -57,16 +57,32 @@ CREATE TABLE event (
 	CONSTRAINT uk_event_name UNIQUE KEY (name)
 );
 
+DROP TABLE IF EXISTS condition_time;
+CREATE TABLE condition_time (
+	id BIGINT AUTO_INCREMENT,
+	sunday BIT(1) NOT NULL,
+	monday BIT(1) NOT NULL,
+	tuesday BIT(1) NOT NULL,
+	wednesday BIT(1) NOT NULL,
+	thursday BIT(1) NOT NULL,
+	friday BIT(1) NOT NULL,
+	saturday BIT(1) NOT NULL,
+	date_time Date NOT NULL,
+	all_hours BIT(1) NOT NULL,
+	time_check VARCHAR(10) NOT NULL,
+	CONSTRAINT pk_conditiontime PRIMARY KEY (id)
+);
+
 DROP TABLE IF EXISTS econdition;
 CREATE TABLE econdition (
 	id BIGINT AUTO_INCREMENT,
 	sensor_id BIGINT NOT NULL,
 	value VARCHAR(10) NOT NULL,
 	modifier VARCHAR(10) NOT NULL,
-	date_time DATE NOT NULL,
-	weekly_occurrences BIT(7) NOT NULL,
+	condition_time_id BIGINT NOT NULL,
 	CONSTRAINT pk_econdition PRIMARY KEY (id),
-	CONSTRAINT fk_econdition_sensor FOREIGN KEY (sensor_id) REFERENCES sensor(id)
+	CONSTRAINT fk_econdition_sensor FOREIGN KEY (sensor_id) REFERENCES sensor(id),
+	CONSTRAINT fk_econdition_time FOREIGN KEY (condition_time_id) REFERENCES condition_time(id)
 );
 
 DROP TABLE IF EXISTS temperature;
