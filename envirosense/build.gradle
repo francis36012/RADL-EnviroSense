@@ -22,6 +22,9 @@ dependencies {
 
 	compile "javax.servlet:javax.servlet-api:3.1.0"
 	compile "javax.servlet:jstl:1.2"
+	
+	compile "org.springframework:spring-context-support:4.2.3.RELEASE"
+	compile "com.sun.mail:javax.mail:1.5.5"
 
 	compile "com.fasterxml.jackson.core:jackson-core:2.7.0"
 	compile "com.fasterxml.jackson.core:jackson-databind:2.7.0"

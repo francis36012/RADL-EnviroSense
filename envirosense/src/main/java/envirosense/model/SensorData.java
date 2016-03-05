@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
- * This interface specifies the basic behavior expected from sensor data classes 
+ * This class models a sensor data type 
  * @author Francis Agyapong 
  */
 public class SensorData {
@@ -15,7 +15,7 @@ public class SensorData {
 	private Object data;
 	private SensorType sensorType;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ", timezone = "America/Edmonton")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "America/Edmonton")
 	private Timestamp timestamp;
 
 	public SensorData(long id, Object data, Timestamp timestamp, SensorType type) {

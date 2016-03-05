@@ -37,7 +37,7 @@ public class Event implements Serializable {
 	
 	private boolean active;
 
-	@ManyToMany(mappedBy = "events")
+	@ManyToMany(mappedBy = "events", fetch = FetchType.EAGER)
 	private Set<User> owners;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
