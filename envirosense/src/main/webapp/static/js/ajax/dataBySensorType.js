@@ -1,4 +1,4 @@
-/*
+/**
  * Initialize Google Charts. Make sure to put the appropriate script for the
  * construction of this object found in Google Charts' API.
  */
@@ -11,12 +11,19 @@ google.charts.load('current', {
  * have an "On Ready State Change" that would run a function once it sends a
  * request to the server.
  */
-function getDataBySensorType() {
+function getDataBySensorType(sensorType, startTime, endTime, buttonLoader) {
+	var dateRegex = new RegExp("T|Z");
+	
+	startTime = new Date(startTime).toISOString().split(dateRegex);
+	endTime = new Date(endTime).toISOString().split(dateRegex);
+	var finalStartTime = startTime[0] + " " + startTime[1].slice(0, -4);
+	var finalEndTime = endTime[0] + " " + endTime[1].slice(0, -4);
+	
 	var xmlHttp = new XMLHttpRequest();
 	xmlHttp.onreadystatechange = function() {
-		readyStateChangeBySensorType(xmlHttp);
+		readyStateChangeBySensorType(xmlHttp, buttonLoader);
 	};
-	xmlHttp.open("GET", "/envirosense/api/report/type/TE/2015-01-01 00:00:00/2016-03-01 00:00:00", true);
+	xmlHttp.open("GET", "/envirosense/api/report/type/" + sensorType + "/"+ finalStartTime + "/" + finalEndTime, true);
 	xmlHttp.send();
 }
 
@@ -25,75 +32,115 @@ function getDataBySensorType() {
  * connection from the server. If it get a response from the server, it will do
  * the necessary process to parse the JSON object where appropriate.
  */
-function readyStateChangeBySensorType(xmlHttp) {
-	/*
-	 * HTTP States
-	 * 
-	 * 0: Hasn't started 
-	 * 1: Connected to the Server 
-	 * 2: Server has received our request 
-	 * 3: Server is processing 
-	 * 4: Request is finished and data is ready
-	 */
-	var dataContainer = document.getElementsByClassName("dataContainer");
+function readyStateChangeBySensorType(xmlHttp, buttonLoader) {
+	var laddaButton = Ladda.create(buttonLoader);
+	laddaButton.start();
+	laddaButton.setProgress(0);
 	
-	if (xmlHttp.status === 200) {
-		if (xmlHttp.readyState === 4) {
-			var jsonObject = JSON.parse(xmlHttp.responseText);
-			jsonObject = reformatJsonBySensorType(jsonObject, "sensorId");
-			
-			if (jsonObject !== null) {
-				if (jsonObject.length > dataContainer.length) {
-					while (jsonObject.length !== dataContainer.length) {
-						$('.single-items').slick("slickAdd", createContainerBySensorType());
+	try {
+		/*
+		 * HTTP States
+		 * 
+		 * 0: Hasn't started 
+		 * 1: Connected to the Server 
+		 * 2: Server has received our request 
+		 * 3: Server is processing 
+		 * 4: Request is finished and data is ready
+		 */
+		var dataContainer = document.getElementsByClassName("dataContainer");
+
+		if (xmlHttp.status === 200) {
+			laddaButton.setProgress(.3);
+
+			if (xmlHttp.readyState === 4) {
+				var jsonObject = JSON.parse(xmlHttp.responseText);
+				laddaButton.setProgress(.5);
+
+				if (jsonObject !== null) {
+					jsonObject = reformatJsonBySensorType(jsonObject, "sensorId");
+					
+					if (jsonObject.length > dataContainer.length) {
+						while (jsonObject.length > dataContainer.length) {
+							$('.single-items').slick("slickAdd", createContainerBySensorType());
+						}
+					} else if (jsonObject.length < dataContainer.length) {
+						while (dataContainer.length > jsonObject.length) {
+							$('.single-items').slick("slickRemove", false);
+						}
 					}
-				} else if (jsonObject.length < dataContainer.length) {
-					while (dataContainer.length > jsonObject.length) {
-						$('.single-items').slick("slickPrev");
-						$('.single-items').slick("slickRemove", false);
+					
+					laddaButton.setProgress(.8);
+					for (var index = 0; index < jsonObject.length; index++) {
+						loadDataBySensorType(jsonObject[index], dataContainer[index]);
 					}
+					
+				} else {
+					//No Data Found
 				}
-			} else {
-				//No Data Found
+				laddaButton.setProgress(1);
 			}
-			
-			for (var index = 0; index < jsonObject.length; index++) {
-				loadDataBySensorType(jsonObject[index], dataContainer[index]);
-			}
+		} else if (xmlHttp.status === 404) {
+			//Can't connect
 		}
-	} else if (xmlHttp.status === 404) {
-		//Can't connect
+		
+		setTimeout(function () {
+		laddaButton.stop();
+	}, 1000);
+	
+	} catch (errorEvent) {
+		laddaButton.setProgress(0);
+		
+		setTimeout(function () {
+			laddaButton.stop();
+		}, 1000);
+		
+		throw errorEvent;
 	}
 }
 
 
-function reformatJsonBySensorType(jsonObject, sortType) {
+
+function reformatJsonBySensorType(jsonObject, sortKey) {
 	/*
 	 * Suggested JSON format:
 	 * 1.]	sensorId
-	 * 2.]	values
+	 * 2.]	sensorType
+	 * 3.]	values
 	 *		i.	timestamp
 	 *		ii.	data
 	 */
 	var formattedJson = {
-		"sensorId" : null,
-		"values" : null
+		sensorId: null,
+		sensorType: null,
+		values: null
 	};
 	var uniqueId = [];
+	var jsonAttributes = [];
 	var jsonData = [];
 	var returnValue = [];
 	
 	for (var index = 0; index < jsonObject.length; index++) {
 		var jsonProperty = {
-			"timestamp" : null, 
-			"data" : null
+			timestamp: null, 
+			data: null
 		};
-		var sortAttribute = jsonObject[index][sortType];
+		var sortAttribute = jsonObject[index][sortKey];
 		
 		if (uniqueId.indexOf(sortAttribute) < 0) {
 			uniqueId.push(sortAttribute);
+			jsonAttributes.push(jsonObject[index]["sensorType"]);
 			jsonData.push([]);
 		}
+		
+		/*
+		 * Since Google Charts isn't very stable when handling boolean values,
+		 * we have to change the JSON object's boolean values to either 1 or 0
+		 * if ever there is a boolean value present in the data.
+		 */
+		if (jsonObject[index]["data"] === true) {
+			jsonObject[index]["data"] = 1;
+		}
+		
 		jsonProperty.timestamp = jsonObject[index]["timestamp"];
 		jsonProperty.data = jsonObject[index]["data"];
 		
@@ -103,6 +150,7 @@ function reformatJsonBySensorType(jsonObject, sortType) {
 	for (var index = 0; index < uniqueId.length; index++) {
 		formattedJson = new Object();
 		formattedJson.sensorId = uniqueId[index];
+		formattedJson.sensorType = jsonAttributes[index];
 		formattedJson.values = jsonData[index];
 		
 		returnValue.push(formattedJson);
@@ -113,60 +161,18 @@ function reformatJsonBySensorType(jsonObject, sortType) {
 
 
 /* ---------------------------------------- */
-/*				DATA CREATION				*/
+/*				DATA LOADER					*/
 /* ---------------------------------------- */
-function createContainerBySensorType() {
-	/*
-	 * For the "Sensor By Type" JSON object, the format would be:
-	 * 1.]	id
-	 * 2.]	timestamp
-	 * 3.]	data
-	 * 
-	 * For this script, we are goign for the format:
-	 * 1.]	sensorId
-	 * 2.]	vaules
-	 *		i.	timestamp
-	 *		ii.	data
-	 */
-	
-	var rowDiv = createNode("div", ["row"], null);
-	var colDiv = createNode("div", ["col-xs-12"], null);
-	var panelDiv = createNode("div", ["panel", "panel-default"], null);
-	var panelHead = createNode("div", ["panel-heading", "text-center"], null);
-	var panelBody = createNode("div", ["panel-body"], null);
-	
-	var sensorData = createNode("div", ["dataContainer"], null);
-	var sensorId = createNode("div", ["sensorId"], null);
-	var sensorName = createNode("div", ["sensorName"], null);
-	var sensorType = createNode("div", ["sensorType"], null);
-	var sensorTime = createNode("div", ["sensorTime"], null);
-	
-	sensorData.appendChild(sensorId);
-	sensorData.appendChild(sensorName);
-	sensorData.appendChild(sensorType);
-	sensorData.innerHTML += "<hr />";
-	sensorData.appendChild(sensorTime);
-	
-	panelBody.appendChild(sensorData);
-	panelDiv.appendChild(panelHead);
-	panelDiv.appendChild(panelBody);
-	
-	colDiv.appendChild(panelDiv);
-	rowDiv.appendChild(colDiv);
-	
-	return rowDiv;
-}
 
 function loadDataBySensorType(jsonObject, domElement) {
 	var jsonElement = {
-		"id" : jsonObject["sensorId"],
-		"values" : {
-			"timestamp" : jsonObject["timestamp"],
-			"data" : jsonObject["data"]	
+		id: jsonObject["sensorId"],
+		sensorType: jsonObject["sensorType"],
+		values: {
+			timestamp: jsonObject["timestamp"],
+			data: jsonObject["data"]	
 		}
 	};
-	
-	domElement.innerHTML += "<img src='/envirosense/static/images/Elements/Spinner.gif' class='loading img-responsive' style='width: 10%; margin: 5% 45%' />";
 	
 	var sensorId = domElement.getElementsByClassName("sensorId")[0];
 	var sensorName = domElement.getElementsByClassName("sensorName")[0];
@@ -174,40 +180,66 @@ function loadDataBySensorType(jsonObject, domElement) {
 	var sensorTime = domElement.getElementsByClassName("sensorTime")[0];
 	
 	sensorId.innerHTML = "ID: " + jsonElement.id;
-	sensorName.innerHTML = "Name: " + "My Temperature";
-	sensorType.innerHTML = "Temperature";
-	generateChartBySensorType(jsonObject, sensorTime);
-	
-	domElement.removeChild(domElement.getElementsByClassName("loading")[0]);
+	sensorName.innerHTML = "Name: " + "My Sensor";
+	sensorType.innerHTML = "Type: " + jsonElement.sensorType;
+	generateChartBySensorType(jsonObject, sensorTime, jsonElement.sensorType);
 }
 
-function generateChartBySensorType(jsonObject, domElement) {
+function generateChartBySensorType(jsonObject, domElement, sensorType) {
 	var rawData = [];
 	for (var index = 0; index < jsonObject.values.length; index++) {
 		rawData.push([new Date(jsonObject.values[index]["timestamp"]), jsonObject.values[index]["data"]]);
 	}
-	
-	google.charts.setOnLoadCallback(function () {
-		var data = new google.visualization.DataTable();
-		data.addColumn('date', 'X');
-		data.addColumn('number', 'Value');
-		data.addRows(rawData);
+	if (sensorType === "MO") {
+		google.charts.setOnLoadCallback(function () {
+			var data = new google.visualization.DataTable();
+			data.addColumn('datetime', 'X');
+			data.addColumn('number', 'Motion');
+			data.addRows(rawData);
 
-		var options = {
-			hAxis: {
-				title: 'Time'
-			},
-			vAxis: {
-				title: 'Celcius'
-			},
-			legend: {
-				position: 'none'
-			}
-		};
+			var options = {
+				hAxis: {
+					title: 'Time'
+				},
+				vAxis: {
+					title: 'Motion',
+					ticks: [0, 1],
+					viewWindow: {
+						min: 0,
+						max: 1
+					}
+				},
+				legend: {
+					position: 'none'
+				}
+			};
 
-		var chart = new google.visualization.LineChart(domElement);
-		chart.draw(data, options);
-	});
+			var chart = new google.visualization.ScatterChart(domElement);
+			chart.draw(data, options);
+		});
+	} else {
+		google.charts.setOnLoadCallback(function () {
+			var data = new google.visualization.DataTable();
+			data.addColumn('datetime', 'X');
+			data.addColumn('number');
+			data.addRows(rawData);
+
+			var options = {
+				hAxis: {
+					title: 'Time'
+				},
+				vAxis: {
+					title: 'Celcius'
+				},
+				legend: {
+					position: 'none'
+				}
+			};
+
+			var chart = new google.visualization.LineChart(domElement);
+			chart.draw(data, options);
+		});
+	} 
 	
 	return domElement;
 }

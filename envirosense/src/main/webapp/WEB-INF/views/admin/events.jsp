@@ -54,6 +54,11 @@
 										</div>
 									</div>
 								</div>
+<<<<<<< .mine
+									
+								<div class="col-xs-3">
+									<input type="checkbox" class="bootstrapSwitch" data-size="mini" data-on-color="success" />
+=======
 							</div>
 
 							<div class="row">
@@ -79,6 +84,7 @@
 										</div>
 										</c:forEach>
 									</div>
+>>>>>>> .r119
 								</div>
 							</div>
 						</div>

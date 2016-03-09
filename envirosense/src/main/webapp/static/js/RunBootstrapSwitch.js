@@ -1,1 +1,1 @@
-$("[name='dataStatus']").bootstrapSwitch();
+$("[class='bootstrapSwitch']").bootstrapSwitch();

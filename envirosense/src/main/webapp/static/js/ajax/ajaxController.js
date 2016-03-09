@@ -13,46 +13,43 @@ function stopAjax() {
 	refreshInterval = null;
 }
 
-function runAjax(domElement) {
-	
+function runAjax(formElement) {
 	if (refreshInterval !== null) {
 		stopAjax();
 		/*
-		 * Sleep function is used for the "stopAjax" function so that the thread
+		 * Sleep function is used for the "Stop Ajax" function so that the thread
 		 * that called that function will be able to finish his tasks before
 		 * we clear out the resources it's using.
 		 */
 		sleep(1000);
 	}
-	clearPanels();
 	
-	var dataChoice = domElement.name;
+	var dataChoice = formElement.dataChoice.value;
 	switch(dataChoice) {
-		case "all":
-			getDataByAllSensors();
+		case "ALL":
+			getDataByAllSensors(formElement);
 			break;
 		
-		case "type":
-			getDataBySensorType();
+		case "Temperature":
+		case "Motion":
+			dataChoice = getSensorTypeByName(dataChoice);
+			var startTime = formElement.fromDate.value;
+			var endTime = formElement.toDate.value;
+			var buttonLoader = formElement.submitButton;
+			getDataBySensorType(dataChoice, startTime, endTime, buttonLoader);
 			
-			/*
-			 * Since Google applies a fixed width (based on it's parent div) whenever they 
-			 * generate their charts, we make a window listener to regenerate the chart 
-			 * whenever the window size is altered. 
-			 */
-			window.onresize = function () {
-				setTimeout(getDataBySensorType, 300);
-			};
-			
+			break;
+		
+		case "report":
+			getDataByPageSettings(dataChoice, formElement);
 			break;
 			
 		default:
 			alert("Not implemented yet.");
 	}
-	$(".single-items").slick("slickNext");
 }
 
 function sleep(timeUnits) {
-	var start = new Date().getTime();
-	while (new Date().getTime() < start + timeUnits);
+	var startTime = new Date().getTime() + timeUnits;
+	while (new Date().getTime() < startTime);
 }

@@ -8,19 +8,20 @@
 			<img src="<c:url value='/static/images/Elements/Divider.png' />" class="img-responsive" />
 		</li>
 		<li><a href="<c:url value='/' />">Live Data</a></li>
-		<li><a href="#">Report</a></li>
+		<li><a href="<c:url value='/report' />">Report</a></li>
 		<li><a href="<c:url value='#' />">Events</a></li>
 		<li><a href="#">Settings</a></li>
 		<li><a href="<c:url value='#' />">Accounts</a></li>
 		<li>
-			<form id="formLogout" class="form" action="<c:url value='/logout' />" method="POST">
-				<a href="<c:url value='javascript:{}' />" onclick="document.getElementById('formLogout').submit();">
-					Logout
-				</a>
-				<input type="hidden" name="<c:out value='${_csrf.parameterName}' />" value="${_csrf.token}" />		
-			</form>
+			<a href="<c:url value='javascript:{}' />" onclick="document.getElementById('formLogout').submit();">
+				Logout
+			</a>
 		</li>
 	</ul>
 </div>
-		
+
+<form id="formLogout" class="form" action="<c:url value='/logout' />" method="POST">
+	<input type="hidden" name="<c:out value='${_csrf.parameterName}' />" value="${_csrf.token}" />		
+</form>
+
 <!-- <div id="page-content-wrapper"> -->

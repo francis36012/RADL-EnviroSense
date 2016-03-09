@@ -79,33 +79,33 @@
 			<hr />
 			
 			<div class="row">
-				<div class="col-xs-12">
-					<small>
-						<a href="#forgotPassword" id="forgotPasswordToggle" data-toggle="collapse" >Forgot Password</a>
-					</small>
+			<div class="col-xs-12">
+				<small>
+					<a href="#forgotPassword" id="forgotPasswordToggle" data-toggle="collapse" >Forgot Password</a>
+				</small>
 
-					<div id="forgotPassword" class="collapse">
-						<br />
-						<!-- Forgot Password -->
-						<form id="formResetPassword" action="<c:url value='/resetPassword' />" method="GET">
-							<fieldset class="input-group-vertical">
-								<div class="input-group form-group">
-									<input type="email" class="form-control" name="forgotPassword" placeholder="Email" autocomplete="on" />
-									<span class="input-group-btn">
-										<button class="btn btn-default" type="submit" form="formResetPassword">
-										<i class="glyphicon glyphicon-menu-right"></i>
-										</button>
-									</span>
-								</div>
-							</fieldset>
+				<div id="forgotPassword" class="collapse">
+					<br />
+					<!-- Forgot Password -->
+					<form id="formResetPassword" action="<c:url value='/resetPassword' />" method="GET">
+						<fieldset class="input-group-vertical">
+							<div class="input-group form-group">
+								<input type="email" class="form-control" name="forgotPassword" placeholder="Email" autocomplete="on" />
+								<span class="input-group-btn">
+									<button class="btn btn-default" type="submit" form="formResetPassword">
+									<i class="glyphicon glyphicon-menu-right"></i>
+									</button>
+								</span>
+							</div>
+						</fieldset>
 
-							<p class="well well-sm">
-								We will send you instructions on how to 
-								reset your password.
-							</p>
-						</form>
-					</div>
+						<p class="well well-sm">
+							We will send you instructions on how to 
+							reset your password.
+						</p>
+					</form>
 				</div>
+			</div>
 			</div>
 							
 		</div>

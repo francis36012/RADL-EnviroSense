@@ -8,6 +8,8 @@
 		<c:import url="/static/common/head/metaTags.jsp" />
 		<c:import url="/static/common/head/jquery.jsp" />
 		<c:import url="/static/common/head/bootstrap.jsp" />
+		<c:import url="/static/common/head/bootstrapSwitch.jsp" />
+		<c:import url="/static/common/head/bootstrapLadda.jsp" />
 		<c:import url="/static/common/head/slick.jsp" />
 		<c:import url="/static/common/head/style.jsp" />
 		<c:import url="/static/common/head/navbar.jsp" />
@@ -31,8 +33,8 @@
 
 				<div class="row page-header">
 				<div class="col-xs-12">
-					<h1>Live Data</h1>
-					<small>Let's pick up where you left off.</small>
+					<h1>Reports</h1>
+					<small>Let's see what we've missed.</small>
 				</div>
 			</div>
 			</div>
@@ -41,101 +43,8 @@
 			<div class="row">
 			<div class="col-xs-12 nopadding">
 				<div class="single-items">
-					<div class="row">
-					<div class="col-xs-12">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<div class="text-center">Settings</div>
-						</div>
-						
-						<div class="panel-body">
-							<div class="well well-sm">
-								This panel will contain sort functions
-								that will sort the data in the other
-								panels.
-							</div>
-						</div>
-					</div>
-					</div>
-					</div>
 					
-				<%
-				for (int index = 0;
-					index < 5;
-					index++)
-				{
-				%>
-					<div class="row">
-					<div class="col-xs-12">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<div class="text-center">Room <%= index + 1 %></div>
-						</div>
-						
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-xs-6">
-									<h5>Temperature</h5>
-								</div>
-								<div class="col-xs-6">
-									<h5>Humidity</h5>
-								</div>
-							</div>
-							
-							
-							<div class="row">
-								<div class="col-xs-6">
-									<h1><%= Math.round(Math.random() * 100) + "%" %></h1>
-								</div>
-								<div class="col-xs-6">
-									<h1><%= Math.round(Math.random() * 100) + "%" %></h1>
-								</div>
-							</div>
-								
-							<div class="row">
-								<div class="col-xs-6">
-									<h5>Carbon Dioxide</h5>
-								</div>
-								<div class="col-xs-6">
-									<h5>Harmful Gasses</h5>
-								</div>
-							</div>
-								
-							<div class="row">
-								<div class="col-xs-6">
-									<h1><%= Math.round(Math.random() * 100) + "%" %></h1>
-								</div>
-								<div class="col-xs-6">
-									<h1><%= Math.round(Math.random() * 100) + "%" %></h1>
-								</div>
-							</div>
-							
-							<hr />
-
-							<div class="well well-sm">
-								<p>
-								This panel will contain data from the
-								sensors through the use of an API.
-								</p>
-							</div>
-							
-							<div class="row">
-								<div class="col-xs-12">
-									<div id="ajaxContainer">
-										
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					</div>
-					</div>
-				<%
-				}
-				%>
-				</div>			
-			</div>
-			</div>
+				</div>
 		</div>
 		</div>
 	</div>
@@ -146,7 +55,23 @@
 	<!-- Javascript : Google Charts -->
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	
-	<!--Javasciprt : AJAX -->
-	<script src="<c:url value='/static/js/report.js' />"></script>
+	<!--Javasciprt : Utilities -->
+	<script src="<c:url value='/static/js/utilities.js' />"></script>
+	
+	<!--Javasciprt : AJAX By Page Settings -->
+	<script src="<c:url value='/static/js/ajax/dataByPageSettings.js' />"></script>
+	
+	<!--Javasciprt : AJAX By Sensor Type -->
+	<script src="<c:url value='/static/js/ajax/dataBySensorType.js' />"></script>
+	
+	<!--Javasciprt : AJAX By All Sensors -->
+	<script src="<c:url value='/static/js/ajax/dataByAllSensors.js' />"></script>
+	
+	<!--Javasciprt : AJAX Controller -->
+	<script src="<c:url value='/static/js/ajax/ajaxController.js' />"></script>
+	
+	<!-- Javascript : Startup Sequence-->
+	<script src="<c:url value='/static/js/startup/report.js' />"></script>
+	
 	</body>
 </html>
