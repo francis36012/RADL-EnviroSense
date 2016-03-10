@@ -378,7 +378,7 @@ public class SensorDataService {
 		});
 		return mapped;
 	}
-	// Dissambiguate
+
 	private List<SensorData> mapDoorData(List<Door> data) {
 		List<SensorData> mapped = new ArrayList<>();
 		data.stream().forEach((d) -> {
