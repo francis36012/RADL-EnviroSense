@@ -39,7 +39,7 @@ public class SensorApiController {
 		return new ResponseEntity<>(sensor, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/{type}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/type/{type}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Sensor>> sensor(@PathVariable("type") String type) {
 		List<Sensor> sensors = sensorService.findByType(type);
 		if (sensors.isEmpty()) {
