@@ -80,7 +80,7 @@
 														<input type="checkbox" name="dataStatus" 
 															   data-size="mini" 
 															   data-on-color="success" 
-															   <%if (currentEvent.active) { out.println("checked"); }%>/>
+															   <%if (currentEvent.active) { out.println("checked") }%>/>
 													</div>
 												</div>
 											</div>

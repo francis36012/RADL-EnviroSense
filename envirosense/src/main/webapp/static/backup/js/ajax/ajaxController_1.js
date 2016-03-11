@@ -23,6 +23,7 @@ function runAjax(formElement) {
 		 */
 		sleep(1000);
 	}
+	clearPanels();
 	
 	var dataChoice = formElement.dataChoice.value;
 	switch(dataChoice) {
@@ -45,7 +46,7 @@ function runAjax(formElement) {
 			break;
 			
 		default:
-			console.error("Data choice not implemented Yet.");
+			alert("Not implemented yet.");
 	}
 }
 

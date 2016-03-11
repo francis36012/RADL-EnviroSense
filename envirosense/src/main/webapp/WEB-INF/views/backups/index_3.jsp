@@ -24,7 +24,7 @@
 		<c:import url="/static/common/navbar/content.jsp" />
 		
 		<div id="page-content-wrapper">
-		<div class="container-fluid nopadding">
+		<div class="container-fluid">
 			<div class="row">
 			<div class="col-xs-12 col-sm-8 col-sm-offset-2">
 

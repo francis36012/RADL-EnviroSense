@@ -1,0 +1,1 @@
+$("[class='bootstrapSwitch']").bootstrapSwitch();

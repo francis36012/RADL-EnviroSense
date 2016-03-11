@@ -72,7 +72,7 @@ function dropdownListeners() {
  * generate their charts, we make a window listener to regenerate the chart 
  * whenever the window size is altered. 
  */
-function windowResizeHandler() {
+function windowResizeHandler() {	
 	var resizeFunction = function () {
 		setTimeout(function () {
 			var reportForm = document.getElementById("reportForm");

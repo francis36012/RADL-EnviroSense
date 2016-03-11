@@ -65,14 +65,11 @@ function readyStateChangeBySensorType(xmlHttp, buttonLoader) {
 						}
 					} else if (jsonObject.length < dataContainer.length) {
 						while (dataContainer.length > jsonObject.length) {
-							if (!$('.single-items').slick("slickRemove", false)) {
-								dataContainer[0].parentNode.parentNode.remove();
-							}
+							$('.single-items').slick("slickRemove", false);
 						}
 					}
 					
 					laddaButton.setProgress(.8);
-					clearPanels();
 					for (var index = 0; index < jsonObject.length; index++) {
 						loadDataBySensorType(jsonObject[index], dataContainer[index]);
 					}
@@ -183,6 +180,7 @@ function loadDataBySensorType(jsonObject, domElement) {
 	var sensorTime = domElement.getElementsByClassName("sensorTime")[0];
 	
 	sensorId.innerHTML = "ID: " + jsonElement.id;
+	sensorName.innerHTML = "Name: " + "My Sensor";
 	sensorType.innerHTML = "Type: " + jsonElement.sensorType;
 	generateChartBySensorType(jsonObject, sensorTime, jsonElement.sensorType);
 }

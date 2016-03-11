@@ -9,7 +9,7 @@
 		</li>
 		<li><a href="<c:url value='/' />">Live Data</a></li>
 		<li><a href="<c:url value='/report' />">Report</a></li>
-		<li><a href="<c:url value='#' />">Events</a></li>
+		<li><a href="<c:url value='/admin/events' />">Events</a></li>
 		<li><a href="#">Settings</a></li>
 		<li><a href="<c:url value='#' />">Accounts</a></li>
 		<li>
