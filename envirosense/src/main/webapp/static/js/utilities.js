@@ -244,8 +244,7 @@ function getSensorNameByType(sensorType) {
 
 function getSensorTypeByName(sensorName) {
 	var returnValue;
-	switch (sensorName)
-	{
+	switch (sensorName) {
 		case "Temperature":
 			returnValue = "TE";
 			break;
@@ -265,4 +264,9 @@ function getSensorTypeByName(sensorName) {
 function setValue(containerElement, dataChoice) {
 	containerElement.innerHTML = dataChoice;
 	containerElement.value = dataChoice;
+}
+
+function sleep(timeUnits) {
+	var startTime = new Date().getTime() + timeUnits;
+	while (new Date().getTime() < startTime);
 }

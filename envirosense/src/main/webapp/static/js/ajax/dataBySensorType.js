@@ -1,10 +1,12 @@
 /**
- * Initialize Google Charts. Make sure to put the appropriate script for the
- * construction of this object found in Google Charts' API.
+ * Initialize Google Charts. A check is used before initializing to make
+ * sure that there is connectivity to the Google Charts API.
  */
-google.charts.load('current', {
-	packages: ['corechart', 'line']
-});
+if (window.google === undefined && window.hasOwnProperty("google")) {
+	google.charts.load('current', {
+		packages: ['corechart', 'line']
+	});
+}
 
 /**
  * The Run AJAX function starts up the AJAX process. By collateral, this would
@@ -56,7 +58,7 @@ function readyStateChangeBySensorType(xmlHttp, buttonLoader) {
 				var jsonObject = JSON.parse(xmlHttp.responseText);
 				laddaButton.setProgress(.5);
 
-				if (jsonObject !== null) {
+				if (jsonObject.length > 0) {
 					jsonObject = reformatJsonBySensorType(jsonObject, "sensorId");
 					
 					if (jsonObject.length > dataContainer.length) {
@@ -71,19 +73,38 @@ function readyStateChangeBySensorType(xmlHttp, buttonLoader) {
 						}
 					}
 					
-					laddaButton.setProgress(.8);
 					clearPanels();
+					laddaButton.setProgress(.8);
 					for (var index = 0; index < jsonObject.length; index++) {
 						loadDataBySensorType(jsonObject[index], dataContainer[index]);
 					}
 					
 				} else {
-					//No Data Found
+					/*
+					 * There's a response that had been receieved but it has
+					 * no length. We can safely assume that it has no value, 
+					 * however, we cannot assume that the server returned a
+					 * "404 Not Found" or "204 No Data Found" status.
+					 */
 				}
 				laddaButton.setProgress(1);
 			}
 		} else if (xmlHttp.status === 404) {
-			//Can't connect
+			/*
+			 * Status 404 was returned. We create a panel with the error
+			 * message "Something went wrong. Please check connection to
+			 * server."
+			 */
+		} else if (xmlHttp.status === 204) {
+			/*
+			 * No data was found. We create a panel with the error message
+			 * "No data was found with that criteria."
+			 */
+			while (dataContainer.length > 0) {
+				if (!$('.single-items').slick("slickRemove", false)) {
+					dataContainer[0].parentNode.parentNode.remove();
+				}
+			}
 		}
 		
 		setTimeout(function () {
@@ -100,8 +121,6 @@ function readyStateChangeBySensorType(xmlHttp, buttonLoader) {
 		throw errorEvent;
 	}
 }
-
-
 
 function reformatJsonBySensorType(jsonObject, sortKey) {
 	/*
@@ -178,13 +197,23 @@ function loadDataBySensorType(jsonObject, domElement) {
 	};
 	
 	var sensorId = domElement.getElementsByClassName("sensorId")[0];
-	var sensorName = domElement.getElementsByClassName("sensorName")[0];
 	var sensorType = domElement.getElementsByClassName("sensorType")[0];
 	var sensorTime = domElement.getElementsByClassName("sensorTime")[0];
 	
 	sensorId.innerHTML = "ID: " + jsonElement.id;
 	sensorType.innerHTML = "Type: " + jsonElement.sensorType;
-	generateChartBySensorType(jsonObject, sensorTime, jsonElement.sensorType);
+	
+	if (window.google !== undefined && window.hasOwnProperty("google")) {
+		generateChartBySensorType(jsonObject, sensorTime, jsonElement.sensorType);
+	} else {
+		var alertMessage = createNode("p", null, null);
+		alertMessage.innerHTML = "Cannot connect to Google Charts. ";
+		alertMessage.innerHTML += "Please check your internet connectivity.";
+		var alertDiv = createNode("div", ["alert", "alert-warning"], null);
+		alertDiv.appendChild(alertMessage);
+		
+		sensorTime.appendChild(alertDiv);
+	}
 }
 
 function generateChartBySensorType(jsonObject, domElement, sensorType) {

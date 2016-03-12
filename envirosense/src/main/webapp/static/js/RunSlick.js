@@ -7,11 +7,11 @@ $('.single-items').slick({
 	mobileFirst: true,
 	responsive: [
 	{
-		breakpoint: 600,
+		breakpoint: 769,
 		settings: "unslick"
 	},
 	{
-		breakpoint: 480,
+		breakpoint: 768,
 		settings: {
 			slidesToShow: 1,
 			slidesToScroll: 1

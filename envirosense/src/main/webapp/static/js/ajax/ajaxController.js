@@ -32,6 +32,7 @@ function runAjax(formElement) {
 		
 		case "Temperature":
 		case "Motion":
+		case "Humidity":
 			dataChoice = getSensorTypeByName(dataChoice);
 			var startTime = formElement.fromDate.value;
 			var endTime = formElement.toDate.value;
@@ -47,9 +48,4 @@ function runAjax(formElement) {
 		default:
 			console.error("Data choice not implemented Yet.");
 	}
-}
-
-function sleep(timeUnits) {
-	var startTime = new Date().getTime() + timeUnits;
-	while (new Date().getTime() < startTime);
 }

@@ -44,8 +44,8 @@ function startupController() {
  */
 function formSubmitListeners() {
 	var reportForm = reportForm = document.getElementById("reportForm");
-	reportForm.onsubmit = function(submitEvent) {
-		runAjax(submitEvent.target.closest("form"));
+	reportForm.onsubmit = function() {
+		runAjax(this);
 		return false;
 	};
 };
