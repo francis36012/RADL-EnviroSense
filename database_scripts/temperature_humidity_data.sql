@@ -12,9 +12,15 @@ VALUES
 INSERT INTO sensor
 	(room_id, name, sensor_type)
 VALUES
-	(1, 'HDC1000', 'TE'),
-	(1, 'HDC1000', 'HU'),
-	(1, 'PIR Motion Sensor', 'MO');
+	(1, 'HDC1000_1', 'TE'),
+	(1, 'HDC1000_1', 'HU'),
+	(1, 'PIRMotionSensor_1', 'MO'),
+	(2, 'HDC1000_2', 'TE'),
+	(2, 'HDC1000_2', 'HU'),
+	(2, 'PIRMotionSensor_2', 'MO'),
+	(3, 'HDC1000_3', 'TE'),
+	(3, 'HDC1000_3', 'HU'),
+	(3, 'PIRMotionSensor_3', 'MO');
 
 -- Temperature data
  INSERT INTO temperature values 
