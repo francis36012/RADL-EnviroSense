@@ -2,12 +2,22 @@
  * Initialize Google Charts. A check is used before initializing to make
  * sure that there is connectivity to the Google Charts API.
  */
-if (window.google === undefined && window.hasOwnProperty("google")) {
-	google.charts.load('current', {
-		packages: ['corechart', 'line']
-	});
+if (window["google"] !== null) {
+	try {
+		google.charts.load('current', {
+			packages: ['corechart', 'line']
+		});
+	} catch (errorEvent) {
+		console.error("Cannot connect to Google Charts.\n---\n" + errorEvent);
+	}
 }
-
+//try {
+//	google.charts.load('current', {
+//		packages: ['corechart', 'line']
+//	});
+//} catch (errorEvent) {
+//	console.error("Cannot connect to Google Charts.\n" + errorEvent);
+//}
 /**
  * The Run AJAX function starts up the AJAX process. By collateral, this would
  * have an "On Ready State Change" that would run a function once it sends a
