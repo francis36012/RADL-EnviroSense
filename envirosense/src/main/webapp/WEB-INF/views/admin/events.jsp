@@ -71,19 +71,18 @@
 											<div class="panel-body">
 												<div class="row">
 													<div class="col-xs-9">
-														<div class="eventsList">
-															ID: '<c:out value="${currentEvent.getId()}"/>'
+														<div class="eventsList"
+															id="<c:out value='${currentEvent.getId()}'/>">
 															<c:out value="${currentEvent.getName()}" />
 														</div>
 													</div>
 													<div class="col-xs-3">
 														<input type="checkbox" name="dataStatus" 
 															   data-size="mini" 
-															   data-on-color="success"
-															   <c:if test='${currentEvent.active}'>
-																   <c:out value='checked' />
-															   </c:if>
-															   />
+															   data-on-color="success" 
+															   <c:if test="${currentEvent.isActive()}">
+															   	<c:out value="checked"/>
+															   </c:if>/>
 													</div>
 												</div>
 											</div>

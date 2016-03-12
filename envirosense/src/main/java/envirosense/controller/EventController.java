@@ -19,7 +19,7 @@ public class EventController {
 	
 	@RequestMapping(value = "/admin/events", method = RequestMethod.GET)
 	public ModelAndView adminAllEvents() {
-		ModelAndView mv = new ModelAndView("events");
+		ModelAndView mv = new ModelAndView("admin/events");
 
 		mv.addObject("events", eventService.findAll());
 		return mv;
