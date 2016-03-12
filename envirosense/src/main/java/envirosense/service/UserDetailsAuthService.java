@@ -30,9 +30,13 @@ public class UserDetailsAuthService implements UserDetailsService {
 		if (user == null) {
 			throw new UsernameNotFoundException(String.format("Email: %s not found", email));
 		}
-		return new org.springframework.security.core.userdetails.User(user.getEmail(),
-				user.getPassword(), user.getEnabled(), true, true, true,
-				getGrantedAuthorities(user));
+		CustomUserDetails userDetails = new CustomUserDetails(
+			user.getEmail(),
+			user.getPassword(),
+			user.getSalt(),
+			user.getEnabled(),
+			getGrantedAuthorities(user));
+		return userDetails;
 	}
 
 	/**

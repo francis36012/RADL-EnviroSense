@@ -61,6 +61,12 @@ public class User {
 	 */
 	@JsonIgnore
 	private String password;
+	
+	/**
+	 * Used for salting the password for storage
+	 */
+	@JsonIgnore
+	private String salt;
 
 	/**
 	 * A flag that indicates whether a user is active in the system
@@ -90,13 +96,14 @@ public class User {
 	 * @param roles The roles associated with the user
 	 */
 	public User(String firstname, String lastname, String email, String phone, String slackId,
-			String password, boolean enabled, Set<Role> roles) {
+			String password, String salt, boolean enabled, Set<Role> roles) {
 		this.email = email;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.phone = phone;
 		this.slackId = slackId;
 		this.password = password;
+		this.salt = salt;
 		this.enabled = enabled;
 		this.roles = roles;
 	}
@@ -112,6 +119,7 @@ public class User {
 		this.phone = user.phone;
 		this.slackId = user.slackId;
 		this.password = user.password;
+		this.salt = user.salt;
 		this.enabled = user.enabled;
 		this.roles = user.roles;
 	}
@@ -249,6 +257,10 @@ public class User {
 	public void setEnabled(boolean state) {
 		this.enabled = state;
 	}
+	
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
@@ -279,5 +291,9 @@ public class User {
 			return false;
 		}
 		return true;
+	}
+
+	public String getSalt() {
+		return salt;
 	}
 }
