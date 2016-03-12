@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "mysql": "*",
-    "socket.io": "*"
+    "socket.io": "*",
+    "request": "*"
   }
 }

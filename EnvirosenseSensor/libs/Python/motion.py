@@ -50,14 +50,14 @@ import time
 import grovepi
 import socket
 
-# Connect the Grove PIR Motion Sensor to digital port D8
+# Connect the Grove PIR Motion Sensor to digital port D2
 # SIG,NC,VCC,GND
-pir_sensor = 8 
+pir_sensor = 2 # Digital port 2
 motion=0
 grovepi.pinMode(pir_sensor,"INPUT")
 
-s = socket.socket() #creates a socket object
-host = "127.0.0.1"  #Gets local machine name
+s = socket.socket()
+host = "127.0.0.1"
 port = 8124
 
 s.connect((host, port))
@@ -69,15 +69,14 @@ while True:
 		if motion==0 or motion==1:	# check if reads were 0 or 1 it can be 255 also because of IO Errors so remove those values
 			if motion==1:
 				cTime = time.strftime("%H %M %S %d %m %Y")
-				s.send("motion Y " + cTime)
-			else:
-				s.send("motion N")
+				s.send("D2 motion true " + cTime)
+			#else:
+				#s.send("D2 motion false")
 
 			# if your hold time is less than this, you might not see as many detections
 		time.sleep(1.1)
 
 	except IOError:
 		print ("Error")#!/usr/bin/env python
-		s.close()
 
 s.close()

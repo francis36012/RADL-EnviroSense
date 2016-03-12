@@ -1,11 +1,13 @@
 #! /bin/bash
 set -e
-node /home/pi/Desktop/EnvirosenseSensor/Server/server.js & 
+node /home/pi/Desktop/EnvirosenseSensor/Server/APIserver.js & 
 pid[0]=$!
-sleep 5
+sleep 10
 python /home/pi/Desktop/EnvirosenseSensor/libs/Python/motion.py &
 pid[1]=$!
 /home/pi/Desktop/EnvirosenseSensor/libs/C/temphum &
 pid[2]=$!
-trap "kill ${pid[0]} ${pid[1]} ${pid[2]}; exit 1" INT
+python /home/pi/Desktop/EnvirosenseSensor/libs/Python/door.py &
+pid[3]=$!
+trap "kill ${pid[0]} ${pid[1]} ${pid[2]} ${pid[3]}; exit 1" INT
 wait

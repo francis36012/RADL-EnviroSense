@@ -103,15 +103,15 @@ int main(int argc, char *argv[]) {
 
 		if (temp != 0xffff && hum != 0xffff) {
 			
-			sprintf(buffer, "Temp/Hum %.2f %.2f Time %s", temp * (160.0/65536.0) - 40, hum * (100.0/65536.0), c_time_string);
-
+			sprintf(buffer, "I2C-1 Temp/Hum %.2f %.2f Time %s", temp * (165.0/65536.0) - 40, hum * (100.0/65536.0), c_time_string);
+            
 			n = write(sockfd,buffer,strlen(buffer));
             
 			if (n < 0)
 				error("ERROR writing to socket");
 		}
 
-		sleep(2);
+		sleep(4);
 		fflush(stdout);
 	}
 	close(sockfd);

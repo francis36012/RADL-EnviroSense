@@ -26,10 +26,8 @@ function getSensors(){
         result.forEach(function (row){
             console.log(row);
                 config.THIS_PI.SENSORS_IDS[row['sensor_type']] = row['id'];
-        });
-        
-        checkLocalDB();                        
-        
+        });       
+        checkLocalDB();                         
     });
 }
 
@@ -118,6 +116,8 @@ function checkLocalDB(){
                     if(result.length > 0){ //Data found for the first sensor
                         //Loop through each data row for the sensor
                         result.forEach(function (row){
+                            console.log(row);
+                            console.log('*****************************');
                             conn.query(util.sprintf(config.DB.INSERT_SENSOR_DATA_SIMP, sensor, row['sensor_id'], row['data'], row['timestamp']), function(err){
                                 if(err){
                                    console.log('Query error: ', err);
