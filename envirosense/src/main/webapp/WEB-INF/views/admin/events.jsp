@@ -54,10 +54,6 @@
 											</div>
 										</div>
 									</div>
-
-									<div class="col-xs-3">
-										<input type="checkbox" class="bootstrapSwitch" data-size="mini" data-on-color="success" />
-									</div>
 								</div>
 
 								<div class="row">
@@ -77,12 +73,14 @@
 														</div>
 													</div>
 													<div class="col-xs-3">
-														<input type="checkbox" name="dataStatus" 
-															   data-size="mini" 
-															   data-on-color="success" 
-															   <c:if test="${currentEvent.isActive()}">
-															   	<c:out value="checked"/>
-															   </c:if>/>
+														<input type="checkbox"
+															class="bootstrapSwitch"
+															data-size="mini"
+															data-on-color="success"
+															<c:if test="${currentEvent.isActive()}">
+																<c:out value="checked"/>
+															</c:if>
+														/>
 													</div>
 												</div>
 											</div>
