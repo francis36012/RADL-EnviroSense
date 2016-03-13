@@ -427,13 +427,9 @@ function parseDataFromDB(sensor, row, callback){
 
 /**
  * Start point of the server. 
- * Will only lift the server if a local DB connection is successful
  * 
+ * TODO:    Continue trying to implement the sending of data from multiple ports from door and motion sensors   
  * 
- * TODOS:   Eliminate the data parsing here. Send it parsed from the sensor code
- *          Eliminate the sortType stuff. Use the array on the beginning
- * 
- *          Deals with ids thing
  *          
  */
 getLocalDBConn(function(error){

@@ -50,12 +50,6 @@ import time
 import grovepi
 import socket
 
-# Connect the Grove PIR Motion Sensor to digital port D2
-# SIG,NC,VCC,GND
-pir_sensor = 2 # Digital port 2
-motion=0
-grovepi.pinMode(pir_sensor,"INPUT")
-
 s = socket.socket()
 host = "127.0.0.1"
 port = 8124
@@ -63,20 +57,46 @@ port = 8124
 s.connect((host, port))
 
 while True:
+	# SIG,NC,VCC,GND
+	motion=0
+	grovepi.pinMode(2,"INPUT")
+
+    #Reads from D2
 	try:
 		# Sense motion, usually human, within the target range
-		motion=grovepi.digitalRead(pir_sensor)
-		if motion==0 or motion==1:	# check if reads were 0 or 1 it can be 255 also because of IO Errors so remove those values
-			if motion==1:
-				cTime = time.strftime("%H %M %S %d %m %Y")
-				s.send("D2 motion true " + cTime)
-			#else:
-				#s.send("D2 motion false")
-
-			# if your hold time is less than this, you might not see as many detections
-		time.sleep(1.1)
-
+		motion=grovepi.digitalRead(2)
+		if motion==1:
+			cTime = time.strftime("%H %M %S %d %m %Y")
+			s.send("D2 motion true " + cTime)
 	except IOError:
-		print ("Error")#!/usr/bin/env python
+		print ("")
+        
+	# SIG,NC,VCC,GND
+	motion=0
+	grovepi.pinMode(3,"INPUT")        
+    #Reads from D3
+	try:
+		# Sense motion, usually human, within the target range
+		motion=grovepi.digitalRead(3)
+		if motion==1:
+			cTime = time.strftime("%H %M %S %d %m %Y")
+			s.send("D3 motion true " + cTime)
+	except IOError:
+		print ("")
+        
+	# SIG,NC,VCC,GND
+	motion=0
+	grovepi.pinMode(4,"INPUT")        
+   #Reads from D4
+	try:
+		# Sense motion, usually human, within the target range
+		motion=grovepi.digitalRead(4)
+		if motion==1:
+			cTime = time.strftime("%H %M %S %d %m %Y")
+			s.send("D4 motion true " + cTime)
+	except IOError:
+		print ("") 
 
+	time.sleep (0.5)
+    
 s.close()

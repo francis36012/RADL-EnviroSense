@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+ #!/usr/bin/env python
 #
 # GrovePi Example for using the analog read command to read analog sensor values
 #
@@ -27,61 +27,129 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 '''
-
 import time
 import grovepi
 import socket
-
-#Sensor connected to A0 Port 
-sensor = 14		# Pin 14 is A0 Port.
-grovepi.pinMode(sensor,"INPUT")
 
 s = socket.socket()
 host = "127.0.0.1"
 port = 8124
 s.connect((host, port))
 
-count = 0
-currentState = 0
+countA0 = 0
+currentStateA0 = 0
+countA1 = 0
+currentStateA1 = 0
+countA2 = 0
+currentStateA2 = 0
 
 while True:
+	# A0 Port.
+	grovepi.pinMode(0,"INPUT")
 	try:
-		sensor_value = grovepi.analogRead(sensor)
-        
-		if sensor_value==0 or sensor_value>800:
-            #Means opened
+		sensor_value = grovepi.analogRead(0)
+		if sensor_value==0 or (sensor_value>800 and sensor_value<900):
+            #0 Means opened
 			if sensor_value==0: 
                 #Write first state found
-				if count==0:
-					count = 1
-					currentState = sensor_value
-					cTime = time.strftime("%H %M %S %d %m %Y")
+				if countA0==0:
+					countA0 = 1
+					currentStateA0 = sensor_value
+					cTime = time.strftime("%H %M %S %d %m %Y")                   
 					s.send("A0 door open " + cTime)
                     
-				if currentState != sensor_value:
-					currentState = sensor_value
+				if currentStateA0 != sensor_value:
+					currentStateA0 = sensor_value
 					cTime = time.strftime("%H %M %S %d %m %Y")
 					s.send("A0 door open " + cTime)     
-			#Means closed
+			# > 800 Means closed
 			else: 
 				sensor_value=1
                 #Write first state found
-				if count==0:
-					count = 1
-					currentState = sensor_value
-					cTime = time.strftime("%H %M %S %d %m %Y")
+				if countA0==0:
+					countA0 = 1
+					currentStateA0 = sensor_value
+					cTime = time.strftime("%H %M %S %d %m %Y")                 
 					s.send("A0 door closed " + cTime)
                     
-				if currentState != sensor_value:
-					currentState = sensor_value
+				if currentStateA0 != sensor_value:
+					currentStateA0 = sensor_value
+					cTime = time.strftime("%H %M %S %d %m %Y")                      
+					s.send("A0 door closed " + cTime)                               
+	except IOError:
+		print ("")
+	time.sleep(.4)    
+	# A1 Port.
+	grovepi.pinMode(1,"INPUT")
+	try:
+		sensor_value = grovepi.analogRead(1)
+        
+		if sensor_value==0 or (sensor_value>800 and sensor_value<900):
+            #0 Means opened
+			if sensor_value==0: 
+                #Write first state found
+				if countA1==0:
+					countA1 = 1
+					currentStateA1 = sensor_value
 					cTime = time.strftime("%H %M %S %d %m %Y")
-					s.send("A0 door closed " + cTime)  
-                
-                
-		#cTime = time.strftime("%H %M %S %d %m %Y")
-		#s.send("A0 door true " + cTime)
-		#print("sensor_value =", sensor_value)
-		time.sleep(.5)
+					#s.send("A1 door open " + cTime)
+					s.send("A1 door open " + cTime)                    
+                    
+				if currentStateA1 != sensor_value:
+					currentStateA1 = sensor_value
+					cTime = time.strftime("%H %M %S %d %m %Y")
+					s.send("A1 door open " + cTime)     
+			# > 800 Means closed
+			else: 
+				sensor_value=1
+                #Write first state found
+				if countA1==0:
+					countA1 = 1
+					currentStateA1 = sensor_value
+					cTime = time.strftime("%H %M %S %d %m %Y")
+					s.send("A1 door closed " + cTime)
+                    
+				if currentStateA1 != sensor_value:
+					currentStateA1 = sensor_value
+					cTime = time.strftime("%H %M %S %d %m %Y")
+					s.send("A1 door closed " + cTime)                               
+	except IOError:
+		print ("")
+	time.sleep(.4)        
+	# A2 Port.
+	grovepi.pinMode(2,"INPUT")
+	try:
+		sensor_value = grovepi.analogRead(2)
+        
+		if sensor_value==0 or (sensor_value>800 and sensor_value<900):
+            #0 Means opened
+			if sensor_value==0: 
+                #Write first state found
+				if countA2==0:
+					countA2 = 1
+					currentStateA2 = sensor_value
+					cTime = time.strftime("%H %M %S %d %m %Y")
+					s.send("A2 door open " + cTime)
+                    
+				if currentStateA2 != sensor_value:
+					currentStateA2 = sensor_value
+					cTime = time.strftime("%H %M %S %d %m %Y")
+					s.send("A2 door open " + cTime)     
+			# > 800 Means closed
+			else: 
+				sensor_value=1
+                #Write first state found
+				if countA2==0:
+					countA2 = 1
+					currentStateA2 = sensor_value
+					cTime = time.strftime("%H %M %S %d %m %Y")
+					s.send("A2 door closed " + cTime)
+                    
+				if currentStateA2 != sensor_value:
+					currentStateA2 = sensor_value
+					cTime = time.strftime("%H %M %S %d %m %Y")
+					s.send("A2 door closed " + cTime)                               
 
 	except IOError:
 		print ("")
+	time.sleep(.4)

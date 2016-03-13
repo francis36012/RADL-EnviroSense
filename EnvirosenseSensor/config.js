@@ -1,22 +1,55 @@
 /**
- *   RULES
+ *                                                  **RULES**
  * 
  * - There is a max capacity of 3 PIR motion sensors per PI. They can be installed on ports D2, D3, and D4 ONLY
- * - If a new sensor is installed, it must exist in the DB, and the relationship port/id specified in this file
- * - The HDC1000 sensor (temp and hum) is a "2 in 1" sensor. Therefore, there must exist 2 ids for this sensor in the DB. The way of specifying this sensor here is: e.g. 'I2C-2': '1,2' (being 1 and 2 the temperature and humidity ids respectively. They MUST follow this order)
+ * 
+ * - If a new sensor is installed, it must exist in the main DB, the table name must exist in THIS_PI.SENSOR_TABLES 
+ * (and in the local DB itself), and the relationship port/id specified in this file
+ * 
+ * - The HDC1000 sensor (temp and hum) is a "2 in 1" sensor. Therefore, there must exist 2 ids for this sensor in the DB.
+ * 
+ *                                               PORTS / SENSORS
+ *  PIR Motion: D2, D3, and/or D4
+ *  Door:       A0, A1, and/or A2 
+ *  HDC1000:    I2C-1
  */
 
 var config = {};
 
 
 config.THIS_PI = {};
-//Sensor tables on local DB
+
+//Sensor tables on local DB. Used to check local DB for data when Pi starts
 config.THIS_PI.SENSOR_TABLES = ["temperature", "humidity", "motion", "door"];
-//The ids of the sensors installed in this PI
+
+//The relationship between GrovePi port numbers and sensor ids in this PI
+/**
+ * IMPORTANT: If adding a HDC1000 sensor (temperature and humidity), always specify the ids in the folling format: temperature id first, humidity id second
+ * 
+ * Example of config.THIS_PI.PORT_SENSORID:
+ * 
+ * SELECT * FROM SENSORS (main DB)
+ * id   room_id     name    sensor_type
+ * 1      1       HDC1000        TE         (attached to I2C-1)
+ * 2      1       HDC1000        HU         (attached to I2C-1) - same as above
+ * 3      2       PIR Motion     MO         (attached to D2)
+ * 4      3       Door           DO         (attached to A0)
+ * 
+ * **Note that both TE and HU (ids 1 and 2) belong to the same physical sensor attached to the GrovePi. They must have different ids there.
+ * 
+ * Having the configuration above in mind, config.THIS_PI.PORT_SENSORID should look like that:
+ * 
+ *                                 Port    SensorID
+ * config.THIS_PI.PORT_SENSORID = {'D2':    '3',
+ *                                 'I2C-1': '1,2',  **
+ *                                 'A0':    '5'};   
+ * 
+ * 
+ */
 config.THIS_PI.PORT_SENSORID = {'D2': '3',
+                                //'D3': '3',
                                 'I2C-1': '1,2',
                                 'A0': '5'}; 
-                                //'A0': '5'};
 
 config.netServer = {};
 config.netServer.PORT = 8124;
