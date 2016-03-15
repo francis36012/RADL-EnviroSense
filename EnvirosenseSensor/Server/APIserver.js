@@ -210,7 +210,7 @@ function parseDoorData(arrData, callback){
     else
         d = 1;    
         
-    doorData.shortType = 'DO';
+    doorData.shortType = 'DR';
     doorData.type = 'door';
     doorData.id = config.THIS_PI.PORT_SENSORID[arrData[0]];
     doorData.data = d;
@@ -428,23 +428,25 @@ function parseDataFromDB(sensor, row, callback){
 /**
  * Start point of the server. 
  * 
- * TODO:    Continue trying to implement the sending of data from multiple ports from door and motion sensors   
+ * TODO:    -Test the readings from multiple ports for same type of sensor
+ *          -Try to implement readings from multiple ports for the HDC1000   
  * 
  *          
  */
 getLocalDBConn(function(error){
     if (error) {
         errorLog(error);
+    }
+    else{
+        console.log('Local DB connection successful');
     } 
-    console.log('Local DB connection successful');
     connectAPI(function(error){
         if(error){
             errorLog(error);
         }
         else{
             console.log('API connection successful');
-        }
-        
+        }    
         checkLocalDB(function(error){
             if(error){
                 errorLog(error);
