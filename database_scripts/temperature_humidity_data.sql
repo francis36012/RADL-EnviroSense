@@ -15,12 +15,15 @@ VALUES
 	(1, 'HDC1000_1', 'TE'),
 	(1, 'HDC1000_1', 'HU'),
 	(1, 'PIRMotionSensor_1', 'MO'),
+	(1, 'DRSENSE_1', 'DR'),
 	(2, 'HDC1000_2', 'TE'),
 	(2, 'HDC1000_2', 'HU'),
 	(2, 'PIRMotionSensor_2', 'MO'),
+	(2, 'DRSENSE_2', 'DR'),
 	(3, 'HDC1000_3', 'TE'),
 	(3, 'HDC1000_3', 'HU'),
-	(3, 'PIRMotionSensor_3', 'MO');
+	(3, 'PIRMotionSensor_3', 'MO'),
+	(3, 'DRSENSE_3', 'DR');
 
 -- Temperature data
  INSERT INTO temperature values 
