@@ -337,7 +337,7 @@ public class SensorDataService {
 			switch (d.getSensorType()) {
 				case DR:
 					try {
-						int ddata = Integer.parseInt((String)d.getData().toString());
+						int ddata = Integer.parseInt(d.getData().toString());
 						if (ddata > 0) {
 							doorData.add(new Door(d.getSensorId(), d.getTimestamp(), true));
 						} else {
@@ -374,7 +374,6 @@ public class SensorDataService {
 						temperatureData.add(new Temperature(d.getSensorId(), d.getTimestamp(), ddata));
 					} catch (Exception ex) {
 					}
-					temperatureData.add(new Temperature(d.getSensorId(), d.getTimestamp(), (Double)d.getData()));
 					break;
 				case UK:
 					break;
