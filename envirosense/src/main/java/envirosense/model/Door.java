@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -15,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  * @author Francis Agyapong
  */
 @Entity
+@Table(name = "door")
 @IdClass(value = envirosense.model.SensorDataPK.class)
 public class Door implements Serializable {
 

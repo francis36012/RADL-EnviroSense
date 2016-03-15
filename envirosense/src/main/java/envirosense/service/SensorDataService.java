@@ -336,19 +336,44 @@ public class SensorDataService {
 		for (SensorData d : data) {
 			switch (d.getSensorType()) {
 				case DR:
-					doorData.add(new Door(d.getSensorId(), d.getTimestamp(), (Boolean)d.getData()));
+					try {
+						int ddata = Integer.parseInt((String)d.getData().toString());
+						if (ddata > 0) {
+							doorData.add(new Door(d.getSensorId(), d.getTimestamp(), true));
+						} else {
+							doorData.add(new Door(d.getSensorId(), d.getTimestamp(), false));
+						}
+					} catch (Exception ex) {
+					}
 					break;
 				case HU:
-					humidityData.add(new Humidity(d.getSensorId(), d.getTimestamp(), (Double)d.getData()));
+					try {
+						double ddata = Double.parseDouble(d.getData().toString());
+						humidityData.add(new Humidity(d.getSensorId(), d.getTimestamp(), ddata));
+					} catch (Exception ex) {
+					}
 					break;
 				case MO:
-					motionData.add(new Motion(d.getSensorId(), d.getTimestamp(), (Boolean)d.getData()));
+					try {
+						int ddata = Integer.parseInt(d.getData().toString());
+						if (ddata > 0) {
+							motionData.add(new Motion(d.getSensorId(), d.getTimestamp(), true));
+						} else {
+							motionData.add(new Motion(d.getSensorId(), d.getTimestamp(), false));
+						}
+					} catch (Exception ex) {
+					}
 					break;
 				case PA:
 					break;
 				case RA:
 					break;
 				case TE:
+					try {
+						double ddata = Double.parseDouble(d.getData().toString());
+						temperatureData.add(new Temperature(d.getSensorId(), d.getTimestamp(), ddata));
+					} catch (Exception ex) {
+					}
 					temperatureData.add(new Temperature(d.getSensorId(), d.getTimestamp(), (Double)d.getData()));
 					break;
 				case UK:

@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * This class models a room in the system's environment
@@ -12,6 +13,7 @@ import javax.persistence.Id;
  * @author Francis Agyapong <francis.agyapong@edu.sait.ca>
  */
 @Entity
+@Table(name = "room")
 public class Room {
 	/** The ID of the room object */
 	@Id
