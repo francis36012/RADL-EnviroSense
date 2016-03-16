@@ -70,7 +70,7 @@ public interface TemperatureRepository extends JpaRepository<Temperature, Sensor
 	 * @return A List of temperature data that satisfy the conditions given above.
 	 */
 	@Query(
-		value = "SELECT * FROM temperature t JOIN sensor s ON t.sensor_id = s.id WHERE s.room_id = ?1 ORDER BY timestamp DESC LIMIT 1;",
+		value = "SELECT * FROM temperature t JOIN sensor s ON t.sensor_id = s.id WHERE s.room_id = ?1 ORDER BY timestamp DESC LIMIT 1",
 		nativeQuery = true
 	)
 	List<Temperature> findLatestByRoomId(long roomId);
@@ -80,7 +80,7 @@ public interface TemperatureRepository extends JpaRepository<Temperature, Sensor
 	 * @return A List of temperature data that satisfy the conditions given above.
 	 */
 	@Query(
-		value = "SELECT sensor_id, data, MAX(timestamp) AS timestamp FROM temperature WHERE sensor_id = ?1",
+		value = "SELECT sensor_id, data, timestamp FROM temperature WHERE sensor_id = ?1 ORDER BY timestamp DESC LIMIT 1",
 		nativeQuery = true
 	)
 	List<Temperature> findLatestBySensorId(long sensorId);
@@ -90,7 +90,7 @@ public interface TemperatureRepository extends JpaRepository<Temperature, Sensor
 	 * @return A List of temperature data that satisfy the conditions given above.
 	 */
 	@Query(
-		value = "SELECT sensor_id, data, MAX(timestamp) AS timestamp FROM temperature t JOIN sensor s ON t.sensor_id = s.id GROUP BY s.room_id",
+		value = "SELECT sensor_id, data, timestamp FROM temperature t JOIN sensor s ON t.sensor_id = s.id GROUP BY s.room_id ORDER BY timestamp DESC LIMIT 1",
 		nativeQuery = true
 	)
 	List<Temperature> findLatest();

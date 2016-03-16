@@ -79,7 +79,7 @@ public interface HumidityRepository extends JpaRepository<Humidity, SensorDataPK
 	 * @return A List of humidity data that satisfy the conditions given above.
 	 */
 	@Query(
-		value = "SELECT sensor_id, data, MAX(timestamp) AS timestamp FROM humidity WHERE sensor_id = ?1",
+		value = "SELECT sensor_id, data, timestamp AS timestamp FROM humidity WHERE sensor_id = ?1 ORDER BY timestamp LIMIT 1",
 		nativeQuery = true
 	)
 	List<Humidity> findLatestBySensorId(long sensorId);
@@ -89,7 +89,7 @@ public interface HumidityRepository extends JpaRepository<Humidity, SensorDataPK
 	 * @return A List of humidity data that satisfy the conditions given above.
 	 */
 	@Query(
-		value = "SELECT sensor_id, data, MAX(timestamp) AS timestamp FROM humidity h JOIN sensor s ON h.sensor_id = s.id GROUP BY s.room_id",
+		value = "SELECT sensor_id, data, timestamp FROM humidity h JOIN sensor s ON h.sensor_id = s.id GROUP BY s.room_id ORDER BY timestamp LIMIT 1",
 		nativeQuery = true
 	)
 	List<Humidity> findLatest();
