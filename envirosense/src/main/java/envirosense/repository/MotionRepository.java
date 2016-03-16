@@ -90,7 +90,7 @@ public interface MotionRepository extends JpaRepository<Motion, SensorDataPK> {
 	 */
 	@Query(
 
-		value = "SELECT sensor_id, data, MAX(timestamp) FROM motion m JOIN sensor s ON m.sensor_id = s.id WHERE s.room_id = 1 GROUP BY s.id",
+		value = "SELECT sensor_id, data, MAX(timestamp) AS timestamp  FROM motion m JOIN sensor s ON m.sensor_id = s.id WHERE s.room_id = 1 GROUP BY s.id",
 		nativeQuery = true
 	)
 	List<Motion> findLatest();

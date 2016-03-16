@@ -89,7 +89,7 @@ public interface DoorRepository extends JpaRepository<Door, SensorDataPK> {
 	 * @return A List of door data that satisfy the conditions given above.
 	 */
 	@Query(
-		value = "SELECT sensor_id, data, MAX(timestamp) FROM door d JOIN sensor s ON d.sensor_id = s.id WHERE s.room_id = 1 GROUP BY s.id",
+		value = "SELECT sensor_id, data, MAX(timestamp) AS timestamp FROM door d JOIN sensor s ON d.sensor_id = s.id WHERE s.room_id = 1 GROUP BY s.id",
 		nativeQuery = true
 	)
 	List<Door> findLatest();
