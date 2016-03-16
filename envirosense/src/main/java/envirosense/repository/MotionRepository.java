@@ -69,7 +69,7 @@ public interface MotionRepository extends JpaRepository<Motion, SensorDataPK> {
 	 * @return A List of motion data that satisfy the conditions given above.
 	 */
 	@Query(
-		value = "SELECT * FROM motion m JOIN sensor s ON m.sensor_id = s.id WHERE s.room_id = ?1 ORDER BY timestamp DESC LIMIT 1;",
+		value = "SELECT * FROM motion m JOIN sensor s ON m.sensor_id = s.id WHERE s.room_id = ?1 ORDER BY timestamp DESC LIMIT 1",
 		nativeQuery = true
 	)
 	List<Motion> findLatestByRoomId(long roomId);
@@ -89,7 +89,8 @@ public interface MotionRepository extends JpaRepository<Motion, SensorDataPK> {
 	 * @return A List of motion data that satisfy the conditions given above.
 	 */
 	@Query(
-		value = "SELECT sensor_id, data, timestamp FROM motion m JOIN sensor s ON m.sensor_id = s.id GROUP BY s.room_id ORDER BY timestamp LIMIT 1",
+
+		value = "SELECT sensor_id, data, MAX(timestamp) FROM motion m JOIN sensor s ON m.sensor_id = s.id WHERE s.room_id = 1 GROUP BY s.id",
 		nativeQuery = true
 	)
 	List<Motion> findLatest();
