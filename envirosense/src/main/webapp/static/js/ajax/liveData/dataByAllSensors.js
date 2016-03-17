@@ -41,7 +41,7 @@ function readyStateChangeByAllSensors(xmlHttp) {
 							sensorCategory.push(jsonObject[index]["sensorType"]);
 							var toAppend = createSlidesByAllSensors();
 							toAppend.setAttribute("id", jsonObject[index]["sensorType"]);
-
+							
 							var slickSlides = document.getElementById("slickSlides");
 							slickSlides.appendChild(toAppend);
 						}

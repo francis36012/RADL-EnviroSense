@@ -30,20 +30,9 @@ function runAjax(formElement) {
 			getDataByAllSensors(formElement);
 			break;
 		
-		case "Temperature":
-		case "Motion":
-		case "Humidity":
-		case "Door":
-			dataChoice = getSensorTypeByName(dataChoice);
-			var startTime = formElement.fromDate.value;
-			var endTime = formElement.toDate.value;
-			var buttonLoader = formElement.submitButton;
-			getDataBySensorType(dataChoice, startTime, endTime, buttonLoader);
-			break;
-		
 		case "liveData":
-			dataChoice = getSensorTypeByName(formElement.type.value);
-			getDataBySensorType(dataChoice, formElement);
+		case "reportSensors":
+			getDataBySensorType(formElement);
 			break;
 			
 		case "reportSettings":

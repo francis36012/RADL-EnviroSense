@@ -23,9 +23,13 @@ if (window["google"] !== null) {
  * have an "On Ready State Change" that would run a function once it sends a
  * request to the server.
  */
-function getDataBySensorType(sensorType, startTime, endTime, buttonLoader) {
-	var dateRegex = new RegExp("T|Z");
+function getDataBySensorType(formElement, buttonLoader) {
+	var sensorType = getSensorTypeByName(formElement.dataType.value);
+	var startTime = formElement.fromDate.value;
+	var endTime = formElement.toDate.value;
+	var buttonLoader = formElement.submitButton;
 	
+	var dateRegex = new RegExp("T|Z");
 	startTime = new Date(startTime).toISOString().split(dateRegex);
 	endTime = new Date(endTime).toISOString().split(dateRegex);
 	var finalStartTime = startTime[0] + " " + startTime[1].slice(0, -4);

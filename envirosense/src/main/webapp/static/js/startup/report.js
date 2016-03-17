@@ -13,17 +13,13 @@ if (window.addEventListener) { //W3 Standards
 	window.attachEvent('onload', startupController);
 }
 
-/**
- * Generate the settings panel for SLICK. It has to be before the "On Load"
- * function because it has to create the settings panel first for the onload
- * method to alter or modify.
- */
-var settingsForm = createNode("form", ["form"], null);
-var hiddenInput = createNode("input", null, [["name", "dataChoice"], ["value", "reportSettings"], ["type", "text"]]);
-settingsForm.appendChild(hiddenInput);
-runAjax(settingsForm);
-
 function startupController() {
+	/*
+	 * Generate the settings panel for SLICK.
+	 */
+	var settingsForm = createForm("reportSettings", null, null);
+	runAjax(settingsForm);
+
 	/*
 	 * Since AJAX is asynchronous and the form creation is based on an AJAX
 	 * call, the form might not finish being created yet, so before getting the 
@@ -60,7 +56,9 @@ function dropdownListeners() {
 	for(var index = 0; index < sensorEntries.length; index++) {
 		sensorEntries[index].onclick = function(clickEvent) {
 			var targetElement = clickEvent.target || clickEvent.srcElement;
-			var containerElement = document.getElementById("reportForm").dataChoice;
+			var hiddenElement = document.getElementById("reportForm").dataChoice;
+			var containerElement = document.getElementById("reportForm").dataType;
+			setValue(hiddenElement, "reportSensors");
 			setValue(containerElement, targetElement.textContent || targetElement.innerText);
 		};
 	}

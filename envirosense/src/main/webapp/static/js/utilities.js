@@ -36,6 +36,28 @@ function createNode(tagName, className, attributeValues) {
 /* ---------------------------------------- */
 /*			CONTAINER CREATION				*/
 /* ---------------------------------------- */
+function createForm(dataChoice, dataCategory, dataType) {
+	var mainForm = createNode("form", ["form"], null);
+	
+	if (dataChoice !== undefined && dataChoice !== null) {
+		var hiddenInput1 = createNode("input", null, [["name", "dataChoice"], ["value", dataChoice], ["type", "text"]]);
+		mainForm.appendChild(hiddenInput1);
+	}
+	
+	if (dataCategory !== undefined && dataCategory !== null) {
+		var hiddenInput2 = createNode("input", null, [["name", "category"], ["value", dataCategory], ["type", "text"]]);
+		mainForm.appendChild(hiddenInput2);
+	}
+	
+	if (dataType !== undefined && dataType !== null) {	
+		var hiddenInput3 = createNode("input", null, [["name", "type"], ["value", dataType], ["type", "text"]]);
+		mainForm.appendChild(hiddenInput3);
+	}
+	
+	return mainForm;
+}
+
+
 function createContainerByPageSettings(webPage) {
 	switch (webPage) {
 		case "reportSettings":
@@ -45,7 +67,8 @@ function createContainerByPageSettings(webPage) {
 			var settingsContainerRow2 = createNode("div", ["row", "form-group"], null);
 			var settingsContainerRow2Col1 = createNode("div", ["col-xs-10", "col-xs-offset-1"], null);
 			var settingsForm = createNode("form", ["form", "form-horizontal"], [["id", "reportForm"], ["role", "form"]]);
-			var settingsAnchorToggle = createNode("button", ["btn", "btn-default", "btn-block"], [["data-toggle", "dropdown"],["name", "dataChoice"]]);
+			var settingsAnchorToggle = createNode("button", ["btn", "btn-default", "btn-block"], [["data-toggle", "dropdown"], ["name", "dataType"]]);
+			var settingsHiddenCategory = createNode("input", null, [["type", "hidden"], ["name", "dataChoice"]]);
 			var settingsUnorderedList = createNode("ul", ["dropdown-menu", "btn-block"], null);
 			
 			var settingsContainerRow3 = createNode("div", ["row", "form-group"], null);
@@ -77,6 +100,7 @@ function createContainerByPageSettings(webPage) {
 			settingsContainerRow3.appendChild(settingsContainerRow3Col1);
 			
 			settingsContainerRow2Col1.appendChild(settingsAnchorToggle);
+			settingsContainerRow2Col1.appendChild(settingsHiddenCategory);
 			settingsContainerRow2Col1.appendChild(settingsUnorderedList);
 			settingsContainerRow2.appendChild(settingsContainerRow2Col1);
 			
@@ -91,7 +115,14 @@ function createContainerByPageSettings(webPage) {
 			return settingsContainerRow1;
 			break;
 			
-		case "index":
+		case "liveDataSettings":
+			var settingsContainerRow1 = createNode("div", ["row"], null);
+			var settingsContainerRow1Col1 = createNode("div", ["col-xs-12"], null);
+			
+			var settingsContainerRow2 = createNode("div", ["row", "form-group"], null);
+			var settingsContainerRow2Col1 = createNode("div", ["col-xs-10", "col-xs-offset-1"], null);
+			
+			var sensorsButton = createNode("input", ["btn", "btn-default", "btn-block"], [["type", "button"]]);
 			break;
 			
 		default:

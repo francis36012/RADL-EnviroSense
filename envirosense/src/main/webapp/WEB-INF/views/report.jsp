@@ -73,6 +73,6 @@
 		<script src="<c:url value='/static/js/ajax/ajaxController.js' />"></script>
 
 		<!-- Javascript : Startup Sequence-->
-		<script src="<c:url value='/static/js/pages/report.js' />"></script>
+		<script src="<c:url value='/static/js/startup/report.js' />"></script>
 	</body>
 </html>

@@ -3,7 +3,8 @@
  * have an "On Ready State Change" that would run a function once it sends a
  * request to the server.
  */
-function getDataBySensorType(sensorType, formElement) {
+function getDataBySensorType(formElement) {
+	var sensorType = formElement.type.value;
 	var xmlHttp = new XMLHttpRequest();
 	xmlHttp.onreadystatechange = function() {
 		readyStateChangeBySensorType(xmlHttp, formElement);
@@ -29,7 +30,7 @@ function readyStateChangeBySensorType(xmlHttp, formElement) {
 		 * 4: Request is finished and data is ready
 		 */
 		
-		var sensorType = getSensorTypeByName(formElement.type.value);
+		var sensorType = formElement.type.value;
 		var dataContainer = document.getElementById(sensorType).getElementsByClassName("dataContainer");
 		
 		if (xmlHttp.status === 200) {
