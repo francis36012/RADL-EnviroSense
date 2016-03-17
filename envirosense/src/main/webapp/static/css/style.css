@@ -37,6 +37,10 @@ textarea {
 	padding: 0 !important;
 }
 
+.panel {
+	margin: 3.33% 3.33%;
+}
+
 /* REMOVE BLUE GLOW */
 *:focus {
 	outline: none;

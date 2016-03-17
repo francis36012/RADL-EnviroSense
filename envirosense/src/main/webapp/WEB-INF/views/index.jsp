@@ -24,30 +24,27 @@
 			<c:import url="/static/common/navbar/content.jsp" />
 
 			<div id="page-content-wrapper">
-			<div class="container-fluid nopadding">
-				<div class="row">
-				<div class="col-xs-12 col-sm-6 col-sm-offset-3">
+				<div class="container-fluid nopadding">
+					<div class="row">
+					<div class="col-xs-12 col-sm-6 col-sm-offset-3">
 
-					<!-- SIDEBAR TOGGLE -->
-					<c:import url="/static/common/navbar/toggle.jsp" />
+						<!-- SIDEBAR TOGGLE -->
+						<c:import url="/static/common/navbar/toggle.jsp" />
 
-					<div class="row page-header">
-					<div class="col-xs-12">
-						<h1>Live Data</h1>
-						<small>Let's pick up where you left off.</small>
+						<div class="row page-header">
+						<div class="col-xs-12">
+							<h1>Live Data</h1>
+							<small>Let's pick up where you left off.</small>
+						</div>
+						</div>
+					</div>
+					</div>
+						
+					<div class="row">
+						<div id="slickSlides" class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 nopadding">
+						</div>
 					</div>
 				</div>
-				</div>
-				</div>
-
-				<div class="row">
-				<div class="col-xs-12 col-sm-6 col-sm-offset-3 nopadding">
-					<div class="single-items">
-
-					</div>
-				</div>
-				</div>
-			</div>
 			</div>
 		</div>
 
@@ -60,20 +57,17 @@
 		<!--Javasciprt : Utilities -->
 		<script src="<c:url value='/static/js/utilities.js' />"></script>
 
-		<!--Javasciprt : AJAX By Page Settings -->
-		<script src="<c:url value='/static/js/ajax/dataByPageSettings.js' />"></script>
-
 		<!--Javasciprt : AJAX By Sensor Type -->
-		<script src="<c:url value='/static/js/ajax/dataBySensorType.js' />"></script>
-
-		<!--Javasciprt : AJAX By All Sensors -->
-		<script src="<c:url value='/static/js/ajax/dataByAllSensors.js' />"></script>
+		<script src="<c:url value='/static/js/ajax/liveData/dataBySensorType.js' />"></script>
 
 		<!--Javasciprt : AJAX Controller -->
 		<script src="<c:url value='/static/js/ajax/ajaxController.js' />"></script>
-
-		<!-- Javascript : Startup Sequence-->
-		<script src="<c:url value='/static/js/startup/report.js' />"></script>
+		
+		<!--Javasciprt : AJAX By All Sensors -->
+		<script src="<c:url value='/static/js/ajax/liveData/dataByAllSensors.js' />"></script>
+		
+		<!-- Javascript : Startup Sequence -->
+		<script src="<c:url value='/static/js/pages/liveData.js' />"></script>
 
 	</body>
 </html>

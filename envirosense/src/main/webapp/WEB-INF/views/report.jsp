@@ -64,15 +64,15 @@
 		<script src="<c:url value='/static/js/ajax/dataByPageSettings.js' />"></script>
 
 		<!--Javasciprt : AJAX By Sensor Type -->
-		<script src="<c:url value='/static/js/ajax/dataBySensorType.js' />"></script>
+		<script src="<c:url value='/static/js/ajax/report/dataBySensorType.js' />"></script>
 
 		<!--Javasciprt : AJAX By All Sensors -->
-		<script src="<c:url value='/static/js/ajax/dataByAllSensors.js' />"></script>
+		<script src="<c:url value='/static/js/ajax/report/dataByAllSensors.js' />"></script>
 
 		<!--Javasciprt : AJAX Controller -->
 		<script src="<c:url value='/static/js/ajax/ajaxController.js' />"></script>
 
 		<!-- Javascript : Startup Sequence-->
-		<script src="<c:url value='/static/js/startup/report.js' />"></script>
+		<script src="<c:url value='/static/js/pages/report.js' />"></script>
 	</body>
 </html>

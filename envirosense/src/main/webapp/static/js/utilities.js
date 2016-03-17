@@ -38,7 +38,7 @@ function createNode(tagName, className, attributeValues) {
 /* ---------------------------------------- */
 function createContainerByPageSettings(webPage) {
 	switch (webPage) {
-		case "report":
+		case "reportSettings":
 			var settingsContainerRow1 = createNode("div", ["row"], null);
 			var settingsContainerRow1Col1 = createNode("div", ["col-xs-12"], null);
 			
@@ -128,13 +128,16 @@ function createContainerBySensorType() {
 	var sensorName = createNode("div", ["sensorName"], null);
 	var sensorType = createNode("div", ["sensorType"], null);
 	var sensorTime = createNode("div", ["sensorTime"], null);
+	var sensorValue = createNode("div", ["sensorValue"], null);
+	
+	var horizontalLine = createNode("hr", null, null);
 	
 	sensorData.appendChild(sensorId);
 	sensorData.appendChild(sensorName);
 	sensorData.appendChild(sensorType);
-	sensorData.innerHTML += "<hr />";
 	sensorData.appendChild(sensorTime);
-	
+	sensorData.appendChild(sensorValue);
+	sensorData.appendChild(horizontalLine);
 	panelBody.appendChild(sensorData);
 	panelDiv.appendChild(panelHead);
 	panelDiv.appendChild(panelBody);
@@ -197,6 +200,12 @@ function createContainerByAllSensors() {
 	return rowDiv;
 }
 
+function createSlidesByAllSensors() {
+	var contentDiv = createNode("div", ["single-items"], null);
+	
+	return contentDiv;
+}
+
 function createPanel() {
 	var rowDiv = createNode("div", ["row"], null);
 	var colDiv = createNode("div", ["col-xs-12"], null);
@@ -213,11 +222,20 @@ function createPanel() {
 	return rowDiv;
 }
 
-function clearPanels() {
-	var panelElements = document.getElementsByClassName("dataContainer");
-	for (var index = 0; index < panelElements.length; index++) {
-		for (var innerIndex = 0; innerIndex < panelElements[index].childNodes.length; innerIndex++) {
-			panelElements[index].childNodes[innerIndex].innerHTML = "";
+function clearPanels(slickPanels) {
+	
+	if (slickPanels === null) {
+		var panelElements = document.getElementsByClassName("dataContainer");
+		for (var index = 0; index < panelElements.length; index++) {
+			for (var innerIndex = 0; innerIndex < panelElements[index].childNodes.length; innerIndex++) {
+				panelElements[index].childNodes[innerIndex].innerHTML = "";
+			}
+		}
+	} else {
+		for (var index = 0; index < slickPanels.length; index++) {
+			for (var innerIndex = 0; innerIndex < slickPanels[index].childNodes.length; innerIndex++) {
+				slickPanels[index].childNodes[innerIndex].innerHTML = "";
+			}
 		}
 	}
 }
@@ -234,6 +252,9 @@ function getSensorNameByType(sensorType) {
 			break;
 		case "MO":
 			returnValue = "Motion";
+			break;
+		case "DR":
+			returnValue = "Door";
 			break;
 		default:
 			returnValue = "";
@@ -253,6 +274,9 @@ function getSensorTypeByName(sensorName) {
 			break;
 		case "Motion":
 			returnValue = "MO";
+			break;
+		case "Door":
+			returnValue = "DR";
 			break;
 		default:
 			returnValue = "";
