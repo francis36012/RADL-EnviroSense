@@ -14,8 +14,11 @@ if (window.addEventListener) { //W3 Standards
 }
 
 function startupController() {
+	runNavbar();
+	runBootstrapSwitch();
+	
 	$("[class='bootstrapSwitch']").on("switchChange.bootstrapSwitch", function (event, state) {
-		buttonListener
+		buttonListener();
 	});
 }
 

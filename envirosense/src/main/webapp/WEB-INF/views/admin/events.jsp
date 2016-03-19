@@ -125,9 +125,6 @@
 			</div>
 		</div>
 
-		<!-- Javascript : BOOTSTRAP SWITCH -->
-		<script src="<c:url value='/static/js/RunBootstrapSwitch.js' />"></script>
-		
 		<!-- Javascript : Startup Sequence -->
 		<script src="<c:url value='/static/js/pages/events.js' />"></script>
 	</body>

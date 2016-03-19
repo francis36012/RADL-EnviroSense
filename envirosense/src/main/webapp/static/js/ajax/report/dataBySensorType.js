@@ -11,13 +11,7 @@ if (window["google"] !== null) {
 		console.error("Cannot connect to Google Charts.\n---\n" + errorEvent);
 	}
 }
-//try {
-//	google.charts.load('current', {
-//		packages: ['corechart', 'line']
-//	});
-//} catch (errorEvent) {
-//	console.error("Cannot connect to Google Charts.\n" + errorEvent);
-//}
+
 /**
  * The Run AJAX function starts up the AJAX process. By collateral, this would
  * have an "On Ready State Change" that would run a function once it sends a
@@ -177,7 +171,7 @@ function reformatJsonBySensorType(jsonObject, sortKey) {
 			jsonObject[index]["data"] = 1;
 		}
 		
-		jsonProperty.timestamp = jsonObject[index]["timestamp"];
+		jsonProperty.timestamp = new Date(jsonObject[index]["timestamp"]);
 		jsonProperty.data = jsonObject[index]["data"];
 		
 		jsonData[uniqueId.indexOf(sortAttribute)].push(jsonProperty);
@@ -215,7 +209,7 @@ function loadDataBySensorType(jsonObject, domElement) {
 	var sensorTime = domElement.getElementsByClassName("sensorTime")[0];
 	
 	sensorId.innerHTML = "ID: " + jsonElement.id;
-	sensorType.innerHTML = "Type: " + jsonElement.sensorType;
+	sensorType.innerHTML = "Type: " + getSensorNameByType(jsonElement.sensorType);
 	
 	if (window.google !== undefined && window.hasOwnProperty("google")) {
 		generateChartBySensorType(jsonObject, sensorTime, jsonElement.sensorType);
@@ -233,18 +227,19 @@ function loadDataBySensorType(jsonObject, domElement) {
 function generateChartBySensorType(jsonObject, domElement, sensorType) {
 	var rawData = [];
 	for (var index = 0; index < jsonObject.values.length; index++) {
-		rawData.push([new Date(jsonObject.values[index]["timestamp"]), jsonObject.values[index]["data"]]);
+		rawData.push([getDateInUTC(jsonObject.values[index]["timestamp"]), jsonObject.values[index]["data"]]);
 	}
-	if (sensorType === "MO") {
+	if (sensorType === "MO" || sensorType === "DR") {
 		google.charts.setOnLoadCallback(function () {
 			var data = new google.visualization.DataTable();
 			data.addColumn('datetime', 'X');
-			data.addColumn('number', 'Motion');
+			data.addColumn('number', 'Event');
 			data.addRows(rawData);
 
 			var options = {
 				hAxis: {
-					title: 'Time'
+					title: 'Time',
+					format: 'MMM dd - HH:mm'
 				},
 				vAxis: {
 					title: 'Motion',
@@ -271,7 +266,8 @@ function generateChartBySensorType(jsonObject, domElement, sensorType) {
 
 			var options = {
 				hAxis: {
-					title: 'Time'
+					title: 'Time',
+					format: 'MMM dd - HH:mm'
 				},
 				vAxis: {
 					title: 'Celcius'

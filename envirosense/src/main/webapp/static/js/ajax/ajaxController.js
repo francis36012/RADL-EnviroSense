@@ -35,12 +35,16 @@ function runAjax(formElement) {
 			getDataBySensorType(formElement);
 			break;
 			
+		case "reportRooms":
+			getDataByRoom(formElement);
+			break;
+			
 		case "reportSettings":
-			getDataByPageSettings(dataChoice, formElement);
+			getDataByPageSettings(formElement);
 			break;
 			
 		case "eventToggle":
-			setDataByEvents(dataChoice, formElement);
+			setDataByEvents(formElement);
 			break;
 			
 		default:

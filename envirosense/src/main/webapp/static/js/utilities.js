@@ -45,11 +45,11 @@ function runSlick() {
 		mobileFirst: true,
 		responsive: [
 		{
-			breakpoint: 769,
+			breakpoint: 768,
 			settings: "unslick"
 		},
 		{
-			breakpoint: 768,
+			breakpoint: 767,
 			settings: {
 				slidesToShow: 1,
 				slidesToScroll: 1
@@ -159,9 +159,24 @@ function createContainerByPageSettings(webPage) {
 			var settingsContainerRow1Col1 = createNode("div", ["col-xs-12"], null);
 			
 			var settingsContainerRow2 = createNode("div", ["row", "form-group"], null);
-			var settingsContainerRow2Col1 = createNode("div", ["col-xs-10", "col-xs-offset-1"], null);
+			var settingsContainerRow2Col1 = createNode("div", ["col-xs-6", "col-xs-offset-1"], null);
+			var settingsContainerRow2Col2 = createNode("div", ["col-xs-6", "col-xs-offset-1"], null);
 			
-			var sensorsButton = createNode("input", ["btn", "btn-default", "btn-block"], [["type", "button"]]);
+			var sensorsForm = createForm("liveData", "Sensors", "all");
+			var sensorsButton = createNode("input", ["btn", "btn-default", "btn-block"], [["name", "dataChoice"], ["type", "button"], ["value", "Sensors"]]);
+			sensorsForm.appendChild(sensorsButton);
+			
+			var roomsForm = createNode("liveData", "Rooms", "all");
+			var roomsButton = createNode("input", ["btn", "btn-default", "btn-block"], [["name", "dataChoice"], ["type", "button"], ["value", "Rooms"]]);
+			roomsForm.appendChild(roomsButton);
+			
+			settingsContainerRow2Col1.appendChild(sensorsForm);
+			settingsContainerRow2Col1.appendChild(roomsForm);
+			settingsContainerRow2.appendChild(settingsContainerRow2Col1);
+			settingsContainerRow2.appendChild(settingsContainerRow2Col2);
+			settingsContainerRow1Col1.appendChild(settingsContainerRow2);
+			settingsContainerRow1.appendChild(settingsContainerRow1Col1);
+			
 			break;
 			
 		default:
@@ -270,6 +285,107 @@ function createContainerByAllSensors() {
 	return rowDiv;
 }
 
+
+function createContainerByRoomId() {
+	/*
+	 * For the "Sensor By Type" JSON object, the format would be:
+	 * 1.]	id
+	 * 2.]	roomType
+	 * 3.]	timestamp
+	 * 4.]	data
+	 * 
+	 * For this script, we are going for the format:
+	 * 1.]	roomId
+	 * 2.]	roomType
+	 * 3.]	vaules
+	 *		i.	timestamp
+	 *		ii.	data
+	 */
+	
+	var rowDiv = createNode("div", ["row"], null);
+	var colDiv = createNode("div", ["col-xs-12"], null);
+	var panelDiv = createNode("div", ["panel", "panel-default"], null);
+	var panelHead = createNode("div", ["panel-heading", "text-center"], null);
+	var panelBody = createNode("div", ["panel-body"], null);
+	
+	var sensorData = createNode("div", ["dataContainer"], null);
+	var sensorId = createNode("div", ["sensorId"], null);
+	var sensorName = createNode("div", ["sensorName"], null);
+	var sensorType = createNode("div", ["sensorType"], null);
+	var sensorTime = createNode("div", ["sensorTime"], null);
+	var sensorValue = createNode("div", ["sensorValue"], null);
+	
+	var horizontalLine = createNode("hr", null, null);
+	
+	sensorData.appendChild(sensorId);
+	sensorData.appendChild(sensorName);
+	sensorData.appendChild(sensorType);
+	sensorData.appendChild(sensorTime);
+	sensorData.appendChild(sensorValue);
+	sensorData.appendChild(horizontalLine);
+	panelBody.appendChild(sensorData);
+	panelDiv.appendChild(panelHead);
+	panelDiv.appendChild(panelBody);
+	
+	colDiv.appendChild(panelDiv);
+	rowDiv.appendChild(colDiv);
+	
+	return rowDiv;
+}
+
+
+function createContainerByAllRooms() {
+	/*
+	 * For the "Report" JSON object, the pattern would be:
+	 *	1.]	id
+	 *	2.]	room
+	 *		i.		id
+	 *		ii.		name
+	 *		iii.	description
+	 *	3.] name
+	 *	4.] roomType
+	 */
+	var rowDiv = createNode("div", ["row"], null);
+	var colDiv = createNode("div", ["col-xs-12"], null);
+	var panelDiv = createNode("div", ["panel", "panel-default"], null);
+	var panelHead = createNode("div", ["panel-heading", "text-center"], null);
+	var panelBody = createNode("div", ["panel-body"], null);
+	
+	var roomData = createNode("div", ["dataContainer"], null);
+	var roomId = createNode("div", ["roomId"], null);
+	var roomName = createNode("div", ["roomName"], null);
+	var roomType = createNode("div", ["roomType"], null);
+	var roomRoom = createNode("div", null, null);
+	
+	var roomHeading = createNode("h5", null, null);
+	var roomData = createNode("div", ["roomData", "well", "well-sm"], null);
+	var roomId = createNode("div", ["roomId"], null);
+	var roomName = createNode("div", ["roomName"], null);
+	var roomDescription = createNode("div", ["roomDescription"], null);
+	
+	roomHeading.innerHTML = "Room Data";
+	roomData.appendChild(roomId);
+	roomData.appendChild(roomName);
+	roomData.appendChild(roomDescription);
+	
+	roomRoom.appendChild(roomData);
+	roomData.appendChild(roomId);
+	roomData.appendChild(roomName);
+	roomData.appendChild(roomType);
+	roomData.appendChild(roomHeading);
+	roomData.appendChild(roomRoom);
+	roomData.innerHTML += "<hr />";
+	
+	panelBody.appendChild(roomData);
+	panelDiv.appendChild(panelHead);
+	panelDiv.appendChild(panelBody);
+	
+	colDiv.appendChild(panelDiv);
+	rowDiv.appendChild(colDiv);
+	
+	return rowDiv;
+}
+
 function createSlidesByAllSensors() {
 	var contentDiv = createNode("div", ["single-items"], null);
 	
@@ -363,4 +479,16 @@ function setValue(containerElement, dataChoice) {
 function sleep(timeUnits) {
 	var startTime = new Date().getTime() + timeUnits;
 	while (new Date().getTime() < startTime);
+}
+
+function getDateInUTC(timestamp) {
+	var date	= new Date(timestamp);
+	var year    = date.getUTCFullYear();
+	var month   = date.getUTCMonth() + 1; // getMonth() is zero-indexed, so we'll increment to get the correct month number
+	var day     = date.getUTCDate();
+	var hours   = date.getUTCHours();
+	var minutes = date.getUTCMinutes();
+	var seconds = date.getUTCSeconds();
+
+	return new Date(year, month, day, hours, minutes, seconds);
 }

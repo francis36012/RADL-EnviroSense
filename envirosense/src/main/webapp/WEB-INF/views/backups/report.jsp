@@ -65,9 +65,6 @@
 
 		<!--Javasciprt : AJAX By All Sensors -->
 		<script type="text/javascript" src="<c:url value='/static/js/ajax/report/dataByAllSensors.js' />"></script>
-		
-		<!--Javasciprt : AJAX By All Rooms -->
-		<script type="text/javascript" src="<c:url value='/static/js/ajax/report/dataByRoom.js' />"></script>
 
 		<!--Javasciprt : AJAX Controller -->
 		<script type="text/javascript" src="<c:url value='/static/js/ajax/ajaxController.js' />"></script>

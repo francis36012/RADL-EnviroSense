@@ -14,6 +14,8 @@ if (window.addEventListener) { //W3 Standards
 }
 
 function startupController() {
+	runNavbar();
+	
 	var settingsForm = createForm("ALL", null, null);	
 	runAjax(settingsForm);
 	

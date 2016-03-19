@@ -20,7 +20,9 @@ function startupController() {
 	/*
 	 * Generate the settings panel for SLICK.
 	 */
-	var settingsForm = createForm("reportSettings", null, null);
+	var settingsForm = createForm("reportSettings", "sensor", null);
+	runAjax(settingsForm);
+	settingsForm = createForm("reportSettings", "room", null);
 	runAjax(settingsForm);
 
 	/*
@@ -30,12 +32,26 @@ function startupController() {
 	 */
 	var formCheck = setInterval(function() {
 		if (document.getElementById("reportForm") !== null) {
+			formDefaultValues();
 			formSubmitListeners();
 			dropdownListeners();
 			windowResizeHandler();
 			clearInterval(formCheck);
 		}
 	}, 100);
+	
+}
+
+function formDefaultValues() {
+	var reportForm = document.getElementById("reportForm");
+	var today = new Date();
+	var lastWeek = new Date(new Date(today).setDate(today.getDate() - 7));
+	
+	var dateRegex = /:\d{2}.\d{3}Z/;
+	var fromDate = reportForm.fromDate;
+	fromDate.value = lastWeek.toISOString().split(dateRegex)[0];
+	var toDate = reportForm.toDate;
+	toDate.value = today.toISOString().split(dateRegex)[0];
 }
 
 /**
@@ -56,12 +72,24 @@ function formSubmitListeners() {
 function dropdownListeners() {
 	var reportForm = document.getElementById("reportForm");
 	var sensorEntries = reportForm.getElementsByClassName("sensorEntry");
+	var roomEntries = reportForm.getElementsByClassName("roomEntry");
+	
 	for(var index = 0; index < sensorEntries.length; index++) {
 		sensorEntries[index].onclick = function(clickEvent) {
 			var targetElement = clickEvent.target || clickEvent.srcElement;
 			var hiddenElement = document.getElementById("reportForm").dataChoice;
 			var containerElement = document.getElementById("reportForm").dataType;
 			setValue(hiddenElement, "reportSensors");
+			setValue(containerElement, targetElement.textContent || targetElement.innerText);
+		};
+	}
+	
+	for(var index = 0; index < roomEntries.length; index++) {
+		roomEntries[index].onclick = function(clickEvent) {
+			var targetElement = clickEvent.target || clickEvent.srcElement;
+			var hiddenElement = document.getElementById("reportForm").dataChoice;
+			var containerElement = document.getElementById("reportForm").dataType;
+			setValue(hiddenElement, "reportRooms");
 			setValue(containerElement, targetElement.textContent || targetElement.innerText);
 		};
 	}
