@@ -1,7 +1,7 @@
 INSERT INTO condition_time
 	(sunday, monday, tuesday, wednesday, thursday, friday, saturday, date_time, all_hours, time_check)
 VALUES
-	(b'1', b'1', b'1', b'1', b'1', b'1', b'1', DATE('2016-02-29 00:00:00'), b'1', 'GT');
+	(b'1', b'1', b'1', b'1', b'1', b'1', b'1', STR_TO_DATE('2016-02-29 00:00:00', '%Y-%m-%d %H:%i:%s'), b'1', 'GT');
 	
 INSERT INTO econdition
 	(sensor_id, value, modifier, condition_time_id)

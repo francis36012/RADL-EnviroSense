@@ -134,7 +134,7 @@ DROP TABLE IF EXISTS ra_bluetooth;
 CREATE TABLE ra_bluetooth (
 	sensor_id BIGINT NOT NULL,
 	beacon_id BIGINT NOT NULL,
-	rssi_value BIGINT NOT NULL,
+	rssi BIGINT NOT NULL,
 	timestamp TIMESTAMP NOT NULL,
 	CONSTRAINT pk_rabluetooth PRIMARY KEY (sensor_id, timestamp),
 	CONSTRAINT fk_bluetooth_sensor FOREIGN KEY (sensor_id) REFERENCES sensor(id),
