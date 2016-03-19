@@ -6,6 +6,3 @@
 	<span class="glyphicon glyphicon-menu-hamburger"></span>
 	</button>
 </a>
-
-<!-- Toggle Script -->
-<script type="text/javascript" src="<c:url value='/static/js/RunNavbar.js' />"></script>

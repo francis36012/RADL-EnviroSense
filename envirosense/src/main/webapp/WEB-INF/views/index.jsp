@@ -48,26 +48,23 @@
 			</div>
 		</div>
 
-		<!-- Javascript : SLICK -->
-		<script src="<c:url value='/static/js/RunSlick.js' />"></script>
-
 		<!-- Javascript : Google Charts -->
 		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-		<!--Javasciprt : Utilities -->
-		<script src="<c:url value='/static/js/utilities.js' />"></script>
-
 		<!--Javasciprt : AJAX By Sensor Type -->
-		<script src="<c:url value='/static/js/ajax/liveData/dataBySensorType.js' />"></script>
+		<script type="text/javascript" src="<c:url value='/static/js/ajax/liveData/dataBySensorType.js' />"></script>
 
 		<!--Javasciprt : AJAX Controller -->
-		<script src="<c:url value='/static/js/ajax/ajaxController.js' />"></script>
+		<script type="text/javascript" src="<c:url value='/static/js/ajax/ajaxController.js' />"></script>
 		
 		<!--Javasciprt : AJAX By All Sensors -->
-		<script src="<c:url value='/static/js/ajax/liveData/dataByAllSensors.js' />"></script>
+		<script type="text/javascript" src="<c:url value='/static/js/ajax/liveData/dataByAllSensors.js' />"></script>
 		
+		<!--Javasciprt : Utilities -->
+		<script type="text/javascript" src="<c:url value='/static/js/utilities.js' />"></script>
+
 		<!-- Javascript : Startup Sequence -->
-		<script src="<c:url value='/static/js/startup/liveData.js' />"></script>
+		<script type="text/javascript" src="<c:url value='/static/js/startup/liveData.js' />"></script>
 
 	</body>
 </html>

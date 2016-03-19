@@ -51,28 +51,25 @@
 			</div>
 		</div>
 
-		<!-- Javascript : SLICK -->
-		<script src="<c:url value='/static/js/RunSlick.js' />"></script>
-
 		<!-- Javascript : Google Charts -->
 		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 		<!--Javasciprt : Utilities -->
-		<script src="<c:url value='/static/js/utilities.js' />"></script>
+		<script type="text/javascript" src="<c:url value='/static/js/utilities.js' />"></script>
 
 		<!--Javasciprt : AJAX By Page Settings -->
-		<script src="<c:url value='/static/js/ajax/dataByPageSettings.js' />"></script>
+		<script type="text/javascript" src="<c:url value='/static/js/ajax/dataByPageSettings.js' />"></script>
 
 		<!--Javasciprt : AJAX By Sensor Type -->
-		<script src="<c:url value='/static/js/ajax/report/dataBySensorType.js' />"></script>
+		<script type="text/javascript" src="<c:url value='/static/js/ajax/report/dataBySensorType.js' />"></script>
 
 		<!--Javasciprt : AJAX By All Sensors -->
-		<script src="<c:url value='/static/js/ajax/report/dataByAllSensors.js' />"></script>
+		<script type="text/javascript" src="<c:url value='/static/js/ajax/report/dataByAllSensors.js' />"></script>
 
 		<!--Javasciprt : AJAX Controller -->
-		<script src="<c:url value='/static/js/ajax/ajaxController.js' />"></script>
+		<script type="text/javascript" src="<c:url value='/static/js/ajax/ajaxController.js' />"></script>
 
 		<!-- Javascript : Startup Sequence-->
-		<script src="<c:url value='/static/js/startup/report.js' />"></script>
+		<script type="text/javascript" src="<c:url value='/static/js/startup/report.js' />"></script>
 	</body>
 </html>

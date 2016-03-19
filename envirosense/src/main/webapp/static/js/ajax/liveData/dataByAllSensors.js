@@ -50,26 +50,7 @@ function readyStateChangeByAllSensors(xmlHttp) {
 					//No Data Found
 				}
 				
-				$('.single-items').slick({
-					dots: true,
-					infinite: false,
-					arrows: false,
-					speed: 250,
-					initialSlide: 0,
-					mobileFirst: true,
-					responsive: [
-					{
-						breakpoint: 769,
-						settings: "unslick"
-					},
-					{
-						breakpoint: 768,
-						settings: {
-							slidesToShow: 1,
-							slidesToScroll: 1
-						}
-					}]
-				});
+				runSlick();
 			}
 		} else if (xmlHttp.status === 404) {
 			//Can't connect

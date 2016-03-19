@@ -14,6 +14,9 @@ if (window.addEventListener) { //W3 Standards
 }
 
 function startupController() {
+	runNavbar();
+	runSlick();
+	
 	/*
 	 * Generate the settings panel for SLICK.
 	 */

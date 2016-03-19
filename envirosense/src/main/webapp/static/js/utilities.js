@@ -32,6 +32,45 @@ function createNode(tagName, className, attributeValues) {
 	return newElement;
 }
 
+/* ---------------------------------------- */
+/*			PLUGIN INITIALIZATION			*/
+/* ---------------------------------------- */
+function runSlick() {
+		$('.single-items').slick({
+		dots: true,
+		infinite: false,
+		arrows: false,
+		speed: 250,
+		initialSlide: 0,
+		mobileFirst: true,
+		responsive: [
+		{
+			breakpoint: 769,
+			settings: "unslick"
+		},
+		{
+			breakpoint: 768,
+			settings: {
+				slidesToShow: 1,
+				slidesToScroll: 1
+			}
+		}]
+	});
+}
+
+function runNavbar() { 
+	$("#menu-toggle").click(
+	function(e) 
+	{
+		e.preventDefault();
+		$("#wrapper").toggleClass("toggled");
+	});
+}
+
+function runBootstrapSwitch() {
+	$("[class='bootstrapSwitch']").bootstrapSwitch();
+}
+
 
 /* ---------------------------------------- */
 /*			CONTAINER CREATION				*/
