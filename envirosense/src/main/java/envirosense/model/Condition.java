@@ -1,10 +1,8 @@
 package envirosense.model;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.util.Calendar;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -30,22 +28,16 @@ public class Condition implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private ConditionModifier modifier;
 	
-	@Column(name = "date_time")
-	private Date dateTime;
-
 	@ManyToOne(targetEntity = ConditionTime.class)
 	@JoinColumn(name = "condition_time_id")
 	private ConditionTime conditionTime;
 
-	public Condition(long id, Sensor sensor, String value, ConditionModifier modifier, Date dateTime,
-		ConditionTime conditionTime
-	) {
+	public Condition(long id, Sensor sensor, String value, ConditionModifier modifier, ConditionTime conditionTime) {
 		super();
 		this.id = id;
 		this.sensor = sensor;
 		this.value = value;
 		this.modifier = modifier;
-		this.dateTime = dateTime;
 		this.conditionTime = conditionTime;
 	}
 	
@@ -68,10 +60,6 @@ public class Condition implements Serializable {
 		return modifier;
 	}
 
-	public Date getDateTime() {
-		return dateTime;
-	}
-
 	public ConditionTime getConditionTime() {
 		return conditionTime;
 	}
@@ -90,10 +78,6 @@ public class Condition implements Serializable {
 
 	public void setModifier(ConditionModifier modifier) {
 		this.modifier = modifier;
-	}
-
-	public void setDateTime(Date dateTime) {
-		this.dateTime = dateTime;
 	}
 
 	public void setWeeklyOccurrences(ConditionTime conditionTime) {
@@ -154,7 +138,7 @@ public class Condition implements Serializable {
 			boolean conditionData = false;
 			
 			try {
-				incomingData = (boolean)data;
+				incomingData = (Integer)data == 1 ? true : false; 
 				conditionData = Boolean.parseBoolean(value);
 			} catch (ClassCastException ex) {
 				return false;

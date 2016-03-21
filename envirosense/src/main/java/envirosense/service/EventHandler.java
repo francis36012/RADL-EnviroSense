@@ -26,6 +26,9 @@ public class EventHandler {
 	@Autowired
 	EmailNotifier emailNotifier;
 	
+	@Autowired
+	SlackNotifier slackNotifier;
+	
 
 	/**
 	 * Creates an <code>EventHandler</code> object
@@ -68,6 +71,7 @@ public class EventHandler {
 	private boolean sendNotification(User user, Event event) {
 		boolean result = true;
 		if (event.isUseSlack()) {
+			result = slackNotifier.sendMessage(user, event.getMessage());
 		}
 		if (event.isUsePhone()) {
 		}
