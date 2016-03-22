@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+ #!/usr/bin/env python
 #
 # GrovePi Example for using the Grove PIR Motion Sensor (http://www.seeedstudio.com/wiki/Grove_-_PIR_Motion_Sensor)
 #
@@ -30,7 +30,7 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+THE SOFTWARE.	
 '''
 # NOTE:
 # 	There are also 2x potentiometers on the board for adjusting measuring distance and hold time
@@ -56,47 +56,82 @@ port = 8124
 
 s.connect((host, port))
 
+currentStateD2 = 0
+noMotionCountD2 = 0
+currentStateD3 = 0
+noMotionCountD3 = 0
+currentStateD4 = 0
+noMotionCountD4 = 0
+
 while True:
 	# SIG,NC,VCC,GND
 	motion=0
 	grovepi.pinMode(2,"INPUT")
 
     #Reads from D2
-	try:
+	try:    
 		# Sense motion, usually human, within the target range
 		motion=grovepi.digitalRead(2)
-		if motion==1:
-			cTime = time.strftime("%H %M %S %d %m %Y")
-			s.send("D2 motion true " + cTime)
+		cTime = time.strftime("%H %M %S %d %m %Y")
+		if motion == 1:
+			noMotionCountD2 = 0	
+			if currentStateD2 != 1:
+				currentStateD2 = 1
+				s.send("D2 motion true " + cTime)
+		elif motion==0:
+			noMotionCountD2 += 1
+			if currentStateD2!=0 and noMotionCountD2 > 5:
+				currentStateD2 = 0
+				s.send("D2 motion false " + cTime)	        
 	except IOError:
 		print ("")
-        
+		
 	# SIG,NC,VCC,GND
 	motion=0
-	grovepi.pinMode(3,"INPUT")        
+	grovepi.pinMode(3,"INPUT")
+
     #Reads from D3
-	try:
+	try:    
 		# Sense motion, usually human, within the target range
 		motion=grovepi.digitalRead(3)
-		if motion==1:
-			cTime = time.strftime("%H %M %S %d %m %Y")
-			s.send("D3 motion true " + cTime)
+		cTime = time.strftime("%H %M %S %d %m %Y")
+		if motion == 1:
+			noMotionCountD3 = 0	
+			if currentStateD3 != 1:
+				currentStateD3 = 1
+				s.send("D3 motion true " + cTime)
+		elif motion==0:
+			noMotionCountD3 += 1
+			if currentStateD3!=0 and noMotionCountD3 > 5:
+				currentStateD3 = 0
+				s.send("D3 motion false " + cTime)	        
 	except IOError:
 		print ("")
-        
+		
+	
 	# SIG,NC,VCC,GND
 	motion=0
-	grovepi.pinMode(4,"INPUT")        
-   #Reads from D4
-	try:
+	grovepi.pinMode(4,"INPUT")
+
+    #Reads from D4
+	try:    
 		# Sense motion, usually human, within the target range
 		motion=grovepi.digitalRead(4)
-		if motion==1:
-			cTime = time.strftime("%H %M %S %d %m %Y")
-			s.send("D4 motion true " + cTime)
+		cTime = time.strftime("%H %M %S %d %m %Y")
+		if motion == 1:
+			noMotionCountD4 = 0	
+			if currentStateD4 != 1:
+				currentStateD4 = 1
+				s.send("D4 motion true " + cTime)
+		elif motion==0:
+			noMotionCountD4 += 1
+			if currentStateD4!=0 and noMotionCountD4 > 5:
+				currentStateD4 = 0
+				s.send("D4 motion false " + cTime)	        
 	except IOError:
-		print ("") 
-
+		print ("")
+		
+		
 	time.sleep (0.5)
     
 s.close()
