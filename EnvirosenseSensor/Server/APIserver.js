@@ -428,8 +428,7 @@ function parseDataFromDB(sensor, row, callback){
 /**
  * Start point of the server. 
  * 
- * TODO:    -Test the readings from multiple ports for same type of sensor
- *          -Try to implement readings from multiple ports for the HDC1000   
+ * TODO:  -Try to implement readings from multiple ports for the HDC1000   
  * 
  *          
  */
