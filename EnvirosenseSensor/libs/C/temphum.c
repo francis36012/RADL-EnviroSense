@@ -91,9 +91,25 @@ int main(int argc, char *argv[]) {
 	if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0)
 		error("ERROR connecting");
 
+	short currentTemp = i2c_read(0x40, 0, 20000);
+	short currentHum = i2c_read(0x40, 1, 20000);
+	
 	while(1){
-		unsigned short temp = i2c_read(0x40, 0, 20000);
-		unsigned short hum  = i2c_read(0x40, 1, 20000);
+		short temp = i2c_read(0x40, 0, 20000);
+		short hum  = i2c_read(0x40, 1, 20000);
+
+		//Check the discrepancy betwen the previous reading with the actual reading
+		if((currentTemp-temp > 10 || currentTemp-temp < 10) || (currentHum-hum > 10 || currentHum-hum < 10)) {
+			//Redo reading. Discrepancy too big. Probably wrong
+			currentTemp = temp;
+			currentHum = hum;
+			sleep(1);
+			continue;
+		}	
+		
+		currentTemp = temp;
+		currentHum = hum;
+		
 
 		time_t current_time;
 		char* c_time_string;
@@ -104,7 +120,6 @@ int main(int argc, char *argv[]) {
 		if (temp != 0xffff && hum != 0xffff) {
 			
 			sprintf(buffer, "I2C-1 Temp/Hum %.2f %.2f Time %s", temp * (165.0/65536.0) - 40, hum * (100.0/65536.0), c_time_string);
-            
 			n = write(sockfd,buffer,strlen(buffer));
             
 			if (n < 0)
@@ -112,7 +127,6 @@ int main(int argc, char *argv[]) {
 		}
 
 		sleep(4);
-		fflush(stdout);
 	}
 	close(sockfd);
 	return 0;
