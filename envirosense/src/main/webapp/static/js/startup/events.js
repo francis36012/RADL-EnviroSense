@@ -33,9 +33,9 @@ function onSwitchChange(event, state) {
 	 * Switch's "On Switch Change" event doesn't respond when something blocks
 	 * it, like an alert box.
 	 */
-	var targetForm = event.currentTarget.form;
-	var eventId = createNode("input", ["value", targetForm.dataset.eventId], [["name", "eventId"]]);
-	var eventState = createNode("input", ["value", state], [["name", "state"]]);
+	var targetForm = event.currentTarget;
+	var eventId = createNode("input", null, [["name", "eventId"], ["value", targetForm.dataset.eventId]]);
+	var eventState = createNode("input", null, [["name", "state"], ["value", state]]);
 	var mainForm = createForm("eventToggle", "Events", null);
 	mainForm.appendChild(eventId);
 	mainForm.appendChild(eventState);
