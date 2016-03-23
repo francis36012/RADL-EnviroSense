@@ -5,8 +5,8 @@
  * request to the server.
  */
 function setDataByEventId(formElement) {
-	var stateValue = formElement.state;
-	var eventId = formElement.eventId;
+	var stateValue = formElement.state.value;
+	var eventId = formElement.eventId.value;
 	
 	var xmlHttp = new XMLHttpRequest();
 	xmlHttp.open("POST", "/envirosense/api/" + stateValue + "/" + eventId, true);
