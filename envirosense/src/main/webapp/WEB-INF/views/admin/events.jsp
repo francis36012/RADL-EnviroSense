@@ -53,11 +53,18 @@
 											<form action="/api/event" method="POST">
 												<div class="row">
 													<div class="col-xs-6">
-													<input type="button" class="btn btn-danger btn-block" value="Disable All" />
+													<input type="button" id="disableAll" class="btn btn-danger btn-block" value="Disable All"
+														   data-switch-toggle="state"
+														   data-switch-value="false"
+														   data-radio-all-off="true"
+														   />
 													</div>
 													
 													<div class="col-xs-6">
-													<input type="button" class="btn btn-success btn-block" value="Enable All" />
+													<input type="button" id="enableAll" class="btn btn-success btn-block" value="Enable All" 
+														   data-switch-toggle="state"
+														   data-switch-value="true"
+														   />
 													</div>
 												</div>
 											</form>
@@ -66,19 +73,20 @@
 
 									<div class="panel panel-default">
 										<div class="panel-heading text-center">
-											Event <c:out value="${currentEvent.getId()}"/>
+											Events
 										</div>
 
 										<div class="panel-body">
 											<div class="dataContainer">
 												<c:forEach items="${events}" var="currentEvent">
+													<form>
 													<div class="row">
 														<div class="col-xs-9">
-																<c:out value="${currentEvent.getName()}" />
+															<c:out value="${currentEvent.getName()}" />
 														</div>
 
 														<div class="col-xs-3">
-															<input type="checkbox"
+															<input type="checkbox" name="event"
 																class="bootstrapSwitch"
 																data-size="mini"
 																data-on-color="success"
@@ -90,6 +98,7 @@
 															/>
 														</div>
 													</div>
+													</form>
 												</c:forEach>
 											</div>
 										</div>
@@ -124,8 +133,17 @@
 				</div>
 			</div>
 		</div>
+						
+		<!--Javasciprt : AJAX Controller -->
+		<script type="text/javascript" src="<c:url value='/static/js/ajax/ajaxController.js' />"></script>
+		
+		<!--Javasciprt : AJAX Events -->
+		<script type="text/javascript" src="<c:url value='/static/js/ajax/event/dataByEvents.js' />"></script>
+
+		<!--Javasciprt : Utilities -->
+		<script type="text/javascript" src="<c:url value='/static/js/utilities.js' />"></script>
 
 		<!-- Javascript : Startup Sequence -->
-		<script src="<c:url value='/static/js/pages/events.js' />"></script>
+		<script type="text/javascript" src="<c:url value='/static/js/startup/events.js' />"></script>
 	</body>
 </html>

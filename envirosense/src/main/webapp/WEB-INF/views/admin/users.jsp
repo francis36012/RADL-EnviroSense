@@ -113,11 +113,11 @@
 		</div>
 		</div>
 	
-	<!-- Javascript : SLICK -->
-	<script src="<c:url value='/static/js/RunSlick.js' />"></script>
-	
-	<!-- Javascript : SLICK -->
-	<script src="<c:url value='/static/js/RunBootstrapSwitch.js' />"></script>
+		<!--Javasciprt : Utilities -->
+		<script type="text/javascript" src="<c:url value='/static/js/utilities.js' />"></script>
+
+		<!-- Javascript : Startup Sequence -->
+		<script type="text/javascript" src="<c:url value='/static/js/startup/users.js' />"></script>
 	
 	</body>
 </html>

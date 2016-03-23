@@ -17,11 +17,36 @@ function startupController() {
 	runNavbar();
 	runBootstrapSwitch();
 	
+	document.getElementById("enableAll").onclick = enableAll;
+	document.getElementById("disableAll").onclick = disableAll;
+	
 	$("[class='bootstrapSwitch']").on("switchChange.bootstrapSwitch", function (event, state) {
-		buttonListener();
+		if (event.type === "switchChange") {
+			onSwitchChange(event, state);
+		}
 	});
 }
 
-function buttonListener() {
+function onSwitchChange(event, state) {
+	/*
+	 * Avoid using blocking methods because for some reason, Bootstrap
+	 * Switch's "On Switch Change" event doesn't respond when something blocks
+	 * it, like an alert box.
+	 */
+	var targetForm = event.currentTarget.form;
+	var eventId = createNode("input", ["value", targetForm.dataset.eventId], [["name", "eventId"]]);
+	var eventState = createNode("input", ["value", state], [["name", "state"]]);
+	var mainForm = createForm("eventToggle", "Events", null);
+	mainForm.appendChild(eventId);
+	mainForm.appendChild(eventState);
 	
+	runAjax(mainForm);
+}
+
+function enableAll() {
+	$("[class='bootstrapSwitch']").bootstrapSwitch("state", true);
+}
+
+function disableAll() {
+	$("[class='bootstrapSwitch']").bootstrapSwitch("state", false);
 }

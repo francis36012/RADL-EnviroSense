@@ -44,7 +44,7 @@ function runAjax(formElement) {
 			break;
 			
 		case "eventToggle":
-			setDataByEvents(formElement);
+			setDataByEventId(formElement);
 			break;
 			
 		default:
