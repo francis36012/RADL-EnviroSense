@@ -54,7 +54,7 @@ public class BluetoothBeaconController {
 	 * @param email The email of the user who owns the beacons to be returned
 	 * @return All the beacons whose owner has the email specified
 	 */
-	@RequestMapping(value = "/id/{email}", method = RequestMethod.GET)
+	@RequestMapping(value = "/email/{email}", method = RequestMethod.GET)
 	public ResponseEntity<List<BluetoothBeacon>> findByUser(@PathVariable("email") String email) {
 		List<BluetoothBeacon> beacons = beaconRepository.findByUser(email);
 		
