@@ -29,9 +29,12 @@ function getDataBySensorType(formElement, buttonLoader) {
 	var finalStartTime = startTime[0] + " " + startTime[1].slice(0, -4);
 	var finalEndTime = endTime[0] + " " + endTime[1].slice(0, -4);
 	
+	var laddaButton = Ladda.create(buttonLoader);
+	laddaButton.start();
+	
 	var xmlHttp = new XMLHttpRequest();
 	xmlHttp.onreadystatechange = function() {
-		readyStateChangeBySensorType(xmlHttp, buttonLoader);
+		readyStateChangeBySensorType(xmlHttp, laddaButton);
 	};
 	xmlHttp.open("GET", "/envirosense/api/report/type/" + sensorType + "/"+ finalStartTime + "/" + finalEndTime, true);
 	xmlHttp.send();
@@ -42,9 +45,7 @@ function getDataBySensorType(formElement, buttonLoader) {
  * connection from the server. If it get a response from the server, it will do
  * the necessary process to parse the JSON object where appropriate.
  */
-function readyStateChangeBySensorType(xmlHttp, buttonLoader) {
-	var laddaButton = Ladda.create(buttonLoader);
-	laddaButton.start();
+function readyStateChangeBySensorType(xmlHttp, laddaButton) {
 	laddaButton.setProgress(0);
 	
 	try {
@@ -81,11 +82,20 @@ function readyStateChangeBySensorType(xmlHttp, buttonLoader) {
 						}
 					}
 					
+					laddaButton.setProgress(.6);
+					var currentPercent = .6;
+					var incrementPercent = (1 - currentPercent)/jsonObject.length;
+					
 					clearPanels(null);
-					laddaButton.setProgress(.8);
+					
 					for (var index = 0; index < jsonObject.length; index++) {
 						loadDataBySensorType(jsonObject[index], dataContainer[index]);
+						laddaButton.setProgress(currentPercent += incrementPercent);
 					}
+					
+					setTimeout(function() {
+						laddaButton.stop();
+					}, 500);
 					
 				} else {
 					/*
@@ -94,8 +104,11 @@ function readyStateChangeBySensorType(xmlHttp, buttonLoader) {
 					 * however, we cannot assume that the server returned a
 					 * "404 Not Found" or "204 No Data Found" status.
 					 */
+					
+					setTimeout(function() {
+						laddaButton.stop();
+					}, 500);
 				}
-				laddaButton.setProgress(1);
 			}
 		} else if (xmlHttp.status === 404) {
 			/*
@@ -103,6 +116,10 @@ function readyStateChangeBySensorType(xmlHttp, buttonLoader) {
 			 * message "Something went wrong. Please check connection to
 			 * server."
 			 */
+			
+			setTimeout(function() {
+				laddaButton.stop();
+			}, 500);
 		} else if (xmlHttp.status === 204) {
 			/*
 			 * No data was found. We create a panel with the error message
@@ -113,19 +130,13 @@ function readyStateChangeBySensorType(xmlHttp, buttonLoader) {
 					dataContainer[0].parentNode.parentNode.remove();
 				}
 			}
+			
+			setTimeout(function() {
+				laddaButton.stop();
+			}, 500);
 		}
 		
-		setTimeout(function () {
-		laddaButton.stop();
-	}, 1000);
-	
 	} catch (errorEvent) {
-		laddaButton.setProgress(0);
-		
-		setTimeout(function () {
-			laddaButton.stop();
-		}, 1000);
-		
 		throw errorEvent;
 	}
 }
@@ -214,12 +225,14 @@ function loadDataBySensorType(jsonObject, domElement) {
 	if (window.google !== undefined && window.hasOwnProperty("google")) {
 		generateChartBySensorType(jsonObject, sensorTime, jsonElement.sensorType);
 	} else {
+		var divider = createNode("hr");
 		var alertMessage = createNode("p", null, null);
 		alertMessage.innerHTML = "Cannot connect to Google Charts. ";
 		alertMessage.innerHTML += "Please check your internet connectivity.";
 		var alertDiv = createNode("div", ["alert", "alert-warning"], null);
 		alertDiv.appendChild(alertMessage);
 		
+		sensorTime.appendChild(divider);
 		sensorTime.appendChild(alertDiv);
 	}
 }

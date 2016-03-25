@@ -1,3 +1,8 @@
+@font-face {
+	font-family: "Open Sans";
+	src: url("../external/Fonts/Open Sans/OpenSans-Regular.ttf");
+}
+
 body {
 	background-image: url("../images/Backgrounds/Background - Noise 2.png");
 	background-repeat: repeat;

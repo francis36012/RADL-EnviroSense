@@ -52,19 +52,17 @@
 										<div class="panel-body">
 											<form action="/api/event" method="POST">
 												<div class="row">
-													<div class="col-xs-6">
-													<input type="button" id="disableAll" class="btn btn-danger btn-block" value="Disable All"
-														   data-switch-toggle="state"
-														   data-switch-value="false"
-														   data-radio-all-off="true"
-														   />
-													</div>
+													<div class="col-xs-12 btn-group btn-group-justified">
+													<a id="disableAll" class="btn btn-danger btn-block"
+														data-switch-toggle="state"
+														data-switch-value="false"
+														data-radio-all-off="true"
+													>Disable All</a>
 													
-													<div class="col-xs-6">
-													<input type="button" id="enableAll" class="btn btn-success btn-block" value="Enable All" 
-														   data-switch-toggle="state"
-														   data-switch-value="true"
-														   />
+													<a id="enableAll" class="btn btn-success btn-block" 
+														data-switch-toggle="state"
+														data-switch-value="true"
+														>Enable All</a>
 													</div>
 												</div>
 											</form>

@@ -15,9 +15,12 @@ function getDataByRoom(formElement, buttonLoader) {
 	var finalStartTime = startTime[0] + " " + startTime[1].slice(0, -4);
 	var finalEndTime = endTime[0] + " " + endTime[1].slice(0, -4);
 	
+	var laddaButton = Ladda.create(buttonLoader);
+	laddaButton.start();
+	
 	var xmlHttp = new XMLHttpRequest();
 	xmlHttp.onreadystatechange = function() {
-		readyStateChangeByRoom(xmlHttp, buttonLoader);
+		readyStateChangeByRoom(xmlHttp, laddaButton);
 	};
 	xmlHttp.open("GET", "/envirosense/api/report/room/" + roomType + "/"+ finalStartTime + "/" + finalEndTime, true);
 	xmlHttp.send();
@@ -28,9 +31,7 @@ function getDataByRoom(formElement, buttonLoader) {
  * connection from the server. If it get a response from the server, it will do
  * the necessary process to parse the JSON object where appropriate.
  */
-function readyStateChangeByRoom(xmlHttp, buttonLoader) {
-	var laddaButton = Ladda.create(buttonLoader);
-	laddaButton.start();
+function readyStateChangeByRoom(xmlHttp, laddaButton) {
 	laddaButton.setProgress(0);
 	
 	try {
@@ -67,8 +68,12 @@ function readyStateChangeByRoom(xmlHttp, buttonLoader) {
 						}
 					}
 					
+					laddaButton.setProgress(.6);
+					var currentPercent = .6;
+					var incrementPercent = (1 - currentPercent)/jsonObject.length;
+					
 					clearPanels(null);
-					laddaButton.setProgress(.8);
+					
 					for (var index = 0; index < jsonObject.length; index++) {
 						/*
 						 * You might have noticed it's loading by Sensor Type.
@@ -78,7 +83,12 @@ function readyStateChangeByRoom(xmlHttp, buttonLoader) {
 						 * by using the Loading of data by Sensor Type.
 						 */
 						loadDataBySensorType(jsonObject[index], dataContainer[index]);
+						laddaButton.setProgress(currentPercent += incrementPercent);
 					}
+					
+					setTimeout(function() {
+						laddaButton.stop();
+					}, 500);
 					
 				} else {
 					/*
@@ -88,7 +98,6 @@ function readyStateChangeByRoom(xmlHttp, buttonLoader) {
 					 * "404 Not Found" or "204 No Data Found" status.
 					 */
 				}
-				laddaButton.setProgress(1);
 			}
 		} else if (xmlHttp.status === 404) {
 			/*
@@ -96,6 +105,11 @@ function readyStateChangeByRoom(xmlHttp, buttonLoader) {
 			 * message "Something went wrong. Please check connection to
 			 * server."
 			 */
+			
+			setTimeout(function() {
+				laddaButton.stop();
+			}, 500);
+			
 		} else if (xmlHttp.status === 204) {
 			/*
 			 * No data was found. We create a panel with the error message
@@ -106,19 +120,12 @@ function readyStateChangeByRoom(xmlHttp, buttonLoader) {
 					dataContainer[0].parentNode.parentNode.remove();
 				}
 			}
+			
+			setTimeout(function() {
+				laddaButton.stop();
+			}, 500);
 		}
-		
-		setTimeout(function () {
-		laddaButton.stop();
-	}, 1000);
-	
 	} catch (errorEvent) {
-		laddaButton.setProgress(0);
-		
-		setTimeout(function () {
-			laddaButton.stop();
-		}, 1000);
-		
 		throw errorEvent;
 	}
 }

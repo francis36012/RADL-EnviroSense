@@ -60,7 +60,9 @@ function formDefaultValues() {
 function formSubmitListeners() {
 	var reportForm = reportForm = document.getElementById("reportForm");
 	reportForm.onsubmit = function() {
-		runAjax(this);
+		if (reportForm.dataType.value !== "") {
+			runAjax(this);
+		}
 		return false;
 	};
 };
@@ -102,12 +104,25 @@ function dropdownListeners() {
  * whenever the window size is altered. 
  */
 function windowResizeHandler() {
+	/*
+	 * For android browsers, it's calling the onscroll event even if you just 
+	 * scroll up. This is because of the address bar of the top of the browser.
+	 * It fires the resize event whenever it appears/disappears when scrolling.
+	 */
+	
 	var resizeFunction = function () {
 		setTimeout(function () {
 			var reportForm = document.getElementById("reportForm");
-			runAjax(reportForm);
+			
+			if (reportForm.dataType.value !== "") {
+				runAjax(reportForm);
+			}
 		}, 300);
 	};
 	
-	window.addEventListener("resize", resizeFunction);
+	if (window.addEventListener) { //W3 Standards
+		window.addEventListener('resize', resizeFunction, false);
+	} else if (window.attachEvent) { //Microsoft Standards
+		window.attachEvent('onresize', resizeFunction);
+	}
 }

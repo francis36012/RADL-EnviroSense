@@ -34,7 +34,7 @@
 					<div class="row page-header">
 					<div class="col-xs-12">
 						<h1>Report</h1>
-						<small>Let's go back in time.</small>
+						<small>Let's see what you've missed.</small>
 					</div>
 				</div>
 				</div>

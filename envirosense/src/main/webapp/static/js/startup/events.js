@@ -21,9 +21,7 @@ function startupController() {
 	document.getElementById("disableAll").onclick = disableAll;
 	
 	$("[class='bootstrapSwitch']").on("switchChange.bootstrapSwitch", function (event, state) {
-		if (event.type === "switchChange") {
-			onSwitchChange(event, state);
-		}
+		onSwitchChange(event, state);
 	});
 }
 
