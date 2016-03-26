@@ -70,27 +70,13 @@
 						<div class="panel-heading">
 							<div class="text-center">All Users</div>
 						</div>
-						<%
-							String[] allUsers = {
-								"Stephanie Kraus",
-								"Sergio Diaz",
-								"Francis Agyapong",
-								"Daniel Chau",
-								"Breno Brezinski",
-								"Jediah Dizon"
-							};
 
-							for(int index = 0;
-								index < allUsers.length;
-								index++)
-							{
-								String currentUser = allUsers[index];
-						%>
+						<c:forEach var="currentUser" items="${users}">
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-xs-9">
-									<div class="usersList" id="<%= currentUser.replaceAll("\\s", "") %>">
-									<%= currentUser %>
+									<div class="usersList" id='<c:out value="${currentUser.getEmail()}"/>'>
+										<c:out value="${currentUser.getFirstname()} ${currentUser.getLastname()}"/>
 									</div>
 								</div>
 									
@@ -99,10 +85,7 @@
 								</div>
 							</div>
 						</div>
-						<%
-							}
-						%>
-
+						</c:forEach>
 					</div>
 					</div>
 					</div>

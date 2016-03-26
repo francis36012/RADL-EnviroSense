@@ -112,7 +112,7 @@ public class UserController {
     @RequestMapping(value = "/lastName/{name}", method = RequestMethod.GET)
     public ModelAndView getUserByLastName(@PathVariable("name") String name) {
         ModelAndView mv = new ModelAndView("admin/users");
-        mv.addObject("admin/users", userService.findByLastname(name));
+        mv.addObject("users", userService.findByLastname(name));
         return mv;
     }
 

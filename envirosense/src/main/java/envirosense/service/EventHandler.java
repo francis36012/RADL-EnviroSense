@@ -45,7 +45,6 @@ public class EventHandler {
 			for (Event e : events) {
 				boolean allConditionsValid = true;
 				for (Condition c : e.getConditions()) {
-					// TODO: Use data
 					if (!c.evaluate(d.getData(), calendar)) {
 						allConditionsValid = false;
 					}
