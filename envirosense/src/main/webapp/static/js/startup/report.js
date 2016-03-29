@@ -30,13 +30,15 @@ function startupController() {
 	 * call, the form might not finish being created yet, so before getting the 
 	 * settings form, we must make sure it exist first.
 	 */
-	var formCheck = setInterval(function() {
+	var formCheck = setTimeout(function reportInterval() {
 		if (document.getElementById("reportForm") !== null) {
+			clearTimeout(formCheck);
 			formDefaultValues();
 			formSubmitListeners();
 			dropdownListeners();
 			windowResizeHandler();
-			clearInterval(formCheck);
+		} else {
+			setTimeout(reportInterval, 100);
 		}
 	}, 100);
 	

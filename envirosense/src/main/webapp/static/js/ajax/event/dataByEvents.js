@@ -4,10 +4,10 @@
  * request to the server.
  */
 function setDataByEventId(formElement) {
-	var stateValue = formElement.state.value;
+	var stateValue = (formElement.state.value === "true") ? "enable" : "disable";
 	var eventId = formElement.eventId.value;
 	
 	var xmlHttp = new XMLHttpRequest();
-	xmlHttp.open("POST", "/envirosense/api/" + stateValue + "/" + eventId, true);
+	xmlHttp.open("POST", "/envirosense/api/event/" + stateValue + "/" + eventId, true);
 	xmlHttp.send();
 }

@@ -28,14 +28,18 @@ function startupController() {
 		var slickSlides = document.getElementById("slickSlides").childNodes;
 
 		if (slickSlides.length > 1) {
+			clearInterval(counterInterval);
+			
 			for (var index = 1; index < slickSlides.length; index++) {
 				var sensorType = slickSlides[index].id;
-				var mainForm = createForm("liveData", "Sensor", sensorType);
+				var mainForm = createForm("liveDataSensors", "Sensor", sensorType);
 				
 				runAjax(mainForm);
-				setInterval(runAjax, 1000, mainForm);
+				setTimeout(function liveDataInterval(mainForm) {
+					runAjax(mainForm);
+					setTimeout(liveDataInterval, 1000, mainForm);
+				}, 1000, mainForm);
 			}
-			clearInterval(counterInterval);
 		}
 	}, 300);
 }
