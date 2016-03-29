@@ -72,4 +72,10 @@ public interface UserService {
 	 * @return The user with email address specified
 	 */
 	public User findByEmail(String email);
+	
+	/**
+	 * Returns all users stored in the database
+	 * @return All the users in the database
+	 */
+	public List<User> findAll();
 }

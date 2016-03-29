@@ -1,8 +1,8 @@
 package envirosense.controller;
 
-import envirosense.model.User;
-import envirosense.service.UserService;
+import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,13 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import envirosense.model.User;
+import envirosense.service.UserService;
+
 /**
  * Administrative CRUD Controllers for managing users
  *
  * @author Daniel Chau
  */
 @Controller
-@RequestMapping("/admin/user")
+@RequestMapping("/admin/users")
 public class UserController {
 
     @Autowired
@@ -86,7 +89,12 @@ public class UserController {
     @RequestMapping(value = "/email/{email}", method = RequestMethod.GET)
     public ModelAndView getUserByEmail(@PathVariable("email") String email) {
         ModelAndView mv = new ModelAndView("admim/users");
-        mv.addObject("users", userService.findByEmail(email));
+        List<User> users = new ArrayList<>();
+        User user = userService.findByEmail(email);
+        if (user != null) {
+        	users.add(user);
+        }
+        mv.addObject("users", users);
         return mv;
     }
 
@@ -137,6 +145,17 @@ public class UserController {
     public ModelAndView getInactiveUsers() {
         ModelAndView mv = new ModelAndView("admin/users");
         mv.addObject("users", userService.finalAllInactive());
+        return mv;
+    }
+    
+    /**
+     * TODO: Documentation
+     * @return
+     */
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public ModelAndView getAllUsers() {
+        ModelAndView mv = new ModelAndView("admin/users");
+        mv.addObject("users", userService.findAll());
         return mv;
     }
 }
