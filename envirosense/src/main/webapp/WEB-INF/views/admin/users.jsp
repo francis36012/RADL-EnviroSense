@@ -78,24 +78,41 @@
 											<div class="dataContainer">
 												<c:forEach items="${users}" var="currentUser">
 													<form>
-													<div class="row">
-														<div class="col-xs-9">
-															<c:out value="${currentUser.getFirstname()} ${currentUser.getLastname()}" />
-														</div>
+														<div class="row">
+															<div class="col-xs-9">
+																<c:out value="${currentUser.getFirstname()} ${currentUser.getLastname()}" />
+															</div>
 
-														<div class="col-xs-3">
-															<input type="checkbox" name="users"
-																class="bootstrapSwitch"
-																data-size="mini"
-																data-on-color="success"
-																data-users-firstname="${currentUser.getFirstname()}"
-																data-users-lastname="${currentUser.getLastname()}"
-																<c:if test="${currentUser.getEnabled()}">
-																	<c:out value="checked"/>
-																</c:if>
-															/>
+															<div class="col-xs-3">
+																<input type="checkbox" name="users"
+																	class="bootstrapSwitch"
+																	data-size="mini"
+																	data-on-color="success"
+																	data-user-email="${currentUser.getEmail()}"
+																	<c:if test="${currentUser.getEnabled()}">
+																		<c:out value="checked"/>
+																	</c:if>
+																/>
+															</div>
 														</div>
-													</div>
+																	
+														<div class="row">
+															<div class="col-xs-12 input-lg">
+																<input type="text" value="<c:out value='${currentUser.getFirstname}' />"/>
+															</div>
+														</div>
+																	
+														<div class="row">
+															<div class="col-xs-12 text-muted">
+																First Name
+															</div>
+														</div>
+																	
+														<div class="row">
+															<div class="col-xs-12 input-lg">
+																<input type="text" value="<c:out value='${currentUser.getLastname}' />"/>
+															</div>
+														</div>
 													</form>
 												</c:forEach>
 											</div>
