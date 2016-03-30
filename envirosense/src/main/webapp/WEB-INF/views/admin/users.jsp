@@ -42,109 +42,214 @@
 					<div class="col-xs-12 col-sm-6 col-sm-offset-3 nopadding">
 						<c:choose>
 							<c:when test="${users != null}">
-								<div class="row">
-								<div class="col-xs-12">
-									<div class="panel panel-default">
-										<div class="panel-heading text-center">
-											Settings
-										</div>
-
-										<div class="panel-body">
-											<form action="/api/users" method="POST">
-												<div class="row">
-													<div class="col-xs-12 btn-group btn-group-justified">
-													<a id="disableAll" class="btn btn-danger btn-block"
-														data-switch-toggle="state"
-														data-switch-value="false"
-														data-radio-all-off="true"
-													>Disable All</a>
-													
-													<a id="enableAll" class="btn btn-success btn-block" 
-														data-switch-toggle="state"
-														data-switch-value="true"
-														>Enable All</a>
-													</div>
-												</div>
-											</form>
-										</div>
+								<c:set var="userCounter" value="1" />
+								
+								<div class="panel panel-default">
+									<div class="panel-heading text-center">
+										Settings
 									</div>
 
-									<div class="panel panel-default">
-										<div class="panel-heading text-center">
-											Users
-										</div>
-
-										<div class="panel-body">
-											<div class="dataContainer">
-												<c:forEach items="${users}" var="currentUser">
-													<form>
-														<div class="row">
-															<div class="col-xs-9">
-																<c:out value="${currentUser.getFirstname()} ${currentUser.getLastname()}" />
-															</div>
-
-															<div class="col-xs-3">
-																<input type="checkbox" name="users"
-																	class="bootstrapSwitch"
-																	data-size="mini"
-																	data-on-color="success"
-																	data-user-email="${currentUser.getEmail()}"
-																	<c:if test="${currentUser.getEnabled()}">
-																		<c:out value="checked"/>
-																	</c:if>
-																/>
-															</div>
-														</div>
-																	
-														<div class="row">
-															<div class="col-xs-12 input-lg">
-																<input type="text" value="<c:out value='${currentUser.getFirstname}' />"/>
-															</div>
-														</div>
-																	
-														<div class="row">
-															<div class="col-xs-12 text-muted">
-																First Name
-															</div>
-														</div>
-																	
-														<div class="row">
-															<div class="col-xs-12 input-lg">
-																<input type="text" value="<c:out value='${currentUser.getLastname}' />"/>
-															</div>
-														</div>
-													</form>
-												</c:forEach>
-											</div>
-										</div>
-									</div>
-								</div>
-								</div>
-							</c:when>
-
-							<c:otherwise>
-								<div class="row">
-								<div class="col-xs-12">
-									<div class="panel panel-default">
-										<div class="panel-heading text-center">
-										</div>
-
-										<div class="panel-body">
+									<div class="panel-body">
+										<form action="/api/users" method="POST">
 											<div class="row">
 												<div class="col-xs-12">
-													<div class="alert alert-warning">
-														<p>No users are currently stored.</p>
+													<div class="btn-group btn-group-justified">
+														<a id="disableAll" class="btn btn-danger btn-block"
+															data-switch-toggle="state"
+															data-switch-value="false"
+															data-radio-all-off="true"
+														>Disable All</a>
+
+														<a id="enableAll" class="btn btn-success btn-block" 
+															data-switch-toggle="state"
+															data-switch-value="true"
+															>Enable All</a>
 													</div>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+
+								<div class="panel panel-default">
+									<div class="panel-heading text-center">
+										Users
+									</div>
+
+									<div class="panel-body">
+										<div class="dataContainer">
+											<c:forEach items="${users}" var="currentUser">
+												<form class="form" role="form">
+													<div class="row">
+														<div class="col-xs-8 col-sm-9">
+															<a href="<c:url value='#collapse-${userCounter}' />" data-toggle="collapse">
+																<c:out value="${currentUser.getFirstname()} ${currentUser.getLastname()}" />
+															</a>
+														</div>
+
+														<div class="col-xs-4 col-sm-3">
+															<input type="checkbox" name="users" class="bootstrapSwitch"
+																data-size="mini"
+																data-on-color="success"
+																data-user-email="${currentUser.getEmail()}"
+																<c:if test="${currentUser.getEnabled()}">
+																	<c:out value="checked"/>
+																</c:if> 
+																/>
+														</div>
+													</div>
+
+													<!-- NOTE -->
+													<!--
+														For right now, every attribute found in the User Object is hard coded.
+														What we are going to do is get the number of attributes, and create 
+														call methods based on those attributes and fill in the proper text box with
+														the proper value. If ever that's a good plan or even possible, of course. 
+													-->
+
+													<div class="row">
+														<div class="col-xs-12">
+															<div id="collapse-${userCounter}" class="collapse">
+																<br />
+																<fieldset class="fieldset form-group">
+																	<div class="row">
+																		<div class="col-xs-12">
+																			<input type="text" class="form-control input-lg" value="<c:out value='${currentUser.getFirstname()}' />"/>
+																		</div>
+																	</div>
+
+																	<div class="row">
+																		<div class="col-xs-4 col-xs-offset-8 col-md-3 col-md-offset-9 text-muted text-right">
+																			First Name
+																		</div>
+																	</div>
+																</fieldset>
+
+																<fieldset class="fieldset form-group">
+																	<div class="row">
+																		<div class="col-xs-12">
+																			<input type="text" class="form-control input-lg" value="<c:out value='${currentUser.getLastname()}' />"/>
+																		</div>
+																	</div>
+
+																	<div class="row">
+																		<div class="col-xs-4 col-xs-offset-8 col-md-3 col-md-offset-9 text-muted text-right">
+																			Last Name
+																		</div>
+																	</div>
+																</fieldset>
+
+																<fieldset class="fieldset form-group">
+																	<div class="row">
+																		<div class="col-xs-12">
+																			<input type="email" class="form-control input-lg" value="<c:out value='${currentUser.getEmail()}' />"/>
+																		</div>
+																	</div>
+
+																	<div class="row">
+																		<div class="col-xs-4 col-xs-offset-8 col-md-3 col-md-offset-9 text-muted text-right">
+																			Email
+																		</div>
+																	</div>
+																</fieldset>
+
+																<fieldset class="fieldset form-group">
+																	<div class="row">
+																		<div class="col-xs-12">
+																			<input type="text" class="form-control input-lg" value="<c:out value='${currentUser.getSlackId()}' />"/>
+																		</div>
+																	</div>
+
+																	<div class="row">
+																		<div class="col-xs-4 col-xs-offset-8 col-md-3 col-md-offset-9 text-muted text-right">
+																			Slack
+																		</div>
+																	</div>
+																</fieldset>
+
+																<fieldset class="fieldset form-group">
+																	<div class="row">
+																		<div class="col-xs-12">
+																			<input type="text" class="form-control input-lg" value="<c:out value='${currentUser.getPhone()}' />"/>
+																		</div>
+																	</div>
+
+																	<div class="row">
+																		<div class="col-xs-4 col-xs-offset-8 col-md-3 col-md-offset-9 text-muted text-right">
+																			Phone
+																		</div>
+																	</div>
+																</fieldset>
+
+
+																<fieldset class="fieldset form-group">
+																	<div class="row">
+																		<div class="col-xs-12">
+																			<input type="password" class="form-control input-lg" value="<c:out value='${currenUser.getPassword()}' />"/>
+																		</div>
+																	</div>
+
+																	<div class="row">
+																		<div class="col-xs-4 col-xs-offset-8 col-md-3 col-md-offset-9 text-muted text-right">
+																			Password
+																		</div>
+																	</div>
+																</fieldset>
+
+																<fieldset class="fieldset form-group">
+																	<div class="row">
+																		<div class="col-xs-12">
+																			<div class="btn-group btn-group-justified">
+																				<a class="btn btn-default btn-block">
+																					Delete
+																				</a>
+
+																				<a class="btn btn-default btn-block">
+																					Reset
+																				</a>
+
+																				<a class="btn btn-success btn-block">
+																					Save
+																				</a>
+																			</div>
+																		</div>
+																	</div>
+																</fieldset>
+															</div>
+														</div>
+													</div>
+												</form>
+												<hr />
+												<c:set var="userCounter" value="${userCounter + 1}" />
+											</c:forEach>
+										</div>
+									</div>
+								</div>
+							</div>
+							</div>
+						</c:when>
+
+						<c:otherwise>
+							<div class="row">
+							<div class="col-xs-12">
+								<div class="panel panel-default">
+									<div class="panel-heading text-center">
+									</div>
+
+									<div class="panel-body">
+										<div class="row">
+											<div class="col-xs-12">
+												<div class="alert alert-warning">
+													<p>No users are currently stored.</p>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-								</div>
-							</c:otherwise>
-						</c:choose>
-					</div>
-					</div>
+							</div>
+							</div>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 		</div>

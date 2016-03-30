@@ -81,14 +81,14 @@
 			<div class="row">
 			<div class="col-xs-12">
 				<small>
-					<a href="#forgotPassword" id="forgotPasswordToggle" data-toggle="collapse" >Forgot Password</a>
+					<a href="<c:url value='#forgotPassword' />" id="forgotPasswordToggle" data-toggle="collapse">Forgot Password</a>
 				</small>
 
 				<div id="forgotPassword" class="collapse">
 					<br />
 					<!-- Forgot Password -->
 					<form id="formResetPassword" action="<c:url value='/resetPassword' />" method="GET">
-						<fieldset class="input-group-vertical">
+						<fieldset class="fieldset input-group-vertical">
 							<div class="input-group form-group">
 								<input type="email" class="form-control" name="forgotPassword" placeholder="Email" autocomplete="on" />
 								<span class="input-group-btn">

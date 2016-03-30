@@ -4,14 +4,14 @@
 <div id="sidebar-wrapper">
 	<ul class="sidebar-nav text-right">
 		<li>
-			<img src="<c:url value='/static/images/Elements/Logo/Logo - Medium.png' />" class="img-responsive" style="width: 33%; margin: 0 37%" />
+			<img src="<c:url value='/static/images/Elements/Logo/Logo - Medium.png' />" style="width: 33%; margin: 0 37%" />
 			<img src="<c:url value='/static/images/Elements/Divider.png' />" class="img-responsive" />
 		</li>
 		<li><a href="<c:url value='/' />">Live Data</a></li>
 		<li><a href="<c:url value='/report' />">Report</a></li>
 		<li><a href="<c:url value='/events' />">Events</a></li>
 		<li><a href="#">Settings</a></li>
-		<li><a href="<c:url value='/admin/user/active' />">Accounts</a></li>
+		<li><a href="<c:url value='/admin/users/all' />">Accounts</a></li>
 		<li>
 			<a href="<c:url value='javascript:{}' />" onclick="document.getElementById('formLogout').submit();">
 				Logout
