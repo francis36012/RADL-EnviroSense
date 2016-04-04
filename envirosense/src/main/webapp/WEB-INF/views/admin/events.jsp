@@ -24,7 +24,7 @@
 			<div id="page-content-wrapper">
 				<div class="container-fluid nopadding">
 					<div class="row">
-					<div class="col-xs-12 col-sm-6 col-sm-offset-3">
+					<div class="col-xs-12 col-sm-8 col-sm-offset-2">
 
 						<!-- SIDEBAR TOGGLE -->
 						<c:import url="/static/common/navbar/toggle.jsp" />
@@ -42,13 +42,14 @@
 					<div class="col-xs-12 col-sm-6 col-sm-offset-3 nopadding">
 					<c:choose>
 						<c:when test="${events != null}">
+							<input type="hidden" id="csrfProtection" name="<c:out value='${_csrf.parameterName}' />" value="${_csrf.token}" />
 							<div class="panel panel-default">
 								<div class="panel-heading text-center">
 									Settings
 								</div>
 
 								<div class="panel-body">
-									<form action="/api/event" method="POST">
+									<form class="form" role="form">
 										<div class="row">
 											<div class="col-xs-12 btn-group btn-group-justified">
 											<a id="disableAll" class="btn btn-danger btn-block"
@@ -75,26 +76,27 @@
 								<div class="panel-body">
 									<div class="dataContainer">
 										<c:forEach items="${events}" var="currentEvent">
-											<form class="form" role="form">
-											<div class="row">
-												<div class="col-xs-9">
-													<c:out value="${currentEvent.getName()}" />
+											<form class="form" role="form">	
+												<div class="row">
+													<div class="col-xs-8 col-sm-9">
+														<c:out value="${currentEvent.getName()}" />
+													</div>
+													
+													<div class="col-xs-4 col-sm-3">
+														<input type="checkbox" name="event"
+															class="bootstrapSwitch"
+															data-size="mini"
+															data-on-color="success"
+															data-event-id="${currentEvent.getId()}"
+															data-event-name="${currentEvent.getName()}"
+															<c:if test="${currentEvent.isActive()}">
+																<c:out value="checked"/>
+															</c:if>
+														/>
+													</div>
 												</div>
-
-												<div class="col-xs-3">
-													<input type="checkbox" name="event"
-														class="bootstrapSwitch"
-														data-size="mini"
-														data-on-color="success"
-														data-event-id="${currentEvent.getId()}"
-														data-event-name="${currentEvent.getName()}"
-														<c:if test="${currentEvent.isActive()}">
-															<c:out value="checked"/>
-														</c:if>
-													/>
-												</div>
-											</div>
 											</form>
+										<hr />
 										</c:forEach>
 									</div>
 								</div>
@@ -132,7 +134,7 @@
 	<script type="text/javascript" src="<c:url value='/static/js/ajax/ajaxController.js' />"></script>
 
 	<!--Javasciprt : AJAX Events -->
-	<script type="text/javascript" src="<c:url value='/static/js/ajax/event/dataByEvents.js' />"></script>
+	<script type="text/javascript" src="<c:url value='/static/js/ajax/events/dataByEvents.js' />"></script>
 
 	<!--Javasciprt : Utilities -->
 	<script type="text/javascript" src="<c:url value='/static/js/utilities.js' />"></script>

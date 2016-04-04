@@ -74,29 +74,49 @@ function formSubmitListeners() {
  * value clicked.
  */
 function dropdownListeners() {
-	var reportForm = document.getElementById("reportForm");
-	var sensorEntries = reportForm.getElementsByClassName("sensorEntry");
-	var roomEntries = reportForm.getElementsByClassName("roomEntry");
 	
-	for(var index = 0; index < sensorEntries.length; index++) {
-		sensorEntries[index].onclick = function(clickEvent) {
-			var targetElement = clickEvent.target || clickEvent.srcElement;
-			var hiddenElement = document.getElementById("reportForm").dataChoice;
-			var containerElement = document.getElementById("reportForm").dataType;
-			setValue(hiddenElement, "reportSensors");
-			setValue(containerElement, targetElement.textContent || targetElement.innerText);
-		};
-	}
+	var sensorEntryTimeout = setTimeout(function sensorEntryCallback() { 
+		var reportForm = document.getElementById("reportForm");
+		var sensorEntries = reportForm.getElementsByClassName("sensorEntry");
+		
 	
-	for(var index = 0; index < roomEntries.length; index++) {
-		roomEntries[index].onclick = function(clickEvent) {
-			var targetElement = clickEvent.target || clickEvent.srcElement;
-			var hiddenElement = document.getElementById("reportForm").dataChoice;
-			var containerElement = document.getElementById("reportForm").dataType;
-			setValue(hiddenElement, "reportRooms");
-			setValue(containerElement, targetElement.textContent || targetElement.innerText);
-		};
-	}
+		if (sensorEntries !== null) {
+			clearTimeout(sensorEntryTimeout);
+			
+			for(var index = 0; index < sensorEntries.length; index++) {
+				sensorEntries[index].onclick = function(clickEvent) {
+					var targetElement = clickEvent.target || clickEvent.srcElement;
+					var hiddenElement = document.getElementById("reportForm").dataChoice;
+					var containerElement = document.getElementById("reportForm").dataType;
+					setValue(hiddenElement, "reportSensors");
+					setValue(containerElement, targetElement.textContent || targetElement.innerText);
+				};
+			}
+		} else {
+			setTimeout(roomEntryCallback, 300);
+		}
+	}, 300);
+	
+	var roomEntryTimeout = setTimeout(function roomEntryCallback() {
+		var reportForm = document.getElementById("reportForm");
+		var roomEntries = reportForm.getElementsByClassName("roomEntry");
+		
+		if (roomEntries !== null) {
+			clearTimeout(roomEntryTimeout);
+			
+			for(var index = 0; index < roomEntries.length; index++) {
+				roomEntries[index].onclick = function(clickEvent) {
+					var targetElement = clickEvent.target || clickEvent.srcElement;
+					var hiddenElement = document.getElementById("reportForm").dataChoice;
+					var containerElement = document.getElementById("reportForm").dataType;
+					setValue(hiddenElement, "reportRooms");
+					setValue(containerElement, targetElement.textContent || targetElement.innerText);
+				};
+			}
+		} else {
+			setTimeout(sensorEntryCallback, 300);
+		}
+	}, 300);
 }
 
 

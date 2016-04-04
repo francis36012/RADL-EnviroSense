@@ -3,26 +3,31 @@
  * have an "On Ready State Change" that would run a function once it sends a
  * request to the server.
  */
-function getDataByRoom(formElement, buttonLoader) {
+function getDataByRoom(formElement) {
 	var roomType = formElement.dataType.value.split("ID: ")[1];
-	var startTime = formElement.fromDate.value;
-	var endTime = formElement.toDate.value;
+	var startTime = formElement.fromDate.value.replace(/T|Z/g, " ");
+	var endTime = formElement.toDate.value.replace(/T|Z/g, " ");
 	var buttonLoader = formElement.submitButton;
 	
-	var dateRegex = /T|Z/;
-	startTime = new Date(startTime).toISOString().split(dateRegex);
-	endTime = new Date(endTime).toISOString().split(dateRegex);
-	var finalStartTime = startTime[0] + " " + startTime[1].slice(0, -4);
-	var finalEndTime = endTime[0] + " " + endTime[1].slice(0, -4);
+	startTime = getDateString(new Date(startTime));
+	endTime = getDateString(new Date(endTime));
 	
 	var laddaButton = Ladda.create(buttonLoader);
 	laddaButton.start();
 	
-	var xmlHttp = new XMLHttpRequest();
+	var xmlHttp;
+	if (window.XMLHttpRequest) { 
+		// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlHttp = new XMLHttpRequest();
+	} else {
+		// code for IE6, IE5
+		xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
 	xmlHttp.onreadystatechange = function() {
 		readyStateChangeByRoom(xmlHttp, laddaButton);
 	};
-	xmlHttp.open("GET", "/envirosense/api/report/room/" + roomType + "/"+ finalStartTime + "/" + finalEndTime, true);
+	xmlHttp.open("GET", "/envirosense/api/report/room/" + roomType + "/"+ startTime + "/" + endTime, true);
 	xmlHttp.send();
 }
 
@@ -32,8 +37,6 @@ function getDataByRoom(formElement, buttonLoader) {
  * the necessary process to parse the JSON object where appropriate.
  */
 function readyStateChangeByRoom(xmlHttp, laddaButton) {
-	laddaButton.setProgress(0);
-	
 	try {
 		/*
 		 * HTTP States
@@ -48,7 +51,6 @@ function readyStateChangeByRoom(xmlHttp, laddaButton) {
 
 		if (xmlHttp.status === 200) {
 			laddaButton.setProgress(.3);
-
 			if (xmlHttp.readyState === 4) {
 				var jsonObject = JSON.parse(xmlHttp.responseText);
 				laddaButton.setProgress(.5);
@@ -106,6 +108,7 @@ function readyStateChangeByRoom(xmlHttp, laddaButton) {
 			 * server."
 			 */
 			
+			laddaButton.setProgress(1);
 			setTimeout(function() {
 				laddaButton.stop();
 			}, 500);
@@ -121,11 +124,16 @@ function readyStateChangeByRoom(xmlHttp, laddaButton) {
 				}
 			}
 			
+			laddaButton.setProgress(1);
 			setTimeout(function() {
 				laddaButton.stop();
 			}, 500);
 		}
 	} catch (errorEvent) {
+		setTimeout(function() {
+			laddaButton.stop();
+		}, 500);
+		
 		throw errorEvent;
 	}
 }

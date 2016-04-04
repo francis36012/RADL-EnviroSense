@@ -1,3 +1,18 @@
+/**
+ * Initialize Google Charts. A check is used before initializing to make
+ * sure that there is connectivity to the Google Charts API.
+ */
+if (window.google) {
+	try {
+		google.charts.load('current', {
+			packages: ['corechart', 'line']
+		});
+	} catch (errorEvent) {
+		console.error("Cannot connect to Google Charts.\n---\n" + errorEvent);
+	}
+}
+
+
 /*
  * Utilities that are necessaryr to display data to the user. It includes 
  * the creation of DOM Elements, and getting Sensor Name by ID.
@@ -491,4 +506,16 @@ function getDateInUTC(timestamp) {
 	var seconds = date.getUTCSeconds();
 
 	return new Date(year, month, day, hours, minutes, seconds);
+}
+
+function getDateString(timestamp) {
+	var date = new Date(timestamp);
+	var currDate = date.getDate();
+	var currMonth = date.getMonth() + 1;
+	var currYear = date.getFullYear();
+	var currHour = date.getHours();
+	var currMinute = date.getMinutes();
+	var currSecond = date.getSeconds();
+	
+	return currYear + "-" + currMonth + "-" + currDate + " " + currHour + ":" + currMinute + ":" + currSecond;
 }

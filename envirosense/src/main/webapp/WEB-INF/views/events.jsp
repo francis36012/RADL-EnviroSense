@@ -24,7 +24,7 @@
 			<div id="page-content-wrapper">
 				<div class="container-fluid nopadding">
 					<div class="row">
-					<div class="col-xs-12 col-sm-6 col-sm-offset-3">
+					<div class="col-xs-12 col-sm-8 col-sm-offset-2">
 
 						<!-- SIDEBAR TOGGLE -->
 						<c:import url="/static/common/navbar/toggle.jsp" />
@@ -42,6 +42,7 @@
 					<div class="col-xs-12 col-sm-6 col-sm-offset-3 nopadding">
 					<c:choose>
 						<c:when test="${events != null}">
+							<input type="hidden" id="csrfProtection" name="<c:out value='${_csrf.parameterName}' />" value="${_csrf.token}" />
 							<div class="panel panel-default">
 								<div class="panel-heading text-center">
 									Settings
@@ -75,7 +76,7 @@
 								<div class="panel-body">
 									<div class="dataContainer">
 										<c:forEach items="${events}" var="currentEvent">
-											<form class="form" role="form">
+											<form class="form" role="form">	
 											<div class="row">
 												<div class="col-xs-9">
 													<c:out value="${currentEvent.getName()}" />
@@ -132,7 +133,7 @@
 	<script type="text/javascript" src="<c:url value='/static/js/ajax/ajaxController.js' />"></script>
 
 	<!--Javasciprt : AJAX Events -->
-	<script type="text/javascript" src="<c:url value='/static/js/ajax/event/dataByEvents.js' />"></script>
+	<script type="text/javascript" src="<c:url value='/static/js/ajax/events/dataByEvents.js' />"></script>
 
 	<!--Javasciprt : Utilities -->
 	<script type="text/javascript" src="<c:url value='/static/js/utilities.js' />"></script>

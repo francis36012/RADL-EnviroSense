@@ -1,42 +1,33 @@
 /**
- * Initialize Google Charts. A check is used before initializing to make
- * sure that there is connectivity to the Google Charts API.
- */
-if (window["google"] !== null) {
-	try {
-		google.charts.load('current', {
-			packages: ['corechart', 'line']
-		});
-	} catch (errorEvent) {
-		console.error("Cannot connect to Google Charts.\n---\n" + errorEvent);
-	}
-}
-
-/**
  * The Run AJAX function starts up the AJAX process. By collateral, this would
  * have an "On Ready State Change" that would run a function once it sends a
  * request to the server.
  */
-function getDataBySensorType(formElement, buttonLoader) {
+function getDataBySensorType(formElement) {
 	var sensorType = getSensorTypeByName(formElement.dataType.value);
-	var startTime = formElement.fromDate.value;
-	var endTime = formElement.toDate.value;
+	var startTime = formElement.fromDate.value.replace(/T|Z/g, " ");
+	var endTime = formElement.toDate.value.replace(/T|Z/g, " ");
 	var buttonLoader = formElement.submitButton;
 	
-	var dateRegex = new RegExp("T|Z");
-	startTime = new Date(startTime).toISOString().split(dateRegex);
-	endTime = new Date(endTime).toISOString().split(dateRegex);
-	var finalStartTime = startTime[0] + " " + startTime[1].slice(0, -4);
-	var finalEndTime = endTime[0] + " " + endTime[1].slice(0, -4);
+	startTime = getDateString(new Date(startTime));
+	endTime = getDateString(new Date(endTime));
 	
 	var laddaButton = Ladda.create(buttonLoader);
 	laddaButton.start();
 	
-	var xmlHttp = new XMLHttpRequest();
+	var xmlHttp;
+	if (window.XMLHttpRequest) { 
+		// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlHttp = new XMLHttpRequest();
+	} else {
+		// code for IE6, IE5
+		xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
 	xmlHttp.onreadystatechange = function() {
 		readyStateChangeBySensorType(xmlHttp, laddaButton);
 	};
-	xmlHttp.open("GET", "/envirosense/api/report/type/" + sensorType + "/"+ finalStartTime + "/" + finalEndTime, true);
+	xmlHttp.open("GET", "/envirosense/api/report/type/" + sensorType + "/"+ startTime + "/" + endTime, true);
 	xmlHttp.send();
 }
 
@@ -61,9 +52,8 @@ function readyStateChangeBySensorType(xmlHttp, laddaButton) {
 		var dataContainer = document.getElementsByClassName("dataContainer");
 
 		if (xmlHttp.status === 200) {
-			laddaButton.setProgress(.3);
-
 			if (xmlHttp.readyState === 4) {
+				laddaButton.setProgress(.3);
 				var jsonObject = JSON.parse(xmlHttp.responseText);
 				laddaButton.setProgress(.5);
 
@@ -137,6 +127,10 @@ function readyStateChangeBySensorType(xmlHttp, laddaButton) {
 		}
 		
 	} catch (errorEvent) {
+		setTimeout(function() {
+			laddaButton.stop();
+		}, 500);
+		
 		throw errorEvent;
 	}
 }
@@ -222,25 +216,37 @@ function loadDataBySensorType(jsonObject, domElement) {
 	sensorId.innerHTML = "ID: " + jsonElement.id;
 	sensorType.innerHTML = "Type: " + getSensorNameByType(jsonElement.sensorType);
 	
-	if (window.google !== undefined && window.hasOwnProperty("google")) {
+	if (window.google) {
 		generateChartBySensorType(jsonObject, sensorTime, jsonElement.sensorType);
 	} else {
-		var divider = createNode("hr");
+		var divider = createNode("hr", null, null);
 		var alertMessage = createNode("p", null, null);
 		alertMessage.innerHTML = "Cannot connect to Google Charts. ";
 		alertMessage.innerHTML += "Please check your internet connectivity.";
 		var alertDiv = createNode("div", ["alert", "alert-warning"], null);
 		alertDiv.appendChild(alertMessage);
 		
+		var collapseToggle = createNode("a", null, [["href", "#dataset" + jsonElement.id], ["data-toggle", "collapse"]]);
+		collapseToggle.innerHTML = "Show Data";
+		var collapseContainer = createNode("div", ["collapse"], [["id", "dataset" + jsonElement.id]]);
+		
+		for (var index = 0; index < jsonObject.values.length; index++) {
+			collapseContainer.appendChild(createNode("br", null, null));
+			collapseContainer.appendChild(document.createTextNode(new Date(jsonObject.values[index]["timestamp"]) + " - "));
+			collapseContainer.appendChild(document.createTextNode(jsonObject.values[index]["data"]));
+		}
 		sensorTime.appendChild(divider);
 		sensorTime.appendChild(alertDiv);
+		
+		sensorTime.appendChild(collapseToggle);
+		sensorTime.appendChild(collapseContainer);
 	}
 }
 
 function generateChartBySensorType(jsonObject, domElement, sensorType) {
 	var rawData = [];
 	for (var index = 0; index < jsonObject.values.length; index++) {
-		rawData.push([getDateInUTC(jsonObject.values[index]["timestamp"]), jsonObject.values[index]["data"]]);
+		rawData.push([new Date(jsonObject.values[index]["timestamp"].replace(/T|Z/g, " ")), jsonObject.values[index]["data"]]);
 	}
 	if (sensorType === "MO" || sensorType === "DR") {
 		google.charts.setOnLoadCallback(function () {

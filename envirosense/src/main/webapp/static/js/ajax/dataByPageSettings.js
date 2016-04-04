@@ -15,7 +15,15 @@
  */
 function getDataByPageSettings(formElement) {
 	var dataCategory = formElement.category.value;
-	var xmlHttp = new XMLHttpRequest();
+	var xmlHttp;
+	if (window.XMLHttpRequest) { 
+		// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlHttp = new XMLHttpRequest();
+	} else {
+		// code for IE6, IE5
+		xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
 	xmlHttp.onreadystatechange = function() {
 		readyStateChangeByPageSettings(xmlHttp, formElement);
 	};

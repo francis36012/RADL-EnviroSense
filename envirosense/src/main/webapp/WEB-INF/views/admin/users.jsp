@@ -24,7 +24,7 @@
 			<div id="page-content-wrapper">
 				<div class="container-fluid nopadding">
 					<div class="row">
-					<div class="col-xs-12 col-sm-6 col-sm-offset-3">
+					<div class="col-xs-12 col-sm-8 col-sm-offset-2">
 
 						<!-- SIDEBAR TOGGLE -->
 						<c:import url="/static/common/navbar/toggle.jsp" />
@@ -43,6 +43,7 @@
 						<c:choose>
 							<c:when test="${users != null}">
 								<c:set var="userCounter" value="1" />
+								<input type="hidden" id="csrfProtection" name="<c:out value='${_csrf.parameterName}' />" value="${_csrf.token}" />
 								
 								<div class="panel panel-default">
 									<div class="panel-heading text-center">
@@ -63,7 +64,7 @@
 														<a id="enableAll" class="btn btn-success btn-block" 
 															data-switch-toggle="state"
 															data-switch-value="true"
-															>Enable All</a>
+														>Enable All</a>
 													</div>
 												</div>
 											</div>
@@ -114,7 +115,7 @@
 																<fieldset class="fieldset form-group">
 																	<div class="row">
 																		<div class="col-xs-12">
-																			<input type="text" class="form-control input-lg" value="<c:out value='${currentUser.getFirstname()}' />"/>
+																			<input type="text" class="form-control input-md" value="<c:out value='${currentUser.getFirstname()}' />"/>
 																		</div>
 																	</div>
 
@@ -128,7 +129,7 @@
 																<fieldset class="fieldset form-group">
 																	<div class="row">
 																		<div class="col-xs-12">
-																			<input type="text" class="form-control input-lg" value="<c:out value='${currentUser.getLastname()}' />"/>
+																			<input type="text" class="form-control input-md" value="<c:out value='${currentUser.getLastname()}' />"/>
 																		</div>
 																	</div>
 
@@ -142,7 +143,7 @@
 																<fieldset class="fieldset form-group">
 																	<div class="row">
 																		<div class="col-xs-12">
-																			<input type="email" class="form-control input-lg" value="<c:out value='${currentUser.getEmail()}' />"/>
+																			<input type="email" class="form-control input-md" value="<c:out value='${currentUser.getEmail()}' />"/>
 																		</div>
 																	</div>
 
@@ -156,7 +157,7 @@
 																<fieldset class="fieldset form-group">
 																	<div class="row">
 																		<div class="col-xs-12">
-																			<input type="text" class="form-control input-lg" value="<c:out value='${currentUser.getSlackId()}' />"/>
+																			<input type="text" class="form-control input-md" value="<c:out value='${currentUser.getSlackId()}' />"/>
 																		</div>
 																	</div>
 
@@ -170,7 +171,7 @@
 																<fieldset class="fieldset form-group">
 																	<div class="row">
 																		<div class="col-xs-12">
-																			<input type="text" class="form-control input-lg" value="<c:out value='${currentUser.getPhone()}' />"/>
+																			<input type="text" class="form-control input-md" value="<c:out value='${currentUser.getPhone()}' />"/>
 																		</div>
 																	</div>
 
@@ -185,7 +186,7 @@
 																<fieldset class="fieldset form-group">
 																	<div class="row">
 																		<div class="col-xs-12">
-																			<input type="password" class="form-control input-lg" value="<c:out value='${currenUser.getPassword()}' />"/>
+																			<input type="password" class="form-control input-md" value="<c:out value='${currenUser.getPassword()}' />"/>
 																		</div>
 																	</div>
 
@@ -258,7 +259,7 @@
 		<script type="text/javascript" src="<c:url value='/static/js/ajax/ajaxController.js' />"></script>
 		
 		<!--Javasciprt : AJAX Users -->
-		<script type="text/javascript" src="<c:url value='/static/js/ajax/user/dataByUsers.js' />"></script>
+		<script type="text/javascript" src="<c:url value='/static/js/ajax/users/dataByUsers.js' />"></script>
 
 		<!--Javasciprt : Utilities -->
 		<script type="text/javascript" src="<c:url value='/static/js/utilities.js' />"></script>

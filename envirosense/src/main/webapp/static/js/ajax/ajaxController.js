@@ -24,6 +24,10 @@ function runAjax(formElement) {
 			setDataByEventId(formElement);
 			break;
 			
+		case "userToggle":
+			setDataByUserId(formElement);
+			break;
+			
 		default:
 			console.error("Data choice not implemented Yet.");
 	}

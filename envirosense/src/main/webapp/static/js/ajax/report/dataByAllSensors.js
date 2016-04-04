@@ -5,9 +5,20 @@
  * request to the server.
  */
 function getDataByAllSensors(buttonLoader) {
-	var xmlHttp = new XMLHttpRequest();
+	var laddaButton = Ladda.create(buttonLoader);
+	laddaButton.start();
+	
+	var xmlHttp;
+	if (window.XMLHttpRequest) { 
+		// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlHttp = new XMLHttpRequest();
+	} else {
+		// code for IE6, IE5
+		xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
 	xmlHttp.onreadystatechange = function() {
-		readyStateChangeByAllSensors(xmlHttp, buttonLoader);
+		readyStateChangeByAllSensors(xmlHttp, laddaButton);
 	};
 	xmlHttp.open("GET", "/envirosense/api/sensor/all", true);
 	xmlHttp.send();
@@ -18,11 +29,7 @@ function getDataByAllSensors(buttonLoader) {
  * connection from the server. If it get a response from the server, it will do
  * the necessary process to parse the JSON object where appropriate.
  */
-function readyStateChangeByAllSensors(xmlHttp, buttonLoader) {
-	var laddaButton = Ladda.create(buttonLoader);
-	laddaButton.start();
-	laddaButton.setProgress(0);
-	
+function readyStateChangeByAllSensors(xmlHttp, laddaButton) {
 	try {
 		/*
 		 * HTTP States
@@ -37,7 +44,7 @@ function readyStateChangeByAllSensors(xmlHttp, buttonLoader) {
 
 		if (xmlHttp.status === 200) {
 			laddaButton.setProgress(.3);
-
+			
 			if (xmlHttp.readyState === 4) {
 				var jsonObject = JSON.parse(xmlHttp.responseText);
 				laddaButton.setProgress(.5);
@@ -53,7 +60,12 @@ function readyStateChangeByAllSensors(xmlHttp, buttonLoader) {
 						}
 					}
 				} else {
-					//No Data Found
+					/*
+					 * There's a response that had been receieved but it has
+					 * no length. We can safely assume that it has no value, 
+					 * however, we cannot assume that the server returned a
+					 * "404 Not Found" or "204 No Data Found" status.
+					 */
 				}
 
 				laddaButton.setProgress(.8);
@@ -64,14 +76,26 @@ function readyStateChangeByAllSensors(xmlHttp, buttonLoader) {
 
 				laddaButton.setProgress(1);
 
+			} else {
+				/*
+				 * There's a response that had been receieved but it has
+				 * no length. We can safely assume that it has no value, 
+				 * however, we cannot assume that the server returned a
+				 * "404 Not Found" or "204 No Data Found" status.
+				 */
 			}
 		} else if (xmlHttp.status === 404) {
-			//Can't connect
+			/*
+			 * Status 404 was returned. We create a panel with the error
+			 * message "Something went wrong. Please check connection to
+			 * server."
+			 */
+			
+			laddaButton.setProgress(1);
+			setTimeout(function() {
+				laddaButton.stop();
+			}, 500);
 		}
-
-		setTimeout(function () {
-			laddaButton.stop();
-		}, 1000);
 	
 	} catch (errorEvent) {
 		laddaButton.setProgress(0);

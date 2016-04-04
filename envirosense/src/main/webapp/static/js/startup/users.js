@@ -23,16 +23,22 @@ function startupController() {
 
 function onSwitchChange(event, state) {
 	/*
+	 * In this method body, we construct the form element to be submitted
+	 * to the server.
+	 * 
 	 * Avoid using blocking methods because for some reason, Bootstrap
 	 * Switch's "On Switch Change" event doesn't respond when something blocks
 	 * it, like an alert box.
 	 */
+	
 	var targetForm = event.currentTarget;
-	var eventId = createNode("input", null, [["name", "userId"], ["value", targetForm.dataset.eventId]]);
-	var eventState = createNode("input", null, [["name", "state"], ["value", state]]);
-	var mainForm = createForm("eventToggle", "Events", null);
-	mainForm.appendChild(eventId);
-	mainForm.appendChild(eventState);
+	var csrfProtection = document.getElementById("csrfProtection");
+	var userId = createNode("input", null, [["name", "userId"], ["value", targetForm.dataset.userEmail]]);
+	var userState = createNode("input", null, [["name", "state"], ["value", state]]);
+	var mainForm = createForm("userToggle", "Users", null);
+	mainForm.appendChild(userId);
+	mainForm.appendChild(userState);
+	mainForm.appendChild(csrfProtection);
 	
 	runAjax(mainForm);
 }
