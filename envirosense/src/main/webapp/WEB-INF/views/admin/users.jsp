@@ -51,7 +51,7 @@
 									</div>
 
 									<div class="panel-body">
-										<form action="/api/users" method="POST">
+										<form class="form" role="form">
 											<div class="row">
 												<div class="col-xs-12">
 													<div class="btn-group btn-group-justified">
@@ -182,21 +182,6 @@
 																	</div>
 																</fieldset>
 
-
-																<fieldset class="fieldset form-group">
-																	<div class="row">
-																		<div class="col-xs-12">
-																			<input type="password" class="form-control input-md" value="<c:out value='${currenUser.getPassword()}' />"/>
-																		</div>
-																	</div>
-
-																	<div class="row">
-																		<div class="col-xs-4 col-xs-offset-8 col-md-3 col-md-offset-9 text-muted text-right">
-																			Password
-																		</div>
-																	</div>
-																</fieldset>
-
 																<fieldset class="fieldset form-group">
 																	<div class="row">
 																		<div class="col-xs-12">
@@ -206,7 +191,7 @@
 																				</a>
 
 																				<a class="btn btn-default btn-block">
-																					Reset
+																					Revert
 																				</a>
 
 																				<a class="btn btn-success btn-block">
@@ -216,6 +201,14 @@
 																		</div>
 																	</div>
 																</fieldset>
+																		
+																<div class="row">
+																	<div class="col-xs-12">
+																		<a href="<c:url value='#collapse-${userCounter}' />" class="btn btn-default btn-sm btn-block" data-toggle="collapse">
+																			<span class="glyphicon glyphicon-menu-up"></span>
+																		</a>
+																	</div>
+																</div>
 															</div>
 														</div>
 													</div>
@@ -226,13 +219,9 @@
 										</div>
 									</div>
 								</div>
-							</div>
-							</div>
-						</c:when>
+							</c:when>
 
-						<c:otherwise>
-							<div class="row">
-							<div class="col-xs-12">
+							<c:otherwise>
 								<div class="panel panel-default">
 									<div class="panel-heading text-center">
 									</div>
@@ -247,10 +236,131 @@
 										</div>
 									</div>
 								</div>
+							</c:otherwise>
+						</c:choose>
+								
+						<div class="panel panel-default">
+							<div class="panel-heading text-center">
+								Create User
 							</div>
+
+							<div class="panel-body">
+								<a href="#createUser" class="btn btn-default btn-block" data-toggle="collapse">
+									<span class="glyphicon glyphicon-plus"></span>
+								</a>
+
+
+								<form class="form" role="form">
+									<div class="row">
+										<div class="col-xs-12">
+												<div id="createUser" class="collapse">
+													<br />
+													<fieldset class="fieldset form-group">
+														<div class="row">
+															<div class="col-xs-12">
+																<input type="text" class="form-control input-md" />
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="col-xs-4 col-xs-offset-8 col-md-3 col-md-offset-9 text-muted text-right">
+																First Name
+															</div>
+														</div>
+													</fieldset>
+
+													<fieldset class="fieldset form-group">
+														<div class="row">
+															<div class="col-xs-12">
+																<input type="text" class="form-control input-md" />
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="col-xs-4 col-xs-offset-8 col-md-3 col-md-offset-9 text-muted text-right">
+																Last Name
+															</div>
+														</div>
+													</fieldset>
+
+													<fieldset class="fieldset form-group">
+														<div class="row">
+															<div class="col-xs-12">
+																<input type="email" class="form-control input-md" />
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="col-xs-4 col-xs-offset-8 col-md-3 col-md-offset-9 text-muted text-right">
+																Email
+															</div>
+														</div>
+													</fieldset>
+
+													<fieldset class="fieldset form-group">
+														<div class="row">
+															<div class="col-xs-12">
+																<input type="text" class="form-control input-md" />
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="col-xs-4 col-xs-offset-8 col-md-3 col-md-offset-9 text-muted text-right">
+																Slack
+															</div>
+														</div>
+													</fieldset>
+
+													<fieldset class="fieldset form-group">
+														<div class="row">
+															<div class="col-xs-12">
+																<input type="text" class="form-control input-md" />
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="col-xs-4 col-xs-offset-8 col-md-3 col-md-offset-9 text-muted text-right">
+																Phone
+															</div>
+														</div>
+													</fieldset>
+
+													<fieldset class="fieldset form-group">
+														<div class="row">
+															<div class="col-xs-12">
+																<div class="btn-group btn-group-justified">
+																	<a class="btn btn-default btn-block">
+																		Delete
+																	</a>
+
+																	<a class="btn btn-default btn-block">
+																		Revert
+																	</a>
+
+																	<a class="btn btn-success btn-block">
+																		Save
+																	</a>
+																</div>
+															</div>
+														</div>
+													</fieldset>
+
+													<div class="row">
+														<div class="col-xs-12">
+															<a href="#createUser" class="btn btn-default btn-sm btn-block" data-toggle="collapse">
+																<span class="glyphicon glyphicon-menu-up"></span>
+															</a>
+														</div>
+													</div>
+												</div>
+										</div>
+									</div>
+								</form>
 							</div>
-						</c:otherwise>
-					</c:choose>
+						</div>
+								
+					</div>
+					</div>
 				</div>
 			</div>
 		</div>

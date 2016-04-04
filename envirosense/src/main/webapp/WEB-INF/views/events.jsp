@@ -49,7 +49,7 @@
 								</div>
 
 								<div class="panel-body">
-									<form action="/api/event" method="POST">
+									<form class="form" role="form">
 										<div class="row">
 											<div class="col-xs-12 btn-group btn-group-justified">
 											<a id="disableAll" class="btn btn-danger btn-block"
@@ -77,25 +77,26 @@
 									<div class="dataContainer">
 										<c:forEach items="${events}" var="currentEvent">
 											<form class="form" role="form">	
-											<div class="row">
-												<div class="col-xs-9">
-													<c:out value="${currentEvent.getName()}" />
+												<div class="row">
+													<div class="col-xs-8 col-sm-9">
+														<c:out value="${currentEvent.getName()}" />
+													</div>
+													
+													<div class="col-xs-4 col-sm-3">
+														<input type="checkbox" name="event"
+															class="bootstrapSwitch"
+															data-size="mini"
+															data-on-color="success"
+															data-event-id="${currentEvent.getId()}"
+															data-event-name="${currentEvent.getName()}"
+															<c:if test="${currentEvent.isActive()}">
+																<c:out value="checked"/>
+															</c:if>
+														/>
+													</div>
 												</div>
-
-												<div class="col-xs-3">
-													<input type="checkbox" name="event"
-														class="bootstrapSwitch"
-														data-size="mini"
-														data-on-color="success"
-														data-event-id="${currentEvent.getId()}"
-														data-event-name="${currentEvent.getName()}"
-														<c:if test="${currentEvent.isActive()}">
-															<c:out value="checked"/>
-														</c:if>
-													/>
-												</div>
-											</div>
 											</form>
+										<hr />
 										</c:forEach>
 									</div>
 								</div>
