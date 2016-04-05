@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import envirosense.model.User;
 import envirosense.service.UserService;
+import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * Administrative CRUD Controllers for managing users
@@ -31,8 +32,8 @@ public class UserController {
      * @param user the user to be saved or updated
      * @return the user management page
      */
-    @RequestMapping(value = {"/save/{user}"}, method = RequestMethod.POST)
-    public ModelAndView saveUser(@PathVariable("user") User user) {
+    @RequestMapping(value = {"/save"}, method = RequestMethod.POST)
+    public ModelAndView saveUser(@RequestBody User user) {
         userService.save(user);
         return new ModelAndView("admin/users");
     }
@@ -43,8 +44,8 @@ public class UserController {
      * @param users the list of users to be saved or updated
      * @return the user management page
      */
-    @RequestMapping(value = {"/saveAll/{users}"}, method = RequestMethod.POST)
-    public ModelAndView saveUsers(@PathVariable("users") List<User> users) {
+    @RequestMapping(value = {"/saveAll"}, method = RequestMethod.POST)
+    public ModelAndView saveUsers(@RequestBody List<User> users) {
         userService.save(users);
         return new ModelAndView("admin/users");
     }
@@ -55,8 +56,8 @@ public class UserController {
      * @param user the user to be deleted from the database
      * @return the user management page
      */
-    @RequestMapping(value = {"/delete/{user}"}, method = RequestMethod.POST)
-    public ModelAndView deleteUser(@PathVariable("user") User user) {
+    @RequestMapping(value = {"/delete"}, method = RequestMethod.POST)
+    public ModelAndView deleteUser(@RequestBody User user) {
         userService.delete(user);
         return new ModelAndView("admin/users");
     }
@@ -71,10 +72,10 @@ public class UserController {
      * @return the user management page
      */
     @RequestMapping(
-            value = {"/resetPassword/{user}/{encrytpedPassword}"},
+            value = {"/resetPassword/{encrytpedPassword}"},
             method = RequestMethod.POST)
     public ModelAndView resetPassword(
-            @PathVariable("user") User user,
+            @RequestBody User user,
             @PathVariable("encryptedPassword") String newPassword) {
         userService.resetPassword(user, newPassword);
         return new ModelAndView("admin/users");
