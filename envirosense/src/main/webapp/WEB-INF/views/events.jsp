@@ -99,6 +99,9 @@
 
 	<!--Javasciprt : Utilities -->
 	<script type="text/javascript" src="<c:url value='/static/js/utilities.js' />"></script>
+	
+	<!-- Javascript : Startup Sequence -->
+	<script type="text/javascript" src="<c:url value='/static/js/startup/events.js' />"></script>
 
 	</body>
 </html>

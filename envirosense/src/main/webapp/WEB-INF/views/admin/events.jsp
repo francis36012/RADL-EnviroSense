@@ -140,6 +140,6 @@
 	<script type="text/javascript" src="<c:url value='/static/js/utilities.js' />"></script>
 
 	<!-- Javascript : Startup Sequence -->
-	<script type="text/javascript" src="<c:url value='/static/js/startup/events.js' />"></script>
+	<script type="text/javascript" src="<c:url value='/static/js/startup/admin/events.js' />"></script>
 	</body>
 </html>

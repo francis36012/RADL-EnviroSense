@@ -171,13 +171,27 @@
 																<fieldset class="fieldset form-group">
 																	<div class="row">
 																		<div class="col-xs-12">
-																			<input type="text" class="form-control input-md" name="phone" value="<c:out value='${currentUser.getPhone()}' />"/>
+																			<input type="tel" class="form-control input-md" name="phone" value="<c:out value='${currentUser.getPhone()}' />"/>
 																		</div>
 																	</div>
 
 																	<div class="row">
 																		<div class="col-xs-4 col-xs-offset-8 col-md-3 col-md-offset-9 text-muted text-right">
 																			Phone
+																		</div>
+																	</div>
+																</fieldset>
+																
+																<fieldset class="fieldset form-group">
+																	<div class="row">
+																		<div class="col-xs-12">
+																			<input type="password" class="form-control input-md" name="password" value="<c:out value='${currentUser.getPassword()}' />"/>
+																		</div>
+																	</div>
+
+																	<div class="row">
+																		<div class="col-xs-4 col-xs-offset-8 col-md-3 col-md-offset-9 text-muted text-right">
+																			Password
 																		</div>
 																	</div>
 																</fieldset>

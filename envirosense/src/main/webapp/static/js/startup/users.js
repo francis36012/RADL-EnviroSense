@@ -67,13 +67,13 @@ function formButtonListeners() {
 			formElement.removeChild(submitButton);
 		});
 		
-		submitButtons[index].addEventListener("click", function(event) {
+		deleteButtons[index].addEventListener("click", function(event) {
 			/*
 			 * Since modern browsers doesn't adhere to going to pre-defined
 			 * "on submit" functions, we have to create an actual submit
 			 * button and append that to the form.
 			 */
-			var submitButton = createNode("input", null, [["type", "submit"], ["style", "display: none"], ["name", "dataChoice"], ["value", "saveUser"]])
+			var submitButton = createNode("input", null, [["type", "submit"], ["style", "display: none"], ["name", "dataChoice"], ["value", "deleteUser"]])
 			var formElement = event.target.closest("form");
 			formElement.appendChild(submitButton);
 			submitButton.click();
