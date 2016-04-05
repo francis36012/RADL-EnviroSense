@@ -112,6 +112,7 @@
 														<div class="col-xs-12">
 															<div id="collapse-<c:out value='${userCounter}' />" class="collapse">
 																<br />
+																
 																<fieldset class="fieldset form-group">
 																	<div class="row">
 																		<div class="col-xs-12">
@@ -264,15 +265,16 @@
 								</a>
 
 
-								<form class="form" role="form">
+								<form class="form userForm" role="form">
 									<div class="row">
 										<div class="col-xs-12">
 												<div id="createUser" class="collapse">
 													<br />
+															
 													<fieldset class="fieldset form-group">
 														<div class="row">
 															<div class="col-xs-12">
-																<input type="text" class="form-control input-md" />
+																<input type="text" name="firstname" class="form-control input-md" />
 															</div>
 														</div>
 
@@ -286,7 +288,7 @@
 													<fieldset class="fieldset form-group">
 														<div class="row">
 															<div class="col-xs-12">
-																<input type="text" class="form-control input-md" />
+																<input type="text" name="lastname" class="form-control input-md" />
 															</div>
 														</div>
 
@@ -300,7 +302,7 @@
 													<fieldset class="fieldset form-group">
 														<div class="row">
 															<div class="col-xs-12">
-																<input type="email" class="form-control input-md" />
+																<input type="email" name="email" class="form-control input-md" />
 															</div>
 														</div>
 
@@ -314,7 +316,7 @@
 													<fieldset class="fieldset form-group">
 														<div class="row">
 															<div class="col-xs-12">
-																<input type="text" class="form-control input-md" />
+																<input type="text" name="slackId" class="form-control input-md" />
 															</div>
 														</div>
 
@@ -328,7 +330,7 @@
 													<fieldset class="fieldset form-group">
 														<div class="row">
 															<div class="col-xs-12">
-																<input type="text" class="form-control input-md" />
+																<input type="text" name="phone" class="form-control input-md" />
 															</div>
 														</div>
 
@@ -338,20 +340,38 @@
 															</div>
 														</div>
 													</fieldset>
+													
+													<fieldset class="fieldset form-group">
+														<div class="row">
+															<div class="col-xs-12">
+																<input type="password" name="password" class="form-control input-md" />
+															</div>
+														</div>
 
+														<div class="row">
+															<div class="col-xs-4 col-xs-offset-8 col-md-3 col-md-offset-9 text-muted text-right">
+																Password
+															</div>
+														</div>
+													</fieldset>
+													
+													<fieldset>
+														<input type="checkbox" name="enabled" checked="checked" style="display:none" />
+													</fieldset>
+													
 													<fieldset class="fieldset form-group">
 														<div class="row">
 															<div class="col-xs-12">
 																<div class="btn-group btn-group-justified">
-																	<a class="btn btn-default btn-block">
+																	<a name="delete" class="btn btn-default btn-block">
 																		Delete
 																	</a>
 
-																	<a class="btn btn-default btn-block">
+																	<a name="revert" class="btn btn-default btn-block">
 																		Revert
 																	</a>
 
-																	<a class="btn btn-success btn-block">
+																	<a name="save" class="btn btn-success btn-block">
 																		Save
 																	</a>
 																</div>

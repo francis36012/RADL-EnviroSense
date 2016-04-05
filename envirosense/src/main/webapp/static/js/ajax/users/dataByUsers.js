@@ -7,8 +7,17 @@ function setDataByUser(formElement) {
 	var userSlack = formElement.elements["slackId"].value;
 	var userPhone = formElement.elements["phone"].value;
 	var userPassword = formElement.elements["password"].value;
-	var userEnabled = formElement.elements["enabled"].checked ? true : false;
-	var action = formElement.dataChoice.value === "saveUser" ? "save" : "delete"
+	var userEnabled = formElement.elements["enabled"].checked ? 1 : 0;
+	var action;
+	
+	switch (formElement.dataChoice.value) {
+		case "saveUser":
+			action = "save";
+			break;
+		case "deleteUser":
+			action = "delete";
+			break;
+	}
 	
 	var userObject = {
 		firstname: userFirstName,
