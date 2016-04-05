@@ -24,8 +24,8 @@ function runAjax(formElement) {
 			setDataByEventId(formElement);
 			break;
 			
-		case "userToggle":
-			setDataByUserId(formElement);
+		case "userData":
+			setDataByUser(formElement);
 			break;
 			
 		default:

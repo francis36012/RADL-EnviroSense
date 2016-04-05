@@ -22,7 +22,7 @@ if (window.google) {
 function createNode(tagName, className, attributeValues) {
 	var newElement = document.createElement(tagName);
 
-	if (className !== null) {
+	if (className !== undefined && className !== null) {
 		for(var index = 0;
 			index < className.length;
 			index++) {
@@ -30,7 +30,7 @@ function createNode(tagName, className, attributeValues) {
 			}
 	}
 
-	if (attributeValues !== null)
+	if (attributeValues !== undefined && attributeValues !== null)
 	{
 		for(var outerIndex = 0;
 			outerIndex < attributeValues.length;

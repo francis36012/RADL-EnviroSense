@@ -4,6 +4,10 @@
  * request to the server.
  */
 function getDataBySensorType(formElement) {
+	/*
+	 * Internet Explorer 11 doesn't have a good date parser, so whenever we 
+	 * create a date object, it's returning NaN.
+	 */
 	var sensorType = getSensorTypeByName(formElement.dataType.value);
 	var startTime = formElement.fromDate.value.replace(/T|Z/g, " ");
 	var endTime = formElement.toDate.value.replace(/T|Z/g, " ");

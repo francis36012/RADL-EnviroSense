@@ -16,9 +16,8 @@ if (window.addEventListener) { //W3 Standards
 function startupController() {
 	runNavbar();
 	runBootstrapSwitch();
-	
-	document.getElementById("enableAll").onclick = enableAll;
-	document.getElementById("disableAll").onclick = disableAll;
+	formButtonListeners();
+	formSubmitListeners();
 	
 	$("[class='bootstrapSwitch']").on("switchChange.bootstrapSwitch", function (event, state) {
 		onSwitchChange(event, state);
@@ -35,16 +34,53 @@ function onSwitchChange(event, state) {
 	 * it, like an alert box.
 	 */
 	
-	var targetForm = event.currentTarget;
-	var csrfProtection = document.getElementById("csrfProtection");
-	var userId = createNode("input", null, [["name", "userId"], ["value", targetForm.dataset.userEmail]]);
-	var userState = createNode("input", null, [["name", "state"], ["value", state]]);
-	var mainForm = createForm("userToggle", "Users", null);
-	mainForm.appendChild(userId);
-	mainForm.appendChild(userState);
-	mainForm.appendChild(csrfProtection);
-	
-	runAjax(mainForm);
+	event.target.closest("form").elements["save"].click();
+}
+
+function formButtonListeners() {
+	document.getElementById("enableAll").onclick = enableAll;
+	document.getElementById("disableAll").onclick = disableAll;
+
+	var resetButtons = document.getElementsByName("revert");
+	var submitButtons = document.getElementsByName("save");
+	for (var index = 0; index < resetButtons.length; index++) {
+		resetButtons[index].addEventListener("click", function(event) {
+			var formElement = event.target.closest("form");
+			formElement.reset();
+		});
+		
+		submitButtons[index].addEventListener("click", function(event) {
+			/*
+			 * Since modern browsers doesn't adhere to going to pre-defined
+			 * "on submit" functions, we have to create an actual submit
+			 * button and append that to the form.
+			 */
+			var submitButton = createNode("input", null, [["type", "submit"], ["style", "display: none"]])
+			var formElement = event.target.closest("form");
+			formElement.appendChild(submitButton);
+			submitButton.click();
+			formElement.removeChild(submitButton);
+		});
+	};
+}
+
+function formSubmitListeners() {
+	var formElements = document.getElementsByClassName("userForm");
+	for (var index = 0; index < formElements.length; index++) {
+		formElements[index].addEventListener("submit", function(event) {
+			var csrfProtection = document.getElementById("csrfProtection").cloneNode();
+			var dataChoice = createNode("input", null, [["type", "hidden"], ["name", "dataChoice"], ["value", "userData"]]);
+			var mainForm = event.target;
+			mainForm.appendChild(csrfProtection);
+			mainForm.appendChild(dataChoice);
+
+			runAjax(mainForm);
+			mainForm.removeChild(csrfProtection);
+			mainForm.removeChild(dataChoice);
+		});
+		
+		formElements[index].onsubmit = function() { return false; };
+	}
 }
 
 function enableAll() {

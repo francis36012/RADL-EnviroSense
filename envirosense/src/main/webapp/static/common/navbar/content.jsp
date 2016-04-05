@@ -18,10 +18,11 @@
 			</a>
 		</li>
 	</ul>
+				
+	<form id="formLogout" class="form" action="<c:url value='/logout' />" method="POST">
+		<input type="hidden" name="<c:out value='${_csrf.parameterName}' />" value="${_csrf.token}" />		
+	</form>
 </div>
 
-<form id="formLogout" class="form" action="<c:url value='/logout' />" method="POST">
-	<input type="hidden" name="<c:out value='${_csrf.parameterName}' />" value="${_csrf.token}" />		
-</form>
 
 <!-- <div id="page-content-wrapper"> -->

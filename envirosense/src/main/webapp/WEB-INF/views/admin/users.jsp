@@ -44,6 +44,7 @@
 							<c:when test="${users != null}">
 								<c:set var="userCounter" value="1" />
 								<input type="hidden" id="csrfProtection" name="<c:out value='${_csrf.parameterName}' />" value="${_csrf.token}" />
+								<input type="hidden" name="dataChoice" value="userData" />
 								
 								<div class="panel panel-default">
 									<div class="panel-heading text-center">
@@ -80,7 +81,7 @@
 									<div class="panel-body">
 										<div class="dataContainer">
 											<c:forEach items="${users}" var="currentUser">
-												<form class="form" role="form">
+												<form class="form userForm" role="form">
 													<div class="row">
 														<div class="col-xs-8 col-sm-9">
 															<a href="<c:url value='#collapse-${userCounter}' />" data-toggle="collapse">
@@ -89,10 +90,9 @@
 														</div>
 
 														<div class="col-xs-4 col-sm-3">
-															<input type="checkbox" name="users" class="bootstrapSwitch"
+															<input type="checkbox" name="enabled" class="bootstrapSwitch"
 																data-size="mini"
 																data-on-color="success"
-																data-user-email="${currentUser.getEmail()}"
 																<c:if test="${currentUser.getEnabled()}">
 																	<c:out value="checked"/>
 																</c:if> 
@@ -110,12 +110,12 @@
 
 													<div class="row">
 														<div class="col-xs-12">
-															<div id="collapse-${userCounter}" class="collapse">
+															<div id="collapse-<c:out value='${userCounter}' />" class="collapse">
 																<br />
 																<fieldset class="fieldset form-group">
 																	<div class="row">
 																		<div class="col-xs-12">
-																			<input type="text" class="form-control input-md" value="<c:out value='${currentUser.getFirstname()}' />"/>
+																			<input type="text" class="form-control input-md" name="firstname" value="<c:out value='${currentUser.getFirstname()}' />"/>
 																		</div>
 																	</div>
 
@@ -129,7 +129,7 @@
 																<fieldset class="fieldset form-group">
 																	<div class="row">
 																		<div class="col-xs-12">
-																			<input type="text" class="form-control input-md" value="<c:out value='${currentUser.getLastname()}' />"/>
+																			<input type="text" class="form-control input-md" name="lastname" value="<c:out value='${currentUser.getLastname()}' />"/>
 																		</div>
 																	</div>
 
@@ -143,7 +143,7 @@
 																<fieldset class="fieldset form-group">
 																	<div class="row">
 																		<div class="col-xs-12">
-																			<input type="email" class="form-control input-md" value="<c:out value='${currentUser.getEmail()}' />"/>
+																			<input type="email" class="form-control input-md" name="email" value="<c:out value='${currentUser.getEmail()}' />"/>
 																		</div>
 																	</div>
 
@@ -157,7 +157,7 @@
 																<fieldset class="fieldset form-group">
 																	<div class="row">
 																		<div class="col-xs-12">
-																			<input type="text" class="form-control input-md" value="<c:out value='${currentUser.getSlackId()}' />"/>
+																			<input type="text" class="form-control input-md" name="slackId" value="<c:out value='${currentUser.getSlackId()}' />"/>
 																		</div>
 																	</div>
 
@@ -171,7 +171,7 @@
 																<fieldset class="fieldset form-group">
 																	<div class="row">
 																		<div class="col-xs-12">
-																			<input type="text" class="form-control input-md" value="<c:out value='${currentUser.getPhone()}' />"/>
+																			<input type="text" class="form-control input-md" name="phone" value="<c:out value='${currentUser.getPhone()}' />"/>
 																		</div>
 																	</div>
 
@@ -186,15 +186,15 @@
 																	<div class="row">
 																		<div class="col-xs-12">
 																			<div class="btn-group btn-group-justified">
-																				<a class="btn btn-default btn-block">
+																				<a name="delete" class="btn btn-default btn-block">
 																					Delete
 																				</a>
 
-																				<a class="btn btn-default btn-block">
+																				<a name="revert" class="btn btn-default btn-block">
 																					Revert
 																				</a>
 
-																				<a class="btn btn-success btn-block">
+																				<a name="save" class="btn btn-success btn-block">
 																					Save
 																				</a>
 																			</div>

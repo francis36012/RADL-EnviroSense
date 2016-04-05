@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import envirosense.model.User;
 import envirosense.service.UserService;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 
 /**
@@ -32,7 +33,7 @@ public class UserController {
      * @param user the user to be saved or updated
      * @return the user management page
      */
-    @RequestMapping(value = {"/save"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/save"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ModelAndView saveUser(@RequestBody User user) {
         userService.save(user);
         return new ModelAndView("admin/users");

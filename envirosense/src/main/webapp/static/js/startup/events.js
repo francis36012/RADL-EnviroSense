@@ -36,7 +36,7 @@ function onSwitchChange(event, state) {
 	 */
 	
 	var targetForm = event.currentTarget;
-	var csrfProtection = document.getElementById("csrfProtection");
+	var csrfProtection = document.getElementById("csrfProtection").cloneNode();
 	var eventId = createNode("input", null, [["name", "eventId"], ["value", targetForm.dataset.eventId]]);
 	var eventState = createNode("input", null, [["name", "state"], ["value", state]]);
 	var mainForm = createForm("eventToggle", "Events", null);
