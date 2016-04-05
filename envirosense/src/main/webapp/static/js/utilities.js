@@ -457,6 +457,9 @@ function getSensorNameByType(sensorType) {
 		case "DR":
 			returnValue = "Door";
 			break;
+		case "RA":
+			returnValue = "Reely Active";
+			break;
 		default:
 			returnValue = "";
 			console.error("Warning: Sensor name for Type \"" + sensorType + "\" unknown.");
@@ -478,6 +481,9 @@ function getSensorTypeByName(sensorName) {
 			break;
 		case "Door":
 			returnValue = "DR";
+			break;
+		case "Reely Active":
+			returnValue = "RA";
 			break;
 		default:
 			returnValue = "";

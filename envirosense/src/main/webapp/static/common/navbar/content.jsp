@@ -10,11 +10,19 @@
 		<li><a href="<c:url value='/' />">Live Data</a></li>
 		<li><a href="<c:url value='/report' />">Report</a></li>
 		<li><a href="<c:url value='/events' />">Events</a></li>
-		<li><a href="#">Settings</a></li>
-		<li><a href="<c:url value='/admin/users/all' />">Accounts</a></li>
+		<li><a href="<c:url value='/admin/users/all' />">Account</a></li>
+		
+		<li><a href="#adminLinks" data-toggle="collapse">Admin</a></li>
+		<li>
+			<div id="adminLinks" class="collapse">
+				<a href="<c:url value='/admin/events' />"><h4>Events</h4></a>
+				<a href="<c:url value='/admin/users' />"><h4>Users</h4></a>
+			</div>
+		</li>
+		
 		<li>
 			<a href="<c:url value='javascript:{}' />" onclick="document.getElementById('formLogout').submit();">
-				Logout
+				<h4>Logout</h4>
 			</a>
 		</li>
 	</ul>

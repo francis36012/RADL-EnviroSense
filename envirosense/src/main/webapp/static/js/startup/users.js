@@ -34,7 +34,11 @@ function onSwitchChange(event, state) {
 	 * it, like an alert box.
 	 */
 	
-	event.target.closest("form").elements["save"].click();
+	var submitButton = createNode("input", null, [["type", "submit"], ["style", "display: none"], ["name", "dataChoice"], ["value", "saveUser"]])
+	var mainForm = event.target.closest("form");
+	mainForm.appendChild(submitButton);
+	submitButton.click();
+	mainForm.removeChild(submitButton);
 }
 
 function formButtonListeners() {
@@ -43,6 +47,7 @@ function formButtonListeners() {
 
 	var resetButtons = document.getElementsByName("revert");
 	var submitButtons = document.getElementsByName("save");
+	var deleteButtons = document.getElementsByName("delete");
 	for (var index = 0; index < resetButtons.length; index++) {
 		resetButtons[index].addEventListener("click", function(event) {
 			var formElement = event.target.closest("form");
@@ -55,7 +60,20 @@ function formButtonListeners() {
 			 * "on submit" functions, we have to create an actual submit
 			 * button and append that to the form.
 			 */
-			var submitButton = createNode("input", null, [["type", "submit"], ["style", "display: none"]])
+			var submitButton = createNode("input", null, [["type", "submit"], ["style", "display: none"], ["name", "dataChoice"], ["value", "saveUser"]])
+			var formElement = event.target.closest("form");
+			formElement.appendChild(submitButton);
+			submitButton.click();
+			formElement.removeChild(submitButton);
+		});
+		
+		submitButtons[index].addEventListener("click", function(event) {
+			/*
+			 * Since modern browsers doesn't adhere to going to pre-defined
+			 * "on submit" functions, we have to create an actual submit
+			 * button and append that to the form.
+			 */
+			var submitButton = createNode("input", null, [["type", "submit"], ["style", "display: none"], ["name", "dataChoice"], ["value", "saveUser"]])
 			var formElement = event.target.closest("form");
 			formElement.appendChild(submitButton);
 			submitButton.click();
@@ -69,14 +87,10 @@ function formSubmitListeners() {
 	for (var index = 0; index < formElements.length; index++) {
 		formElements[index].addEventListener("submit", function(event) {
 			var csrfProtection = document.getElementById("csrfProtection").cloneNode();
-			var dataChoice = createNode("input", null, [["type", "hidden"], ["name", "dataChoice"], ["value", "userData"]]);
 			var mainForm = event.target;
 			mainForm.appendChild(csrfProtection);
-			mainForm.appendChild(dataChoice);
-
 			runAjax(mainForm);
 			mainForm.removeChild(csrfProtection);
-			mainForm.removeChild(dataChoice);
 		});
 		
 		formElements[index].onsubmit = function() { return false; };

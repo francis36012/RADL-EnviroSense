@@ -7,6 +7,7 @@ function setDataByUser(formElement) {
 	var userSlack = formElement.elements["slackId"].value;
 	var userPhone = formElement.elements["phone"].value;
 	var userEnabled = formElement.elements["enabled"].checked ? true : false;
+	var action = formElement.dataChoice.value === "saveUser" ? "save" : "delete"
 	
 	var userObject = {
 		firstname: userFirstName,
@@ -18,7 +19,8 @@ function setDataByUser(formElement) {
 	}
 	
 	var xmlHttp = new XMLHttpRequest();
-	xmlHttp.open("POST", "/envirosense/admin/users/save", true);
+	xmlHttp.open("POST", "/envirosense/admin/users/" + action, true);
 	xmlHttp.setRequestHeader("X-CSRF-TOKEN", csrfProtection.value);
+	xmlHttp.setRequestHeader("Content-type", "application/json");
 	xmlHttp.send(JSON.stringify(userObject));
 }

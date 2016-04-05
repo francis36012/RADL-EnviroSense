@@ -24,7 +24,8 @@ function runAjax(formElement) {
 			setDataByEventId(formElement);
 			break;
 			
-		case "userData":
+		case "saveUser":
+		case "deleteUser":
 			setDataByUser(formElement);
 			break;
 			

@@ -41,33 +41,7 @@
 					<div class="row">
 					<div class="col-xs-12 col-sm-6 col-sm-offset-3 nopadding">
 					<c:choose>
-						<c:when test="${events != null}">
-							<input type="hidden" id="csrfProtection" name="<c:out value='${_csrf.parameterName}' />" value="${_csrf.token}" />
-							<div class="panel panel-default">
-								<div class="panel-heading text-center">
-									Settings
-								</div>
-
-								<div class="panel-body">
-									<form class="form" role="form">
-										<div class="row">
-											<div class="col-xs-12 btn-group btn-group-justified">
-											<a id="disableAll" class="btn btn-danger btn-block"
-												data-switch-toggle="state"
-												data-switch-value="false"
-												data-radio-all-off="true"
-											>Disable All</a>
-
-											<a id="enableAll" class="btn btn-success btn-block" 
-												data-switch-toggle="state"
-												data-switch-value="true"
-												>Enable All</a>
-											</div>
-										</div>
-									</form>
-								</div>
-							</div>
-
+						<c:when test="${events.size() > 0}">
 							<div class="panel panel-default">
 								<div class="panel-heading text-center">
 									Events
@@ -78,21 +52,8 @@
 										<c:forEach items="${events}" var="currentEvent">
 											<form class="form" role="form">	
 												<div class="row">
-													<div class="col-xs-8 col-sm-9">
+													<div class="col-xs-12">
 														<c:out value="${currentEvent.getName()}" />
-													</div>
-													
-													<div class="col-xs-4 col-sm-3">
-														<input type="checkbox" name="event"
-															class="bootstrapSwitch"
-															data-size="mini"
-															data-on-color="success"
-															data-event-id="${currentEvent.getId()}"
-															data-event-name="${currentEvent.getName()}"
-															<c:if test="${currentEvent.isActive()}">
-																<c:out value="checked"/>
-															</c:if>
-														/>
 													</div>
 												</div>
 											</form>
@@ -139,7 +100,5 @@
 	<!--Javasciprt : Utilities -->
 	<script type="text/javascript" src="<c:url value='/static/js/utilities.js' />"></script>
 
-	<!-- Javascript : Startup Sequence -->
-	<script type="text/javascript" src="<c:url value='/static/js/startup/events.js' />"></script>
 	</body>
 </html>
