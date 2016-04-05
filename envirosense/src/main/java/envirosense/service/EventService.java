@@ -5,11 +5,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import envirosense.model.Event;
 import envirosense.repository.EventRepository;
 
 @Service
+@Transactional
 public class EventService {
 	@Autowired
 	EventRepository eventRepository;
