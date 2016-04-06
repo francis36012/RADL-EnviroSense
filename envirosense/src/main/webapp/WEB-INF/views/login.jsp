@@ -18,7 +18,7 @@
         <div class="container-fluid">
 			
 			<div class="row">
-				<div class="col-xs-12 page-header">
+				<div class="col-xs-12 col-sm-6 col-sm-offset-3 page-header">
 					<!-- HEADER -->
 					<div class="jumbotron text-center">
 						<img src="<c:url value='/static/images/Elements/Logo/Logo - Small.png' />" class="img-responsive center-block" />
@@ -30,7 +30,7 @@
 			</div>
 			
 			<div class="row">
-				<div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3">
+				<div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-4 nopadding">
 				
 					<!-- Login Form -->
 					<form id="loginForm" action="<c:url value='/login' />" method="POST">
@@ -73,41 +73,34 @@
 						</div>
 					</c:if>
 					
-				</div>
-			</div>
-			
-			<hr />
-			
-			<div class="row">
-			<div class="col-xs-12">
-				<small>
-					<a href="<c:url value='#forgotPassword' />" id="forgotPasswordToggle" data-toggle="collapse">Forgot Password</a>
-				</small>
+					<small>
+						<a href="<c:url value='#forgotPassword' />" id="forgotPasswordToggle" data-toggle="collapse">Forgot Password</a>
+					</small>
 
-				<div id="forgotPassword" class="collapse">
-					<br />
-					<!-- Forgot Password -->
-					<form id="formResetPassword" action="<c:url value='/resetPassword' />" method="GET">
-						<fieldset class="fieldset input-group-vertical">
-							<div class="input-group form-group">
-								<input type="email" class="form-control" name="forgotPassword" placeholder="Email" autocomplete="on" />
-								<span class="input-group-btn">
-									<button class="btn btn-default" type="submit" form="formResetPassword">
-									<i class="glyphicon glyphicon-menu-right"></i>
-									</button>
-								</span>
-							</div>
-						</fieldset>
+					<div id="forgotPassword" class="collapse">
+						<br />
+						<!-- Forgot Password -->
+						<form id="formResetPassword" action="<c:url value='/resetPassword' />" method="GET">
+							<fieldset class="fieldset input-group-vertical">
+								<div class="input-group form-group">
+									<input type="email" class="form-control" name="forgotPassword" placeholder="Email" autocomplete="on" />
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="submit" form="formResetPassword">
+										<i class="glyphicon glyphicon-menu-right"></i>
+										</button>
+									</span>
+								</div>
+							</fieldset>
 
-						<p class="well well-sm">
-							We will send you instructions on how to 
-							reset your password.
-						</p>
-					</form>
+							<p class="well well-sm">
+								We will send you instructions on how to 
+								reset your password.
+							</p>
+						</form>
+					</div>
+					<hr />
 				</div>
-			</div>
-			</div>
-							
+			</div>		
 		</div>
 		</div>
 	</body>

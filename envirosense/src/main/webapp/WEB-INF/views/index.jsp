@@ -41,31 +41,33 @@
 					</div>
 					
 					<div class="row">
-						<div id="slickSlides" class="col-xs-12 col-sm-6 col-sm-offset-3 nopadding">
-							<div class="row">
-								<div class="col-xs-12">
-									<div class="panel panel-default">
-										<div class="panel-heading text-center">
-											Settings
-										</div>
+					<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 nopadding">
+						<div class="panel panel-default">
+							<div class="panel-heading text-center">
+								Settings
+							</div>
 
-										<div class="panel-body">
-											<form class="form" role="form">
-												<div class="btn-group btn-group-justified">
-													<a id="roomsToggle" class="btn btn-default btn-block">
-														Rooms
-													</a>
+							<div class="panel-body">
+								<form class="form" role="form">
+									<div class="btn-group btn-group-justified">
+										<a id="roomsToggle" class="btn btn-default btn-block">
+											Rooms
+										</a>
 
-													<a id="sensorsToggle" class="btn btn-default btn-block">
-														Sensors
-													</a>
-												</div>
-											</form>
-										</div>
+										<a id="sensorsToggle" class="btn btn-default btn-block">
+											Sensors
+										</a>
 									</div>
-								</div>
+								</form>
 							</div>
 						</div>
+					</div>
+					</div>
+						
+					<div class="row">
+					<div id="slickSlides" class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 nopadding">
+						
+					</div>
 					</div>
 				</div>
 			</div>
@@ -74,6 +76,9 @@
 		<!--Javasciprt : AJAX Controller -->
 		<script type="text/javascript" src="<c:url value='/static/js/ajax/ajaxController.js' />"></script>
 
+		<!--Javasciprt : AJAX By Room Id -->
+		<script type="text/javascript" src="<c:url value='/static/js/ajax/liveData/dataByRoomId.js' />"></script>
+		
 		<!--Javasciprt : AJAX By Sensor Type -->
 		<script type="text/javascript" src="<c:url value='/static/js/ajax/liveData/dataBySensorType.js' />"></script>
 		

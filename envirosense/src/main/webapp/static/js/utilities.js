@@ -529,3 +529,17 @@ function getDateString(timestamp) {
 	
 	return currYear + "-" + currMonth + "-" + currDate + " " + currHour + ":" + currMinute + ":" + currSecond;
 }
+
+function getReadableDateString(timestamp) {
+	var date = new Date(timestamp);
+	var currDate = date.getDate();
+	var currMonth = date.getMonth() + 1;
+	var currYear = date.getFullYear();
+	var currHour = date.getHours();
+	var currMinute = date.getMinutes();
+	var currSecond = date.getSeconds();
+	var monthNames = ["January", "February", "March", "April", "May", "June",
+		"July", "August", "September", "October", "November", "December"
+	  ];
+	return monthNames[currMonth - 1] + " " + currDate +  " " + currYear + " - " + currHour + ":" + currMinute + ":" + currSecond;
+}

@@ -1,15 +1,16 @@
-1/**
+/**
  * The Run AJAX function starts up the AJAX process. By collateral, this would
  * have an "On Ready State Change" that would run a function once it sends a
  * request to the server.
  */
-function getDataBySensorType(formElement) {
-	var sensorType = formElement.type.value;
+function getDataByRoomId(formElement) {
+	var roomId = formElement.type.value;
+	
 	var xmlHttp = new XMLHttpRequest();
 	xmlHttp.onreadystatechange = function() {
 		readyStateChangeBySensorType(xmlHttp, formElement);
 	};
-	xmlHttp.open("GET", "/envirosense/api/data/live/sensortype/" + sensorType, true);
+	xmlHttp.open("GET", "/envirosense/api/data/live/room/" + roomId, true);
 	xmlHttp.send();
 }
 
@@ -18,7 +19,7 @@ function getDataBySensorType(formElement) {
  * connection from the server. If it get a response from the server, it will do
  * the necessary process to parse the JSON object where appropriate.
  */
-function readyStateChangeBySensorType(xmlHttp, formElement) {
+function readyStateChangeByRoomId(xmlHttp, formElement) {
 	try {
 		/*
 		 * HTTP States
@@ -41,7 +42,7 @@ function readyStateChangeBySensorType(xmlHttp, formElement) {
 
 					if (jsonObject.length > dataContainer.length) {
 						while (jsonObject.length > dataContainer.length) {
-							$("#" + sensorType).slick("slickAdd", createContainerBySensorType());
+							$("#" + sensorType).slick("slickAdd", createContainerByRoomId());
 						}
 					} else if (jsonObject.length < dataContainer.length) {
 						while (dataContainer.length > jsonObject.length) {
@@ -77,19 +78,10 @@ function readyStateChangeBySensorType(xmlHttp, formElement) {
 			 * "No data was found with that criteria."
 			 */
 			while (dataContainer.length > 0) {
-				if (!$("#" + sensorType).slick("slickRemove", false)) {
+				if (!$('.single-items').slick("slickRemove", false)) {
 					dataContainer[0].parentNode.parentNode.remove();
 				}
 			}
-			
-			var messagePanel = createContainerBySensorType();
-			var messageText = createNode("div", ["alert", "alert-warning"], null);
-			messageText.innerHTML = "No data is currently stored.";
-			var messageContainer = messagePanel.getElementsByClassName("sensorValue")[0];
-			messageContainer.appendChild(messageText);
-			
-			$("#" + sensorType).slick("slickAdd", messagePanel);
-			
 		}
 	} catch (errorEvent) {
 		/*
@@ -177,16 +169,7 @@ function loadDataBySensorType(jsonObject, domElement) {
 	var sensorTime = domElement.getElementsByClassName("sensorTime")[0];
 	var sensorValue = domElement.getElementsByClassName("sensorValue")[0];
 	
-	var h1 = createNode("h1", ["text-center"], null);
-	var h3 = createNode("h3", ["text-center"], null);
-	var small = createNode("small", ["text-center"], null);
-	
-	h3.appendChild(document.createTextNode("ID: " + jsonElement.id));
-	sensorId.appendChild(h3);
-	
-	small.appendChild(document.createTextNode(getReadableDateString(jsonElement.values.timestamp)));
-	sensorTime.appendChild(small);
-	
-	h1.appendChild(h3.cloneNode().appendChild(document.createTextNode(jsonElement.values.data)));
-	sensorValue.appendChild(h1);
+	sensorId.appendChild(small.cloneNode().appendChild(document.createTextNode("<h3 class='text-center'>ID: " + jsonElement.id) + "</h3>"));
+	sensorTime.appendChild(h3.cloneNode().appendChild(document.createTextNode("<h5 class='text-center'>" + getReadableDateString(jsonElement.values.timestamp)) + "</h5>"));
+	sensorValue.appendChild(h1.cloneNode().appendChild(document.createTextNode(jsonElement.values.data + " <small class='text-muted'>Celcius</small>")));
 }

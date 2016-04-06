@@ -18,6 +18,14 @@ function startupController() {
 	formSubmitListeners();
 }
 
+/* 
+ * We use these global variable to stop the AJAX call intervals so we can make
+ * another AJAX call intervals. They are using shared memory that's why only
+ * one of them must run at a time.
+ */
+var sensorInterval = 0;
+var roomInterval = 0;
+
 function formSubmitListeners() {
 	var roomsToggle = document.getElementById("roomsToggle");
 	var sensorsToggle = document.getElementById("sensorsToggle");
@@ -29,21 +37,27 @@ function formSubmitListeners() {
 	 * for each room.
 	 */
 	roomsToggle.addEventListener("click", function () {
+		clearTimeout(sensorInterval);
+		
+		var slickSlides = document.getElementById("slickSlides");
+		while(slickSlides.children.length > 1) {
+			slickSlides.removeChild(slickSlides.children[0]);
+		}
 		
 		var mainForm = createForm("liveDataAllRoomsAndSensors", "room", "all");
 		runAjax(mainForm);
 		
 		var counterInterval = setTimeout(function () {
-			var slickSlides = document.getElementById("slickSlides").children;
+			var slickSlides = document.getElementById("slickSlides").getElementsByClassName("single-items");
 
-			if (slickSlides.length > 1) {
+			if (slickSlides.length > 0) {
 				clearTimeout(counterInterval);
-				for (var index = 2; index < slickSlides.length; index += 2) {	
-					var sensorType = slickSlides[index].id;
-					var mainForm = createForm("liveDataRooms", "Room", sensorType);
+				for (var index = 0; index < slickSlides.length; index++) {	
+					var roomId = slickSlides[index].id;
+					var mainForm = createForm("liveDataRooms", "room", roomId);
 					runAjax(mainForm);
 					
-					setTimeout(function liveDataInterval(mainForm) {
+					roomInterval = setTimeout(function liveDataInterval(mainForm) {
 						runAjax(mainForm);
 						setTimeout(liveDataInterval, 1000, mainForm);
 					}, 1000, mainForm);
@@ -53,6 +67,13 @@ function formSubmitListeners() {
 	});
 	
 	sensorsToggle.addEventListener("click", function () {
+		clearTimeout(roomInterval);
+		
+		var slickSlides = document.getElementById("slickSlides");
+		while(slickSlides.children.length > 1) {
+			slickSlides.removeChild(slickSlides.children[0]);
+		}
+		
 		/*
 		 * We put it in a constant loop interval because it might run even
 		 * though the "Slick Slides" aren't created yet, thus creating problems.
@@ -62,26 +83,25 @@ function formSubmitListeners() {
 		runAjax(mainForm);
 		
 		var counterInterval = setTimeout(function () {
-			var slickSlides = document.getElementById("slickSlides").children;
-
-			if (slickSlides.length > 1) {
+			var slickSlides = document.getElementById("slickSlides").getElementsByClassName("single-items");
+			
+			if (slickSlides.length > 0) {
 				/*
 				 * We increment index by 2 because the child nodes of Slick 
 				 * Slides are also composed of a title before the target we are
 				 * getting.
 				 */
 				clearTimeout(counterInterval);
-				for (var index = 2; index < slickSlides.length; index += 2) {
+				for (var index = 0; index < slickSlides.length; index++) {
 					var sensorType = slickSlides[index].id;
 					var mainForm = createForm("liveDataSensors", "Sensor", sensorType);
 					runAjax(mainForm);
 					
-					setTimeout(function liveDataInterval(mainForm) {
+					sensorInterval = setTimeout(function liveDataInterval(mainForm) {
 						runAjax(mainForm);
 						setTimeout(liveDataInterval, 1000, mainForm);
 					}, 1000, mainForm);
 				}
-
 			}
 		}, 300);
 	});

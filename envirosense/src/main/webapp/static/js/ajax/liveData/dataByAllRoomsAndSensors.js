@@ -39,7 +39,6 @@ function readyStateChangeByRoomsAndSensors(xmlHttp, formElement) {
 				var jsonObject = JSON.parse(xmlHttp.responseText);
 
 				if (jsonObject.length !== 0) {
-					
 					if (formElement.category.value === "sensor") {
 						var sensorCategory = [];
 						for (var index = 0; index < jsonObject.length; index++) {
@@ -48,11 +47,13 @@ function readyStateChangeByRoomsAndSensors(xmlHttp, formElement) {
 								var toAppend = createSlickSlideContainer();
 								toAppend.setAttribute("id", jsonObject[index]["sensorType"]);
 
+								var br = createNode("br", null, null);
 								var h3 = createNode("h3", ["text-center"], null);
 								var slickSlides = document.getElementById("slickSlides");
 								h3.appendChild(document.createTextNode(getSensorNameByType(jsonObject[index]["sensorType"])));
 								slickSlides.appendChild(h3);
 								slickSlides.appendChild(toAppend);
+								slickSlides.appendChild(br);
 							}
 						}
 					} else if (formElement.category.value === "room") {
@@ -63,11 +64,13 @@ function readyStateChangeByRoomsAndSensors(xmlHttp, formElement) {
 								var toAppend = createSlickSlideContainer();
 								toAppend.setAttribute("id", jsonObject[index]["id"]);
 								
+								var br = createNode("br", null, null);
 								var h3 = createNode("h3", ["text-center"], null);
-								h3.appendChild(document.createTextNode(getSensorNameByType(jsonObject[index]["name"])));
+								h3.appendChild(document.createTextNode(jsonObject[index]["name"]));
 								var slickSlides = document.getElementById("slickSlides");
 								slickSlides.appendChild(h3);
 								slickSlides.appendChild(toAppend);
+								slickSlides.appendChild(br);
 							}
 						}
 					}

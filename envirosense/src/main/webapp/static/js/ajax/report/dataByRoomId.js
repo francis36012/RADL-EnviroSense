@@ -3,7 +3,7 @@
  * have an "On Ready State Change" that would run a function once it sends a
  * request to the server.
  */
-function getDataByRoom(formElement) {
+function getDataByRoomId(formElement) {
 	/*
 	 * Internet Explorer 11 doesn't have a good date parser, so whenever we 
 	 * create a date object, it's returning NaN.
@@ -29,7 +29,7 @@ function getDataByRoom(formElement) {
 	}
 	
 	xmlHttp.onreadystatechange = function() {
-		readyStateChangeByRoom(xmlHttp, laddaButton);
+		readyStateChangeByRoomId(xmlHttp, laddaButton);
 	};
 	xmlHttp.open("GET", "/envirosense/api/report/room/" + roomType + "/"+ startTime + "/" + endTime, true);
 	xmlHttp.send();
@@ -40,7 +40,7 @@ function getDataByRoom(formElement) {
  * connection from the server. If it get a response from the server, it will do
  * the necessary process to parse the JSON object where appropriate.
  */
-function readyStateChangeByRoom(xmlHttp, laddaButton) {
+function readyStateChangeByRoomId(xmlHttp, laddaButton) {
 	try {
 		/*
 		 * HTTP States

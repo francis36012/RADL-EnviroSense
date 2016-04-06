@@ -32,7 +32,7 @@
 						<div class="row page-header">
 							<div class="col-xs-12">
 								<h1>Manage Events</h1>
-								<small>Let's get notified.</small>
+								<!--<small>Let's get notified.</small>-->
 							</div>
 						</div>
 					</div>
@@ -96,7 +96,7 @@
 													</div>
 												</div>
 											</form>
-										<hr />
+										<br />
 										</c:forEach>
 									</div>
 								</div>

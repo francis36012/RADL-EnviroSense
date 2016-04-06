@@ -12,7 +12,7 @@ function runAjax(formElement) {
 			
 		case "liveDataRooms":
 		case "reportRooms":
-			getDataByRoom(formElement);
+			getDataByRoomId(formElement);
 			break;
 			
 		case "liveDataSettings":
