@@ -1,8 +1,8 @@
 function runAjax(formElement) {
 	var dataChoice = formElement.dataChoice.value;
 	switch(dataChoice) {
-		case "ALL":
-			getDataByAllSensors(formElement);
+		case "liveDataAllRoomsAndSensors":
+			getDataByAllRoomsAndSensors(formElement);
 			break;
 		
 		case "liveDataSensors":

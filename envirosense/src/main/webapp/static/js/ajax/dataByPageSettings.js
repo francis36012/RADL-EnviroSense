@@ -53,32 +53,10 @@ function readyStateChangeByPageSettings(xmlHttp, formElement) {
 				try {
 					var jsonObject = JSON.parse(xmlHttp.responseText);
 
-					if (jsonObject !== null) {
+					if (jsonObject.length !== 0) {
 						
-						/*
-						 * Check to see if the settings panel exist. This 
-						 * asynchronous AJAX call doesn't know this because
-						 * in the report form, we have to call this AJAX twice,
-						 * both for Sensors and Rooms. We don't want to create
-						 * the panel twice.
-						 */
-						var settingsPanel = document.getElementById("reportForm");
-						if (settingsPanel === null) {
-							/*
-							 * Load up the "Settings" slide with data from a JSON call and add it to
-							 * SLICK as slides.
-							 */
-							settingsPanel = createPanel();
-							$(".single-items").slick("slickAdd", settingsPanel);
-							
-							var toAppend = createContainerByPageSettings(formElement.dataChoice.value);
-							var appendContainer = settingsPanel.getElementsByClassName("panel-body")[0];
-							appendContainer.appendChild(toAppend);
-						}
-						
+						var settingsPanel = document.getElementById("settingsPanel");
 						loadDataByPageSettings(jsonObject, settingsPanel);
-					} else {
-						//No Data Found
 					}
 				} catch (errorEvent) {
 					//Problem parsing JSON object
@@ -100,30 +78,6 @@ function readyStateChangeByPageSettings(xmlHttp, formElement) {
 /* ---------------------------------------- */
 
 function loadDataByPageSettings(jsonObject, domElement) {
-	
-	var settingsContainerFlag = domElement.getElementsByClassName("panel")[0] !== undefined;
-	if (settingsContainerFlag) {
-		var panelTitle = domElement.getElementsByClassName("panel-heading")[0];
-		panelTitle.innerHTML = "Settings";
-		
-		var settingsContainer = domElement.getElementsByClassName("panel-body")[0];
-		var toggleButton = settingsContainer.getElementsByTagName("button")[0];
-		
-		var formGroup = settingsContainer.getElementsByClassName("form-group");
-		var settingsLabel1 = formGroup[1].getElementsByTagName("label")[0];
-		var settingsInput1 = formGroup[1].getElementsByTagName("input")[0];
-		var settingsLabel2 = formGroup[2].getElementsByTagName("label")[0];
-		var settingsInput2 = formGroup[2].getElementsByTagName("input")[0];
-
-		toggleButton.setAttribute("href", "#toggleButton");
-		toggleButton.innerHTML  = "Category";
-
-		settingsLabel1.setAttribute("for", "fromDate");
-		settingsLabel2.setAttribute("for", "toDate");
-		settingsInput1.setAttribute("name", "fromDate");
-		settingsInput2.setAttribute("name", "toDate");
-	}
-	
 	var listContainer = domElement.getElementsByClassName("dropdown-menu")[0];
 	var listSeperator = createNode("li", ["divider"], [["role", "seperator"]], null);
 	
@@ -139,7 +93,7 @@ function loadDataByPageSettings(jsonObject, domElement) {
 			 * a speific room assigned to each of the sensor records. A room
 			 * doesn't have a room assigned to it. That would be silly.
 			 */
-			dataChoice = "Sensor";
+			dataChoice = "Sensors";
 			jsonElement = {
 				id: jsonObject[index]["id"],
 				name: jsonObject[index]["name"],
@@ -161,12 +115,11 @@ function loadDataByPageSettings(jsonObject, domElement) {
 			dataList[jsonElement.sensorType] = sensorEntry;
 				
 		} else {
-			
 			/*
 			 * This JSON object holds data for all rooms because it doesn't
 			 * have a room assigned to it. That would be silly.
 			 */
-			dataChoice = "Room";
+			dataChoice = "Rooms";
 			jsonElement = {
 				id: jsonObject[index]["id"],
 				name: jsonObject[index]["name"],
@@ -202,6 +155,4 @@ function loadDataByPageSettings(jsonObject, domElement) {
 	}
 	
 	listContainer.appendChild(listSeperator);
-	
-	
 }

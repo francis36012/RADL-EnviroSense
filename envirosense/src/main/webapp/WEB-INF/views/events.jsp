@@ -31,8 +31,8 @@
 
 						<div class="row page-header">
 							<div class="col-xs-12">
-								<h1>Manage Events</h1>
-								<small>Let's get notified.</small>
+								<h1>Events</h1>
+								<!--<small>Let's get notified.</small>-->
 							</div>
 						</div>
 					</div>
@@ -65,23 +65,19 @@
 						</c:when>
 
 						<c:otherwise>
-							<div class="row">
-							<div class="col-xs-12">
-								<div class="panel panel-default">
-									<div class="panel-heading text-center">
-									</div>
+							<div class="panel panel-default">
+								<div class="panel-heading text-center">
+								</div>
 
-									<div class="panel-body">
-										<div class="row">
-											<div class="col-xs-12">
-												<div class="alert alert-warning">
-													<p>No events are currently stored.</p>
-												</div>
+								<div class="panel-body">
+									<div class="row">
+										<div class="col-xs-12">
+											<div class="alert alert-warning">
+												<p>No events are currently stored.</p>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
 							</div>
 						</c:otherwise>
 					</c:choose>

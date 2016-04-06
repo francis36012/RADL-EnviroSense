@@ -19,6 +19,16 @@ function startupController() {
 	
 	/*
 	 * Generate the settings panel for SLICK.
+	 * What this do is to create a settigns panel composed of the data
+	 * by both rooms and sensors so the user can select specifically what type
+	 * of data they want.
+	 * 
+	 * Now what we can do is to just make this in HTML/JSP right away instead
+	 * of creating the tags in Javascript. However, what would happen if we
+	 * implement the application that way, is that we would have a dropdown 
+	 * that is empty. So in our case, I have decided that if we receieve data
+	 * from the AJAX call, we then make the settings panel. Otherwise, we 
+	 * display a message saying that there are no data to display.
 	 */
 	var settingsForm = createForm("reportSettings", "sensor", null);
 	runAjax(settingsForm);

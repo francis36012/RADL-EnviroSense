@@ -31,8 +31,8 @@
 
 						<div class="row page-header">
 							<div class="col-xs-12">
-								<h1>Manage Users</h1>
-								<small>Some catch phrase.</small>
+								<h1>Users</h1>
+								<!--<small>Some catch phrase.</small>-->
 							</div>
 						</div>
 					</div>
@@ -53,21 +53,17 @@
 
 									<div class="panel-body">
 										<form class="form" role="form">
-											<div class="row">
-												<div class="col-xs-12">
-													<div class="btn-group btn-group-justified">
-														<a id="disableAll" class="btn btn-danger btn-block"
-															data-switch-toggle="state"
-															data-switch-value="false"
-															data-radio-all-off="true"
-														>Disable All</a>
+											<div class="btn-group btn-group-justified">
+												<a id="disableAll" class="btn btn-danger btn-block"
+													data-switch-toggle="state"
+													data-switch-value="false"
+													data-radio-all-off="true"
+												>Disable All</a>
 
-														<a id="enableAll" class="btn btn-success btn-block" 
-															data-switch-toggle="state"
-															data-switch-value="true"
-														>Enable All</a>
-													</div>
-												</div>
+												<a id="enableAll" class="btn btn-success btn-block" 
+													data-switch-toggle="state"
+													data-switch-value="true"
+												>Enable All</a>
 											</div>
 										</form>
 									</div>

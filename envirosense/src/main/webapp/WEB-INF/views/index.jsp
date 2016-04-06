@@ -34,14 +34,37 @@
 						<div class="row page-header">
 						<div class="col-xs-12">
 							<h1>Live Data</h1>
-							<small>Let's pick up where you left off.</small>
+							<!--<small>Let's pick up where you left off.</small>-->
 						</div>
 						</div>
 					</div>
 					</div>
 					
 					<div class="row">
-						<div id="slickSlides" class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 nopadding">
+						<div id="slickSlides" class="col-xs-12 col-sm-6 col-sm-offset-3 nopadding">
+							<div class="row">
+								<div class="col-xs-12">
+									<div class="panel panel-default">
+										<div class="panel-heading text-center">
+											Settings
+										</div>
+
+										<div class="panel-body">
+											<form class="form" role="form">
+												<div class="btn-group btn-group-justified">
+													<a id="roomsToggle" class="btn btn-default btn-block">
+														Rooms
+													</a>
+
+													<a id="sensorsToggle" class="btn btn-default btn-block">
+														Sensors
+													</a>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -55,7 +78,7 @@
 		<script type="text/javascript" src="<c:url value='/static/js/ajax/liveData/dataBySensorType.js' />"></script>
 		
 		<!--Javasciprt : AJAX By All Sensors -->
-		<script type="text/javascript" src="<c:url value='/static/js/ajax/liveData/dataByAllSensors.js' />"></script>
+		<script type="text/javascript" src="<c:url value='/static/js/ajax/liveData/dataByAllRoomsAndSensors.js' />"></script>
 		
 		<!--Javasciprt : Utilities -->
 		<script type="text/javascript" src="<c:url value='/static/js/utilities.js' />"></script>

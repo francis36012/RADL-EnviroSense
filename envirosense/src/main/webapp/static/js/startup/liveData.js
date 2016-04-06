@@ -15,31 +15,74 @@ if (window.addEventListener) { //W3 Standards
 
 function startupController() {
 	runNavbar();
-	
-	var settingsForm = createForm("ALL", null, null);	
-	runAjax(settingsForm);
+	formSubmitListeners();
+}
+
+function formSubmitListeners() {
+	var roomsToggle = document.getElementById("roomsToggle");
+	var sensorsToggle = document.getElementById("sensorsToggle");
 	
 	/*
-	 * We put it in a constant loop interval because it might run even
-	 * though the "Slick Slides" aren't created yet, thus creating problems.
-	 * Once it detects the
+	 * By makign an AJAX call to all rooms, we are able to get the ID for each
+	 * room that is available to the system. Once we have the ID of all the
+	 * rooms, we can make an API call to those rooms that shows sensor data
+	 * for each room.
 	 */
-	var counterInterval = setInterval(function () {
-		var slickSlides = document.getElementById("slickSlides").childNodes;
+	roomsToggle.addEventListener("click", function () {
+		
+		var mainForm = createForm("liveDataAllRoomsAndSensors", "room", "all");
+		runAjax(mainForm);
+		
+		var counterInterval = setTimeout(function () {
+			var slickSlides = document.getElementById("slickSlides").children;
 
-		if (slickSlides.length > 1) {
-			clearInterval(counterInterval);
-			
-			for (var index = 1; index < slickSlides.length; index++) {
-				var sensorType = slickSlides[index].id;
-				var mainForm = createForm("liveDataSensors", "Sensor", sensorType);
-				
-				runAjax(mainForm);
-				setTimeout(function liveDataInterval(mainForm) {
+			if (slickSlides.length > 1) {
+				clearTimeout(counterInterval);
+				for (var index = 2; index < slickSlides.length; index += 2) {	
+					var sensorType = slickSlides[index].id;
+					var mainForm = createForm("liveDataRooms", "Room", sensorType);
 					runAjax(mainForm);
-					setTimeout(liveDataInterval, 1000, mainForm);
-				}, 1000, mainForm);
+					
+					setTimeout(function liveDataInterval(mainForm) {
+						runAjax(mainForm);
+						setTimeout(liveDataInterval, 1000, mainForm);
+					}, 1000, mainForm);
+				}
 			}
-		}
-	}, 300);
+		}, 300);
+	});
+	
+	sensorsToggle.addEventListener("click", function () {
+		/*
+		 * We put it in a constant loop interval because it might run even
+		 * though the "Slick Slides" aren't created yet, thus creating problems.
+		 * Once it detects the...
+		 */
+		var mainForm = createForm("liveDataAllRoomsAndSensors", "sensor", "all");
+		runAjax(mainForm);
+		
+		var counterInterval = setTimeout(function () {
+			var slickSlides = document.getElementById("slickSlides").children;
+
+			if (slickSlides.length > 1) {
+				/*
+				 * We increment index by 2 because the child nodes of Slick 
+				 * Slides are also composed of a title before the target we are
+				 * getting.
+				 */
+				clearTimeout(counterInterval);
+				for (var index = 2; index < slickSlides.length; index += 2) {
+					var sensorType = slickSlides[index].id;
+					var mainForm = createForm("liveDataSensors", "Sensor", sensorType);
+					runAjax(mainForm);
+					
+					setTimeout(function liveDataInterval(mainForm) {
+						runAjax(mainForm);
+						setTimeout(liveDataInterval, 1000, mainForm);
+					}, 1000, mainForm);
+				}
+
+			}
+		}, 300);
+	});
 }

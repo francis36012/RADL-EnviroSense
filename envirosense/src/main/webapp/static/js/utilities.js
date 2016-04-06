@@ -111,7 +111,7 @@ function createForm(dataChoice, dataCategory, dataType) {
 	return mainForm;
 }
 
-
+/*
 function createContainerByPageSettings(webPage) {
 	switch (webPage) {
 		case "reportSettings":
@@ -174,14 +174,14 @@ function createContainerByPageSettings(webPage) {
 			var settingsContainerRow1Col1 = createNode("div", ["col-xs-12"], null);
 			
 			var settingsContainerRow2 = createNode("div", ["row", "form-group"], null);
-			var settingsContainerRow2Col1 = createNode("div", ["col-xs-6", "col-xs-offset-1"], null);
-			var settingsContainerRow2Col2 = createNode("div", ["col-xs-6", "col-xs-offset-1"], null);
+			var settingsContainerRow2Col1 = createNode("div", ["col-xs-6"], null);
+			var settingsContainerRow2Col2 = createNode("div", ["col-xs-6"], null);
 			
 			var sensorsForm = createForm("liveData", "Sensors", "all");
 			var sensorsButton = createNode("input", ["btn", "btn-default", "btn-block"], [["name", "dataChoice"], ["type", "button"], ["value", "Sensors"]]);
 			sensorsForm.appendChild(sensorsButton);
 			
-			var roomsForm = createNode("liveData", "Rooms", "all");
+			var roomsForm = createForm("liveData", "Rooms", "all");
 			var roomsButton = createNode("input", ["btn", "btn-default", "btn-block"], [["name", "dataChoice"], ["type", "button"], ["value", "Rooms"]]);
 			roomsForm.appendChild(roomsButton);
 			
@@ -192,6 +192,7 @@ function createContainerByPageSettings(webPage) {
 			settingsContainerRow1Col1.appendChild(settingsContainerRow2);
 			settingsContainerRow1.appendChild(settingsContainerRow1Col1);
 			
+			return settingsContainerRow1;
 			break;
 			
 		default:
@@ -200,7 +201,7 @@ function createContainerByPageSettings(webPage) {
 	
 	return settingsContainerRow1;
 }
-
+*/
 function createContainerBySensorType() {
 	/*
 	 * For the "Sensor By Type" JSON object, the format would be:
@@ -223,6 +224,9 @@ function createContainerBySensorType() {
 	var panelHead = createNode("div", ["panel-heading", "text-center"], null);
 	var panelBody = createNode("div", ["panel-body"], null);
 	
+	var h1 = createNode("h1", null, null);
+	var small = createNode("small", null, null);
+	
 	var sensorData = createNode("div", ["dataContainer"], null);
 	var sensorId = createNode("div", ["sensorId"], null);
 	var sensorName = createNode("div", ["sensorName"], null);
@@ -232,12 +236,12 @@ function createContainerBySensorType() {
 	
 	var horizontalLine = createNode("hr", null, null);
 	
+	sensorData.appendChild(sensorValue);
 	sensorData.appendChild(sensorId);
 	sensorData.appendChild(sensorName);
 	sensorData.appendChild(sensorType);
-	sensorData.appendChild(sensorTime);
-	sensorData.appendChild(sensorValue);
 	sensorData.appendChild(horizontalLine);
+	sensorData.appendChild(sensorTime);
 	panelBody.appendChild(sensorData);
 	panelDiv.appendChild(panelHead);
 	panelDiv.appendChild(panelBody);
@@ -401,7 +405,7 @@ function createContainerByAllRooms() {
 	return rowDiv;
 }
 
-function createSlidesByAllSensors() {
+function createSlickSlideContainer() {
 	var contentDiv = createNode("div", ["single-items"], null);
 	
 	return contentDiv;

@@ -168,8 +168,11 @@ function loadDataBySensorType(jsonObject, domElement) {
 	var sensorTime = domElement.getElementsByClassName("sensorTime")[0];
 	var sensorValue = domElement.getElementsByClassName("sensorValue")[0];
 	
+	var h1 = createNode("h1", ["text-center"], null);
+	var h3 = createNode("h3", ["text-center"], null);
+	
 	sensorId.appendChild(document.createTextNode("ID: " + jsonElement.id));
 	sensorType.appendChild(document.createTextNode("Type: " + jsonElement.sensorType));
-	sensorTime.appendChild(document.createTextNode("Timestamp: " + jsonElement.values.timestamp));
-	sensorValue.appendChild(document.createTextNode("Data: " + jsonElement.values.data));
+	sensorTime.appendChild(h3.cloneNode().appendChild(document.createTextNode(jsonElement.values.timestamp)));
+	sensorValue.appendChild(h1.cloneNode().appendChild(document.createTextNode(jsonElement.values.data)));
 }
