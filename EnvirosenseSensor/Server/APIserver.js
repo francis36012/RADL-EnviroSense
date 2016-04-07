@@ -428,7 +428,8 @@ function parseDataFromDB(sensor, row, callback){
 /**
  * Start point of the server. 
  * 
- * TODO:  -Try to implement readings from multiple ports for the HDC1000   
+ * TODO:-Try to regain the API connection once it is lost  
+ * 		-Try to implement readings from multiple ports for the HDC1000   
  * 
  *          
  */
