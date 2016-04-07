@@ -1,3 +1,4 @@
+use envirosense;
 -- Users
 INSERT INTO envirosense.user(
 	email, firstname, lastname, phone, slack_id, password, salt, enabled
@@ -71,8 +72,8 @@ values(
 );
  
 -- Roles
-INSERT INTO role(role) values('ADMIN');
-INSERT INTO role(role) values('USER');
+INSERT INTO envirosense.role(role) values('ADMIN');
+INSERT INTO envirosense.role(role) values('USER');
 
 INSERT INTO envirosense.user_role(user_email, user_role)
 VALUES('sergio.diazchavez@edu.sait.ca', 'USER');

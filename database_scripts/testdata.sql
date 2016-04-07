@@ -1,7 +1,6 @@
--- Historic temperature data that can be used during development
-
+use envirosense;
 -- Rooms
-INSERT INTO room
+INSERT INTO envirosense.room
 	(name, description)
 VALUES
 	('Room 1', 'This is test room 1'),
@@ -9,7 +8,7 @@ VALUES
 	('Room 3', 'This is test room 3');
 
 -- Sensors
-INSERT INTO sensor
+INSERT INTO envirosense.sensor
 	(room_id, name, sensor_type)
 VALUES
 	(1, 'HDC1000_1', 'TE'),
@@ -26,7 +25,7 @@ VALUES
 	(3, 'DRSENSE_3', 'DR');
 
 -- Temperature data
- INSERT INTO temperature values 
+ INSERT INTO envirosense.temperature values 
  (1 , 17.90 , STR_TO_DATE('2016-02-17 20:02:09','%Y-%m-%d %H:%i:%s')),
  (1 , 17.90 , STR_TO_DATE('2016-02-17 20:02:11','%Y-%m-%d %H:%i:%s')),
  (1 , 17.88 , STR_TO_DATE('2016-02-17 20:02:13','%Y-%m-%d %H:%i:%s')),
@@ -108,7 +107,7 @@ VALUES
  (1 , 21.65 , STR_TO_DATE('2016-02-17 20:08:02','%Y-%m-%d %H:%i:%s'));
 
  -- humidity data
- INSERT INTO temperature values
+ INSERT INTO envirosense.temperature values
 (2 , 55.76 , STR_TO_DATE('2016-02-17 20:02:09','%Y-%m-%d %H:%i:%s')),
 (2 , 55.76 , STR_TO_DATE('2016-02-17 20:02:11','%Y-%m-%d %H:%i:%s')),
 (2 , 55.76 , STR_TO_DATE('2016-02-17 20:02:13','%Y-%m-%d %H:%i:%s')),
@@ -190,7 +189,7 @@ VALUES
 (2 , 82.84 , STR_TO_DATE('2016-02-17 20:08:02','%Y-%m-%d %H:%i:%s'));
 
  -- motion data
-  INSERT INTO motion values
+  INSERT INTO envirosense.motion values
 (3 ,    1 , STR_TO_DATE('2016-02-17 20:02:10','%Y-%m-%d %H:%i:%s')),
 (3 ,    1 , STR_TO_DATE('2016-02-17 20:02:12','%Y-%m-%d %H:%i:%s')),
 (3 ,    1 , STR_TO_DATE('2016-02-17 20:02:14','%Y-%m-%d %H:%i:%s')),
