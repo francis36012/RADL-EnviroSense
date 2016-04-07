@@ -8,7 +8,6 @@
 #include <fcntl.h>
 #include <linux/i2c-dev.h.kernel>
 #include <linux/i2c.h>
-
 #include <string.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -90,22 +89,23 @@ int main(int argc, char *argv[]) {
 	serv_addr.sin_port = htons(portno);
 	if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0)
 		error("ERROR connecting");
+		
+	float currentTemp = i2c_read(0x40, 0, 20000) * (165.0/65536.0) -40;
+ 	float currentHum =  i2c_read(0x40, 1, 20000) * (100.0/65536.0);
 
-	short currentTemp = i2c_read(0x40, 0, 20000);
-	short currentHum = i2c_read(0x40, 1, 20000);
-	
+
 	while(1){
-		short temp = i2c_read(0x40, 0, 20000);
-		short hum  = i2c_read(0x40, 1, 20000);
+		float temp = i2c_read(0x40, 0, 20000) * (165.0/65536.0)-40;
+		float hum  = i2c_read(0x40, 1, 20000) * (100.0/65536.0);
 
 		//Check the discrepancy betwen the previous reading with the actual reading
-		if((currentTemp-temp > 10 || currentTemp-temp < 10) || (currentHum-hum > 10 || currentHum-hum < 10)) {
+		if((currentTemp - temp > 1 || currentTemp - temp < -1) || (currentHum-hum > 1 || currentHum-hum < -1)) {		
 			//Redo reading. Discrepancy too big. Probably wrong
 			currentTemp = temp;
 			currentHum = hum;
-			sleep(1);
+			printf("Discrepancy too big. Reading again to make sure...\n");
 			continue;
-		}	
+		}
 		
 		currentTemp = temp;
 		currentHum = hum;
@@ -119,15 +119,15 @@ int main(int argc, char *argv[]) {
 
 		if (temp != 0xffff && hum != 0xffff) {
 			
-			sprintf(buffer, "I2C-1 Temp/Hum %.2f %.2f Time %s", temp * (165.0/65536.0) - 40, hum * (100.0/65536.0), c_time_string);
+			sprintf(buffer, "I2C-1 Temp/Hum %.2f %.2f Time %s", temp, hum, c_time_string);
 			n = write(sockfd,buffer,strlen(buffer));
             
 			if (n < 0)
 				error("ERROR writing to socket");
 		}
 
-		sleep(4);
+		sleep(2);
 	}
-	close(sockfd);
+	//close(sockfd);
 	return 0;
 }
