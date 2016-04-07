@@ -37,7 +37,13 @@ function formSubmitListeners() {
 	 * for each room.
 	 */
 	roomsToggle.addEventListener("click", function () {
+		roomsToggle.classList.add("disabled");
+		roomsToggle.classList.add("btn-success");
+		sensorsToggle.classList.remove("disabled");
+		sensorsToggle.classList.remove("btn-success");
+		
 		clearTimeout(sensorInterval);
+		sensorInterval = 0;
 		
 		var slickSlides = document.getElementById("slickSlides");
 		while(slickSlides.children.length > 1) {
@@ -58,8 +64,10 @@ function formSubmitListeners() {
 					runAjax(mainForm);
 					
 					roomInterval = setTimeout(function liveDataInterval(mainForm) {
-						runAjax(mainForm);
-						setTimeout(liveDataInterval, 1000, mainForm);
+						if(roomInterval > 0) {
+							runAjax(mainForm);
+							setTimeout(liveDataInterval, 1000, mainForm);
+						}
 					}, 1000, mainForm);
 				}
 			}
@@ -67,7 +75,13 @@ function formSubmitListeners() {
 	});
 	
 	sensorsToggle.addEventListener("click", function () {
+		sensorsToggle.classList.add("disabled");
+		sensorsToggle.classList.add("btn-success");
+		roomsToggle.classList.remove("disabled")
+		roomsToggle.classList.remove("btn-success");
+		
 		clearTimeout(roomInterval);
+		roomInterval = 0;
 		
 		var slickSlides = document.getElementById("slickSlides");
 		while(slickSlides.children.length > 1) {
@@ -77,7 +91,8 @@ function formSubmitListeners() {
 		/*
 		 * We put it in a constant loop interval because it might run even
 		 * though the "Slick Slides" aren't created yet, thus creating problems.
-		 * Once it detects the...
+		 * Once it detects that there are now containers created, we fill in
+		 * those containers based on another AJAX call.
 		 */
 		var mainForm = createForm("liveDataAllRoomsAndSensors", "sensor", "all");
 		runAjax(mainForm);
@@ -98,8 +113,10 @@ function formSubmitListeners() {
 					runAjax(mainForm);
 					
 					sensorInterval = setTimeout(function liveDataInterval(mainForm) {
-						runAjax(mainForm);
-						setTimeout(liveDataInterval, 1000, mainForm);
+						if (sensorInterval > 0) {
+							runAjax(mainForm);
+							setTimeout(liveDataInterval, 1000, mainForm);
+						}
 					}, 1000, mainForm);
 				}
 			}

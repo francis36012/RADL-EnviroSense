@@ -76,7 +76,7 @@ function readyStateChangeBySensorType(xmlHttp, formElement) {
 			 * No data was found. We create a panel with the error message
 			 * "No data was found with that criteria."
 			 */
-			while (dataContainer.length > 0) {
+			while (dataContainer.length > 1) {
 				if (!$("#" + sensorType).slick("slickRemove", false)) {
 					dataContainer[0].parentNode.parentNode.remove();
 				}
@@ -88,8 +88,11 @@ function readyStateChangeBySensorType(xmlHttp, formElement) {
 			var messageContainer = messagePanel.getElementsByClassName("sensorValue")[0];
 			messageContainer.appendChild(messageText);
 			
-			$("#" + sensorType).slick("slickAdd", messagePanel);
-			
+			if (dataContainer.length === 1) {
+				dataContainer[0] = messagePanel;
+			} else {
+				$("#" + sensorType).slick("slickAdd", messagePanel);
+			}
 		}
 	} catch (errorEvent) {
 		/*
