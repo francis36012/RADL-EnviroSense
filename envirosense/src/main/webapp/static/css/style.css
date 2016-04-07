@@ -22,6 +22,64 @@ body * {
 	max-width: 1280px;
 }
 
+/* SIDEBAR ELEMENTS */
+#sidebar-wrapper {
+	background-image: url("../images/Backgrounds/Background - Noise 3.png") !important;
+	box-shadow: inset -1em 0em 1.5em -1em rgba(0, 0, 0, 0.7);
+	overflow-x: hidden;
+}
+
+#sidebar-wrapper .sidebar-nav {
+	margin-top: 1em;
+}
+
+#sidebar-wrapper .sidebar-nav > li:first-child img:first-child {
+	margin-bottom: 25px;
+}
+
+#sidebar-wrapper .sidebar-nav > li:last-child a {
+	padding: .1em 25px .1em 0;
+}
+
+#sidebar-wrapper .sidebar-nav li a {
+	padding-right: 25px;
+	font-size: 2em;
+	font-weight: lighter;
+	line-height: 2em;
+}
+
+#sidebar-wrapper #adminLinks a {
+	padding: .1em 25px .1em 0;
+}
+
+#page-content-wrapper {
+	position: absolute !important;
+}
+
+/* SLICK ELEMENTS */
+.slick-slider { //
+	background-image: url("../images/Backgrounds/Background - Noise 1.png");
+	background-repeat: repeat;
+	border-radius: 3px;
+}
+
+.slick-slide {
+	height: 100%;
+	overflow-y: auto;
+}
+
+.slick-slide::-webkit-scrollbar {
+	display: none;
+}
+
+.slick-list * {
+	
+}
+
+.slick-dots {
+	/*opacity: 0.3;*/
+}
+
 /* OTHER ELEMENTS */
 .hidden {
 	display: none;

@@ -70,7 +70,7 @@ function formDefaultValues() {
  * Add "On Submit" events for the forms in the reports page.
  */
 function formSubmitListeners() {
-	var reportForm = reportForm = document.getElementById("reportForm");
+	var reportForm = document.getElementById("reportForm");
 	reportForm.onsubmit = function() {
 		if (reportForm.dataType.value !== "") {
 			runAjax(this);

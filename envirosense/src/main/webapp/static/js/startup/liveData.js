@@ -15,7 +15,7 @@ if (window.addEventListener) { //W3 Standards
 
 function startupController() {
 	runNavbar();
-	formSubmitListeners();
+	formButtonListeners();
 }
 
 /* 
@@ -26,7 +26,7 @@ function startupController() {
 var sensorInterval = 0;
 var roomInterval = 0;
 
-function formSubmitListeners() {
+function formButtonListeners() {
 	var roomsToggle = document.getElementById("roomsToggle");
 	var sensorsToggle = document.getElementById("sensorsToggle");
 	

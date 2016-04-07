@@ -31,7 +31,7 @@
 						<!-- SIDEBAR TOGGLE -->
 						<c:import url="/static/common/navbar/toggle.jsp" />
 
-						<div class="row page-header">
+						<div class="row page-header text-center">
 						<div class="col-xs-12">
 							<h1>Live Data</h1>
 							<!--<small>Let's pick up where you left off.</small>-->

@@ -29,7 +29,7 @@
 						<!-- SIDEBAR TOGGLE -->
 						<c:import url="/static/common/navbar/toggle.jsp" />
 
-						<div class="row page-header">
+						<div class="row page-header text-center">
 							<div class="col-xs-12">
 								<h1>Manage Events</h1>
 								<!--<small>Let's get notified.</small>-->
@@ -52,16 +52,16 @@
 									<form class="form" role="form">
 										<div class="row">
 											<div class="col-xs-12 btn-group btn-group-justified">
-											<a id="disableAll" class="btn btn-danger btn-block"
-												data-switch-toggle="state"
-												data-switch-value="false"
-												data-radio-all-off="true"
-											>Disable All</a>
+											<a id="disableAll" class="btn btn-default btn-block"
+											data-switch-toggle="state"
+											data-switch-value="false"
+											data-radio-all-off="true">
+												Disable All</a>
 
 											<a id="enableAll" class="btn btn-success btn-block" 
-												data-switch-toggle="state"
-												data-switch-value="true"
-												>Enable All</a>
+											data-switch-toggle="state"
+											data-switch-value="true">
+												Enable All</a>
 											</div>
 										</div>
 									</form>
@@ -96,7 +96,7 @@
 													</div>
 												</div>
 											</form>
-										<br />
+										<hr />
 										</c:forEach>
 									</div>
 								</div>

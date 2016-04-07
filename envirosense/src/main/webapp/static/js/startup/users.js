@@ -16,8 +16,8 @@ if (window.addEventListener) { //W3 Standards
 function startupController() {
 	runNavbar();
 	runBootstrapSwitch();
-	formButtonListeners();
 	formSubmitListeners();
+	formButtonListeners();
 	
 	$("[class='bootstrapSwitch']").on("switchChange.bootstrapSwitch", function (event, state) {
 		onSwitchChange(event, state);
@@ -34,7 +34,7 @@ function onSwitchChange(event, state) {
 	 * it, like an alert box.
 	 */
 	
-	var submitButton = createNode("input", null, [["type", "submit"], ["style", "display: none"], ["name", "dataChoice"], ["value", "saveUser"]])
+	var submitButton = createNode("input", null, [["type", "submit"], ["style", "display: none"], ["name", "dataChoice"], ["value", "saveUser"]]);
 	var mainForm = event.target.closest("form");
 	mainForm.appendChild(submitButton);
 	submitButton.click();
@@ -48,38 +48,59 @@ function formButtonListeners() {
 	var resetButtons = document.getElementsByName("revert");
 	var submitButtons = document.getElementsByName("save");
 	var deleteButtons = document.getElementsByName("delete");
+	var createButtons = document.getElementsByName("create");
+	
 	for (var index = 0; index < resetButtons.length; index++) {
 		resetButtons[index].addEventListener("click", function(event) {
 			var formElement = event.target.closest("form");
 			formElement.reset();
 		});
-		
+	}
+	
+	for (var index = 0; index < submitButtons.length; index++) {
 		submitButtons[index].addEventListener("click", function(event) {
 			/*
 			 * Since modern browsers doesn't adhere to going to pre-defined
 			 * "on submit" functions, we have to create an actual submit
 			 * button and append that to the form.
 			 */
-			var submitButton = createNode("input", null, [["type", "submit"], ["style", "display: none"], ["name", "dataChoice"], ["value", "saveUser"]])
+			var submitButton = createNode("input", null, [["type", "submit"], ["style", "display: none"], ["name", "dataChoice"], ["value", "saveUser"]]);
 			var formElement = event.target.closest("form");
 			formElement.appendChild(submitButton);
 			submitButton.click();
 			formElement.removeChild(submitButton);
 		});
-		
+	}
+
+	for (var index = 0; index < deleteButtons.length; index++) {
 		deleteButtons[index].addEventListener("click", function(event) {
 			/*
 			 * Since modern browsers doesn't adhere to going to pre-defined
 			 * "on submit" functions, we have to create an actual submit
 			 * button and append that to the form.
 			 */
-			var submitButton = createNode("input", null, [["type", "submit"], ["style", "display: none"], ["name", "dataChoice"], ["value", "deleteUser"]])
+			var submitButton = createNode("input", null, [["type", "submit"], ["style", "display: none"], ["name", "dataChoice"], ["value", "deleteUser"]]);
 			var formElement = event.target.closest("form");
 			formElement.appendChild(submitButton);
 			submitButton.click();
 			formElement.removeChild(submitButton);
 		});
-	};
+	}
+		
+		for (var index = 0; index < createButtons.length; index++) {
+		createButtons[index].addEventListener("click", function(event) {
+			/*
+			 * Since modern browsers doesn't adhere to going to pre-defined
+			 * "on submit" functions, we have to create an actual submit
+			 * button and append that to the form.
+			 */
+			var submitButton = createNode("input", null, [["type", "submit"], ["style", "display: none"], ["name", "dataChoice"], ["value", "createUser"]]);
+			var formElement = event.target.closest("form");
+			formElement.appendChild(submitButton);
+			submitButton.click();
+			formElement.removeChild(submitButton);
+		});
+	}
 }
 
 function formSubmitListeners() {

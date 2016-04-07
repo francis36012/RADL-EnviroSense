@@ -72,7 +72,11 @@
 						again or contact the administrator for assistance.</p>
 						</div>
 					</c:if>
-					
+				</div>
+			</div>
+								
+			<div class="row">
+				<div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-4 nopadding">
 					<small>
 						<a href="<c:url value='#forgotPassword' />" id="forgotPasswordToggle" data-toggle="collapse">Forgot Password</a>
 					</small>
@@ -98,9 +102,8 @@
 							</p>
 						</form>
 					</div>
-					<hr />
 				</div>
-			</div>		
+			</div>
 		</div>
 		</div>
 	</body>

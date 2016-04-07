@@ -4,18 +4,24 @@
 <div id="sidebar-wrapper">
 	<ul class="sidebar-nav text-right">
 		<li>
-			<img src="<c:url value='/static/images/Elements/Logo/Logo - Medium.png' />" style="width: 33%; margin: 0 37%" />
+			<div class="row">
+				<div class="col-xs-6 col-xs-offset-3">
+					<img src="<c:url value='/static/images/Elements/Logo/Logo - Medium.png' />" class="img-responsive" />
+				</div>
+			</div>
 			<img src="<c:url value='/static/images/Elements/Divider.png' />" class="img-responsive" />
 		</li>
 		<li><a href="<c:url value='/' />">Live Data</a></li>
 		<li><a href="<c:url value='/report' />">Report</a></li>
 		<li><a href="<c:url value='/events' />">Events</a></li>
-		<li><a href="<c:url value='#' />">Account</a></li>
 		
-		<li><a href="#adminLinks" data-toggle="collapse">Admin</a></li>
-		<li id="adminLinks" class="collapse">
-			<a href="<c:url value='/admin/events' />"><h4>Events</h4></a>
-			<a href="<c:url value='/admin/users/all' />"><h4>Users</h4></a>
+		<li>
+			<a href="#adminLinks" data-toggle="collapse">Admin</a>
+			<div id="adminLinks" class="collapse">
+				<a href="<c:url value='/admin/events' />"><h4>Events</h4></a>
+				<a href="<c:url value='/admin/users/all' />"><h4>Users</h4></a>
+			</div>
+			<img src="<c:url value='/static/images/Elements/Divider.png' />" class="img-responsive" />
 		</li>
 		
 		<li>

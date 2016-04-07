@@ -8,6 +8,7 @@
 		<c:import url="/static/common/head/jquery.jsp" />
 		<c:import url="/static/common/head/bootstrap.jsp" />
 		<c:import url="/static/common/head/bootstrapSwitch.jsp" />
+		<c:import url="/static/common/head/bootstrapLadda.jsp" />
 		<c:import url="/static/common/head/style.jsp" />
 		<c:import url="/static/common/head/navbar.jsp" />
 
@@ -29,7 +30,7 @@
 						<!-- SIDEBAR TOGGLE -->
 						<c:import url="/static/common/navbar/toggle.jsp" />
 
-						<div class="row page-header">
+						<div class="row page-header text-center">
 							<div class="col-xs-12">
 								<h1>Users</h1>
 								<!--<small>Some catch phrase.</small>-->
@@ -54,7 +55,7 @@
 									<div class="panel-body">
 										<form class="form" role="form">
 											<div class="btn-group btn-group-justified">
-												<a id="disableAll" class="btn btn-danger btn-block"
+												<a id="disableAll" class="btn btn-default btn-block"
 													data-switch-toggle="state"
 													data-switch-value="false"
 													data-radio-all-off="true"
@@ -182,7 +183,7 @@
 																<fieldset class="fieldset form-group">
 																	<div class="row">
 																		<div class="col-xs-12">
-																			<input type="password" class="form-control input-md" name="password" value="<c:out value='${currentUser.getPassword()}' />"/>
+																			<input type="password" class="form-control input-md" name="password" value="" />
 																		</div>
 																	</div>
 
@@ -197,15 +198,21 @@
 																	<div class="row">
 																		<div class="col-xs-12">
 																			<div class="btn-group btn-group-justified">
-																				<a name="delete" class="btn btn-default btn-block">
+																				<a name="delete" class="btn btn-danger btn-block ladda-button" 
+																					data-spinner-color="#333" 
+																					data-style="slide-down">
 																					Delete
 																				</a>
 
-																				<a name="revert" class="btn btn-default btn-block">
+																				<a name="revert" class="btn btn-default btn-block ladda-button" 
+																					data-spinner-color="#333" 
+																					data-style="slide-down">
 																					Revert
 																				</a>
 
-																				<a name="save" class="btn btn-success btn-block">
+																				<a name="save" class="btn btn-success btn-block ladda-button" 
+																					data-spinner-color="#333" 
+																					data-style="slide-down">
 																					Save
 																				</a>
 																			</div>
@@ -359,15 +366,15 @@
 														<div class="row">
 															<div class="col-xs-12">
 																<div class="btn-group btn-group-justified">
-																	<a name="delete" class="btn btn-default btn-block">
-																		Delete
-																	</a>
-
-																	<a name="revert" class="btn btn-default btn-block">
+																	<a name="revert" class="btn btn-default btn-block ladda-button" 
+																		data-spinner-color="#333" 
+																		data-style="slide-down">
 																		Revert
 																	</a>
 
-																	<a name="save" class="btn btn-success btn-block">
+																	<a name="create" class="btn btn-success btn-block ladda-button" 
+																		data-spinner-color="#333" 
+																		data-style="slide-down">
 																		Save
 																	</a>
 																</div>
@@ -394,15 +401,15 @@
 				</div>
 			</div>
 		</div>
+
+		<!--Javasciprt : Utilities -->
+		<script type="text/javascript" src="<c:url value='/static/js/utilities.js' />"></script>
 						
 		<!--Javasciprt : AJAX Controller -->
 		<script type="text/javascript" src="<c:url value='/static/js/ajax/ajaxController.js' />"></script>
 		
 		<!--Javasciprt : AJAX Users -->
 		<script type="text/javascript" src="<c:url value='/static/js/ajax/users/dataByUsers.js' />"></script>
-
-		<!--Javasciprt : Utilities -->
-		<script type="text/javascript" src="<c:url value='/static/js/utilities.js' />"></script>
 
 		<!-- Javascript : Startup Sequence -->
 		<script type="text/javascript" src="<c:url value='/static/js/startup/users.js' />"></script>

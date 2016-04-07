@@ -86,6 +86,16 @@ function runBootstrapSwitch() {
 	$("[class='bootstrapSwitch']").bootstrapSwitch();
 }
 
+function runJqueryUI() {
+	$(function() {
+		$("[type=datetime-local]" ).datepicker();
+	});
+	
+	$( "#format" ).change(function() {
+      $( "#datepicker" ).datepicker( "option", "dateFormat", $( this ).val() );
+    });
+}
+
 
 /* ---------------------------------------- */
 /*			CONTAINER CREATION				*/

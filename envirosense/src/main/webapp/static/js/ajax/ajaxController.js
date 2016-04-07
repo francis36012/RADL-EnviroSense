@@ -26,6 +26,7 @@ function runAjax(formElement) {
 			
 		case "saveUser":
 		case "deleteUser":
+		case "createUser":
 			setDataByUser(formElement);
 			break;
 			

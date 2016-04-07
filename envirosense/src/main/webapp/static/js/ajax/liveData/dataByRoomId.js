@@ -77,10 +77,22 @@ function readyStateChangeByRoomId(xmlHttp, formElement) {
 			 * No data was found. We create a panel with the error message
 			 * "No data was found with that criteria."
 			 */
-			while (dataContainer.length > 0) {
-				if (!$('.single-items').slick("slickRemove", false)) {
+			while (dataContainer.length > 1) {
+				if (!$("#" + sensorType).slick("slickRemove", false)) {
 					dataContainer[0].parentNode.parentNode.remove();
 				}
+			}
+			
+			var messagePanel = createContainerBySensorType();
+			var messageText = createNode("div", ["alert", "alert-warning"], null);
+			messageText.innerHTML = "No data is currently stored.";
+			var messageContainer = messagePanel.getElementsByClassName("sensorValue")[0];
+			messageContainer.appendChild(messageText);
+			
+			if (dataContainer.length === 1) {
+				dataContainer[0] = messagePanel;
+			} else {
+				$("#" + sensorType).slick("slickAdd", messagePanel);
 			}
 		}
 	} catch (errorEvent) {
@@ -89,87 +101,4 @@ function readyStateChangeByRoomId(xmlHttp, formElement) {
 		 */
 		throw errorEvent;
 	}
-}
-
-function reformatJsonBySensorType(jsonObject, sortKey) {
-	/*
-	 * Suggested JSON format:
-	 * 1.]	sensorId
-	 * 2.]	sensorType
-	 * 3.]	values
-	 *		i.	timestamp
-	 *		ii.	data
-	 */
-	var formattedJson = {
-		sensorId: null,
-		sensorType: null,
-		values: null
-	};
-	var uniqueId = [];
-	var jsonAttributes = [];
-	var jsonData = [];
-	var returnValue = [];
-	
-	for (var index = 0; index < jsonObject.length; index++) {
-		var jsonProperty = {
-			timestamp: null, 
-			data: null
-		};
-		var sortAttribute = jsonObject[index][sortKey];
-		
-		if (uniqueId.indexOf(sortAttribute) < 0) {
-			uniqueId.push(sortAttribute);
-			jsonAttributes.push(jsonObject[index]["sensorType"]);
-			jsonData.push([]);
-		}
-		
-		/*
-		 * Since Google Charts isn't very stable when handling boolean values,
-		 * we have to change the JSON object's boolean values to either 1 or 0
-		 * if ever there is a boolean value present in the data.
-		 */
-		if (jsonObject[index]["data"] === true) {
-			jsonObject[index]["data"] = 1;
-		}
-		
-		jsonProperty.timestamp = jsonObject[index]["timestamp"];
-		jsonProperty.data = jsonObject[index]["data"];
-		
-		jsonData[uniqueId.indexOf(sortAttribute)].push(jsonProperty);
-	}
-	
-	for (var index = 0; index < uniqueId.length; index++) {
-		formattedJson = new Object();
-		formattedJson.sensorId = uniqueId[index];
-		formattedJson.sensorType = jsonAttributes[index];
-		formattedJson.values = jsonData[index];
-		
-		returnValue.push(formattedJson);
-	}
-	return JSON.parse(JSON.stringify(returnValue));
-}
-
-
-
-/* ---------------------------------------- */
-/*				DATA LOADER					*/
-/* ---------------------------------------- */
-function loadDataBySensorType(jsonObject, domElement) {
-	var jsonElement = {
-		id: jsonObject["sensorId"],
-		sensorType: jsonObject["sensorType"],
-		values: {
-			timestamp: jsonObject["values"][0]["timestamp"],
-			data: jsonObject["values"][0]["data"]	
-		}
-	};
-	
-	var sensorId = domElement.getElementsByClassName("sensorId")[0];
-	var sensorType = domElement.getElementsByClassName("sensorType")[0];
-	var sensorTime = domElement.getElementsByClassName("sensorTime")[0];
-	var sensorValue = domElement.getElementsByClassName("sensorValue")[0];
-	
-	sensorId.appendChild(small.cloneNode().appendChild(document.createTextNode("<h3 class='text-center'>ID: " + jsonElement.id) + "</h3>"));
-	sensorTime.appendChild(h3.cloneNode().appendChild(document.createTextNode("<h5 class='text-center'>" + getReadableDateString(jsonElement.values.timestamp)) + "</h5>"));
-	sensorValue.appendChild(h1.cloneNode().appendChild(document.createTextNode(jsonElement.values.data + " <small class='text-muted'>Celcius</small>")));
 }
