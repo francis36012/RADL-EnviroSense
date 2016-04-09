@@ -287,9 +287,7 @@ function generateChartBySensorType(jsonObject, domElement, sensorType) {
 						max: 1
 					}
 				},
-				legend: {
-					position: 'none'
-				},
+				legend: 'none',
 				colors: [
 					'#5CB85C'
 				]
@@ -317,9 +315,7 @@ function generateChartBySensorType(jsonObject, domElement, sensorType) {
 						max: -10
 					}
 				},
-				legend: {
-					position: 'none'
-				},
+				legend: 'none',
 				colors: [
 					'#5CB85C'
 				]

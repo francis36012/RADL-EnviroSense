@@ -559,13 +559,15 @@ function getReadableDateString(timestamp) {
 	var currDate = date.getDate();
 	var currMonth = date.getMonth() + 1;
 	var currYear = date.getFullYear();
-	var currHour = date.getHours();
+	var currAmPm = date.getHours() >= 12 ? "pm" : "am";
+	var currHour = date.getHours() % 12;
+	currHour = currHour ? currHour : 12;
 	var currMinute = date.getMinutes();
 	var currSecond = date.getSeconds();
 	var monthNames = ["January", "February", "March", "April", "May", "June",
 		"July", "August", "September", "October", "November", "December"
 	  ];
-	return monthNames[currMonth - 1] + " " + currDate +  " " + currYear + " - " + currHour + ":" + currMinute + ":" + currSecond;
+	return monthNames[currMonth - 1] + " " + currDate +  " " + currYear + " - " + currHour + ":" + currMinute + ":" + currSecond + " " + currAmPm;
 }
 
 function getDataValueBySensorType(sensorType, dataType) {

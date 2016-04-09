@@ -198,7 +198,10 @@ function loadDataBySensorType(jsonObject, domElement) {
 	var toAppend = null;
 	
 	toAppend = h1.cloneNode();
-	toAppend.appendChild(document.createTextNode(jsonElement.values.data + " " + getDataTypeBySensorType(jsonElement.sensorType)));
+	toAppend.appendChild(document.createTextNode(jsonElement.values.data + " "));
+	var subText = small.cloneNode();
+	subText.appendChild(document.createTextNode(getDataTypeBySensorType(jsonElement.sensorType)));
+	toAppend.appendChild(subText);
 	sensorValue.appendChild(toAppend);
 	
 	toAppend = h4.cloneNode();
