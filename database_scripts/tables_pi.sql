@@ -32,7 +32,7 @@ CREATE TABLE door (
 
 DROP TABLE IF EXISTS bluetooth_beacon;
 CREATE TABLE bluetooth_beacon (
-	id BIGINT NOT NULL,
+	id VARCHAR(60) NOT NULL,
 	user_email VARCHAR(60) NOT NULL,
 	CONSTRAINT pk_blebeacon PRIMARY KEY (id)
 );
@@ -41,7 +41,7 @@ CREATE TABLE bluetooth_beacon (
 DROP TABLE IF EXISTS ra_bluetooth;
 CREATE TABLE ra_bluetooth (
 	sensor_id BIGINT NOT NULL,
-	beacon_id BIGINT NOT NULL,
+	beacon_id VARCHAR(60) NOT NULL,
 	rssi BIGINT NOT NULL,
 	timestamp TIMESTAMP NOT NULL,
 	CONSTRAINT pk_rabluetooth PRIMARY KEY (sensor_id, timestamp),

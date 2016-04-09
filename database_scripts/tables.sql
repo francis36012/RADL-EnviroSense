@@ -126,7 +126,7 @@ CREATE TABLE envirosense.door (
 
 DROP TABLE IF EXISTS envirosense.bluetooth_beacon;
 CREATE TABLE envirosense.bluetooth_beacon (
-	id BIGINT NOT NULL,
+	id BIGINT VARCHAR(60) NULL,
 	user_email VARCHAR(60) NOT NULL,
 	CONSTRAINT pk_blebeacon PRIMARY KEY (id)
 );
@@ -135,7 +135,7 @@ CREATE TABLE envirosense.bluetooth_beacon (
 DROP TABLE IF EXISTS envirosense.ra_bluetooth;
 CREATE TABLE envirosense.ra_bluetooth (
 	sensor_id BIGINT NOT NULL,
-	beacon_id BIGINT NOT NULL,
+	beacon_id VARCHAR(60)NOT NULL,
 	rssi BIGINT NOT NULL,
 	timestamp TIMESTAMP NOT NULL,
 	CONSTRAINT pk_rabluetooth PRIMARY KEY (sensor_id, timestamp),
