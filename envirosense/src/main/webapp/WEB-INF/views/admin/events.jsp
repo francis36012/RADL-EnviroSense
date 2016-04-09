@@ -24,88 +24,88 @@
 			<div id="page-content-wrapper">
 				<div class="container-fluid nopadding">
 					<div class="row">
-					<div class="col-xs-12 col-sm-8 col-sm-offset-2">
+						<div class="col-xs-12 col-sm-8 col-sm-offset-2">
+							<div class="row page-header text-center">
+								<div class="col-xs-12">
+									<h1>Manage Events</h1>
+								</div>
+							</div>
 
-						<!-- SIDEBAR TOGGLE -->
-						<c:import url="/static/common/navbar/toggle.jsp" />
-
-						<div class="row page-header text-center">
-							<div class="col-xs-12">
-								<h1>Manage Events</h1>
-								<!--<small>Let's get notified.</small>-->
+							<div class="row">
+								<div class="col-xs-12 col-sm-6 col-sm-offset-3">
+									<!-- SIDEBAR TOGGLE -->
+									<c:import url="/static/common/navbar/toggle.jsp" />	
+								</div>
 							</div>
 						</div>
 					</div>
-					</div>
 
 					<div class="row">
-					<div class="col-xs-12 col-sm-6 col-sm-offset-3 nopadding">
-					<c:choose>
-						<c:when test="${events != null}">
-							<input type="hidden" id="csrfProtection" name="<c:out value='${_csrf.parameterName}' />" value="${_csrf.token}" />
-							<div class="panel panel-default">
-								<div class="panel-heading text-center">
-									Settings
-								</div>
+						<div class="col-xs-12 col-sm-6 col-sm-offset-3 nopadding">
+						<<c:choose>
+							<c:when test="${events.size() > 0}">
+								<input type="hidden" id="csrfProtection" name="<c:out value='${_csrf.parameterName}' />" value="${_csrf.token}" />
+								<div class="panel panel-default">
+									<div class="panel-heading text-center">
+										Settings
+									</div>
 
-								<div class="panel-body">
-									<form class="form" role="form">
-										<div class="row">
-											<div class="col-xs-12 btn-group btn-group-justified">
-											<a id="disableAll" class="btn btn-default btn-block"
-											data-switch-toggle="state"
-											data-switch-value="false"
-											data-radio-all-off="true">
-												Disable All</a>
+									<div class="panel-body">
+										<form class="form" role="form">
+											<div class="row">
+												<div class="col-xs-12 btn-group btn-group-justified">
+												<a id="disableAll" class="btn btn-default btn-block"
+												data-switch-toggle="state"
+												data-switch-value="false"
+												data-radio-all-off="true">
+													Disable All</a>
 
-											<a id="enableAll" class="btn btn-success btn-block" 
-											data-switch-toggle="state"
-											data-switch-value="true">
-												Enable All</a>
-											</div>
-										</div>
-									</form>
-								</div>
-							</div>
-
-							<div class="panel panel-default">
-								<div class="panel-heading text-center">
-									Events
-								</div>
-
-								<div class="panel-body">
-									<div class="dataContainer">
-										<c:forEach items="${events}" var="currentEvent">
-											<form class="form" role="form">	
-												<div class="row">
-													<div class="col-xs-8 col-sm-9">
-														<c:out value="${currentEvent.getName()}" />
-													</div>
-													
-													<div class="col-xs-4 col-sm-3">
-														<input type="checkbox" name="event"
-															class="bootstrapSwitch"
-															data-size="mini"
-															data-on-color="success"
-															data-event-id="${currentEvent.getId()}"
-															data-event-name="${currentEvent.getName()}"
-															<c:if test="${currentEvent.isActive()}">
-																<c:out value="checked"/>
-															</c:if>
-														/>
-													</div>
+												<a id="enableAll" class="btn btn-success btn-block" 
+												data-switch-toggle="state"
+												data-switch-value="true">
+													Enable All</a>
 												</div>
-											</form>
-										<hr />
-										</c:forEach>
+											</div>
+										</form>
 									</div>
 								</div>
-							</div>
-						</c:when>
 
-						<c:otherwise>
-							<div class="row">
-							<div class="col-xs-12">
+								<div class="panel panel-default">
+									<div class="panel-heading text-center">
+										Events
+									</div>
+
+									<div class="panel-body">
+										<div class="dataContainer">
+											<c:forEach items="${events}" var="currentEvent">
+												<form class="form" role="form">	
+													<div class="row">
+														<div class="col-xs-8 col-sm-9">
+															<c:out value="${currentEvent.getName()}" />
+														</div>
+
+														<div class="col-xs-4 col-sm-3">
+															<input type="checkbox" name="event"
+																class="bootstrapSwitch"
+																data-size="mini"
+																data-on-color="success"
+																data-event-id="${currentEvent.getId()}"
+																data-event-name="${currentEvent.getName()}"
+																<c:if test="${currentEvent.isActive()}">
+																	<c:out value="checked"/>
+																</c:if>
+															/>
+														</div>
+													</div>
+												</form>
+											<hr />
+											</c:forEach>
+										</div>
+									</div>
+								</div>
+							</c:when>
+
+							<c:otherwise>
 								<div class="panel panel-default">
 									<div class="panel-heading text-center">
 									</div>
@@ -120,11 +120,9 @@
 										</div>
 									</div>
 								</div>
-							</div>
-							</div>
-						</c:otherwise>
-					</c:choose>
-				</div>
+							</c:otherwise>
+						</c:choose>
+					</div>
 				</div>
 			</div>
 		</div>

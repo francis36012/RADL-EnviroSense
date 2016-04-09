@@ -26,18 +26,20 @@
 			<div id="page-content-wrapper">
 			<div class="container-fluid nopadding">
 				<div class="row">
-				<div class="col-xs-12 col-sm-8 col-sm-offset-2">
+					<div class="col-xs-12 col-sm-8 col-sm-offset-2">
+						<div class="row page-header text-center">
+							<div class="col-xs-12">
+								<h1>Report</h1>
+							</div>
+						</div>
 
-					<!-- SIDEBAR TOGGLE -->
-					<c:import url="/static/common/navbar/toggle.jsp" />
-
-					<div class="row page-header text-center">
-						<div class="col-xs-12">
-							<h1>Report</h1>
-							<!--<small>Let's see what you've missed.</small>-->
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-sm-offset-3">
+								<!-- SIDEBAR TOGGLE -->
+								<c:import url="/static/common/navbar/toggle.jsp" />	
+							</div>
 						</div>
 					</div>
-				</div>
 				</div>
 
 				<div class="row">

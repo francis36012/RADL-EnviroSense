@@ -27,13 +27,17 @@
 					<div class="row">
 					<div class="col-xs-12 col-sm-8 col-sm-offset-2">
 
-						<!-- SIDEBAR TOGGLE -->
-						<c:import url="/static/common/navbar/toggle.jsp" />
-
 						<div class="row page-header text-center">
 							<div class="col-xs-12">
 								<h1>Users</h1>
-								<!--<small>Some catch phrase.</small>-->
+								
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-sm-offset-3">
+								<!-- SIDEBAR TOGGLE -->
+								<c:import url="/static/common/navbar/toggle.jsp" />	
 							</div>
 						</div>
 					</div>
@@ -45,7 +49,6 @@
 							<c:when test="${users != null}">
 								<c:set var="userCounter" value="1" />
 								<input type="hidden" id="csrfProtection" name="<c:out value='${_csrf.parameterName}' />" value="${_csrf.token}" />
-								<input type="hidden" name="dataChoice" value="userData" />
 								
 								<div class="panel panel-default">
 									<div class="panel-heading text-center">
@@ -96,14 +99,6 @@
 																/>
 														</div>
 													</div>
-
-													<!-- NOTE -->
-													<!--
-														For right now, every attribute found in the User Object is hard coded.
-														What we are going to do is get the number of attributes, and create 
-														call methods based on those attributes and fill in the proper text box with
-														the proper value. If ever that's a good plan or even possible, of course. 
-													-->
 
 													<div class="row">
 														<div class="col-xs-12">

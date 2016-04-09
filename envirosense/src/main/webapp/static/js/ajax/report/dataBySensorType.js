@@ -151,10 +151,16 @@ function reformatJsonBySensorType(jsonObject, sortKey) {
 	var formattedJson = {
 		sensorId: null,
 		sensorType: null,
+		roomName: null,
+		roomDescription: null,
 		values: null
 	};
 	var uniqueId = [];
-	var jsonAttributes = [];
+	var jsonAttributes = [{
+			sensorType: null,
+			roomName: null,
+			roomDescription: null
+		}];
 	var jsonData = [];
 	var returnValue = [];
 	
@@ -167,20 +173,22 @@ function reformatJsonBySensorType(jsonObject, sortKey) {
 		
 		if (uniqueId.indexOf(sortAttribute) < 0) {
 			uniqueId.push(sortAttribute);
-			jsonAttributes.push(jsonObject[index]["sensorType"]);
+			jsonAttributes.push({
+				sensorType: jsonObject[index]["sensorType"],
+				roomName: jsonObject[index]["roomName"],
+				roomDescription: jsonObject[index]["roomDescription"]
+			});
 			jsonData.push([]);
 		}
 		
 		/*
 		 * Since Google Charts isn't very stable when handling boolean values,
-		 * we have to change the JSON object's boolean values to either 1 or 0
+		 * we have to change the JSON object's boolean values to a string value
 		 * if ever there is a boolean value present in the data.
 		 */
-		if (jsonObject[index]["data"] === true) {
-			jsonObject[index]["data"] = 1;
-		}
+		jsonObject[index]["data"] = getDataValueBySensorType(jsonObject[index]["sensorType"], jsonObject[index]["data"]);
 		
-		jsonProperty.timestamp = new Date(jsonObject[index]["timestamp"]);
+		jsonProperty.timestamp = jsonObject[index]["timestamp"];
 		jsonProperty.data = jsonObject[index]["data"];
 		
 		jsonData[uniqueId.indexOf(sortAttribute)].push(jsonProperty);
@@ -189,14 +197,16 @@ function reformatJsonBySensorType(jsonObject, sortKey) {
 	for (var index = 0; index < uniqueId.length; index++) {
 		formattedJson = new Object();
 		formattedJson.sensorId = uniqueId[index];
-		formattedJson.sensorType = jsonAttributes[index];
+		formattedJson.sensorType = jsonAttributes[index]["sensorType"];
+		formattedJson.roomName = jsonAttributes[index]["roomName"];
+		formattedJson.roomDescription = jsonAttributes[index]["roomDescription"];
 		formattedJson.values = jsonData[index];
 		
 		returnValue.push(formattedJson);
 	}
+	
 	return JSON.parse(JSON.stringify(returnValue));
 }
-
 
 
 /* ---------------------------------------- */
@@ -207,6 +217,8 @@ function loadDataBySensorType(jsonObject, domElement) {
 	var jsonElement = {
 		id: jsonObject["sensorId"],
 		sensorType: jsonObject["sensorType"],
+		roomName: jsonObject["roomName"],
+		roomDescription: jsonObject["roomDescription"],
 		values: {
 			timestamp: jsonObject["values"][0]["timestamp"],
 			data: jsonObject["values"][0]["data"]
@@ -216,9 +228,12 @@ function loadDataBySensorType(jsonObject, domElement) {
 	var sensorId = domElement.getElementsByClassName("sensorId")[0];
 	var sensorType = domElement.getElementsByClassName("sensorType")[0];
 	var sensorTime = domElement.getElementsByClassName("sensorTime")[0];
+	var roomName = domElement.getElementsByClassName("roomName")[0];
+	var roomDescription = domElement.getElementsByClassName("roomDescription")[0];
 	
 	sensorId.innerHTML = "ID: " + jsonElement.id;
 	sensorType.innerHTML = "Type: " + getSensorNameByType(jsonElement.sensorType);
+	roomName.innerHTML = "";
 	
 	if (window.google) {
 		generateChartBySensorType(jsonObject, sensorTime, jsonElement.sensorType);
@@ -274,10 +289,13 @@ function generateChartBySensorType(jsonObject, domElement, sensorType) {
 				},
 				legend: {
 					position: 'none'
-				}
+				},
+				colors: [
+					'#5CB85C'
+				]
 			};
 
-			var chart = new google.visualization.ScatterChart(domElement);
+			var chart = new google.visualization.SteppedAreaChart(domElement);
 			chart.draw(data, options);
 		});
 	} else {
@@ -293,11 +311,18 @@ function generateChartBySensorType(jsonObject, domElement, sensorType) {
 					format: 'MMM dd - HH:mm'
 				},
 				vAxis: {
-					title: 'Celcius'
+					title: 'Celcius',
+					viewWindow: {
+						min: 30,
+						max: -10
+					}
 				},
 				legend: {
 					position: 'none'
-				}
+				},
+				colors: [
+					'#5CB85C'
+				]
 			};
 
 			var chart = new google.visualization.LineChart(domElement);

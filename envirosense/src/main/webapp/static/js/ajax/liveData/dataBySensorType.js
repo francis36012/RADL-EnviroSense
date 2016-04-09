@@ -114,6 +114,8 @@ function reformatJsonBySensorType(jsonObject, sortKey) {
 	var formattedJson = {
 		sensorId: null,
 		sensorType: null,
+		roomName: null,
+		roomDescription: null,
 		values: null
 	};
 	var uniqueId = [];
@@ -130,18 +132,20 @@ function reformatJsonBySensorType(jsonObject, sortKey) {
 		
 		if (uniqueId.indexOf(sortAttribute) < 0) {
 			uniqueId.push(sortAttribute);
-			jsonAttributes.push(jsonObject[index]["sensorType"]);
+			jsonAttributes.push({
+				sensorType: jsonObject[index]["sensorType"],
+				roomName: jsonObject[index]["roomName"],
+				roomDescription: jsonObject[index]["roomDescription"]
+			});
 			jsonData.push([]);
 		}
 		
 		/*
 		 * Since Google Charts isn't very stable when handling boolean values,
-		 * we have to change the JSON object's boolean values to either 1 or 0
+		 * we have to change the JSON object's boolean values to a string value
 		 * if ever there is a boolean value present in the data.
 		 */
-		if (jsonObject[index]["data"] === true) {
-			jsonObject[index]["data"] = 1;
-		}
+		jsonObject[index]["data"] = getDataValueBySensorType(jsonObject[index]["sensorType"], jsonObject[index]["data"]);
 		
 		jsonProperty.timestamp = jsonObject[index]["timestamp"];
 		jsonProperty.data = jsonObject[index]["data"];
@@ -152,11 +156,14 @@ function reformatJsonBySensorType(jsonObject, sortKey) {
 	for (var index = 0; index < uniqueId.length; index++) {
 		formattedJson = new Object();
 		formattedJson.sensorId = uniqueId[index];
-		formattedJson.sensorType = jsonAttributes[index];
+		formattedJson.sensorType = jsonAttributes[index]["sensorType"];
+		formattedJson.roomName = jsonAttributes[index]["roomName"];
+		formattedJson.roomDescription = jsonAttributes[index]["roomDescription"];
 		formattedJson.values = jsonData[index];
 		
 		returnValue.push(formattedJson);
 	}
+	
 	return JSON.parse(JSON.stringify(returnValue));
 }
 
@@ -169,9 +176,11 @@ function loadDataBySensorType(jsonObject, domElement) {
 	var jsonElement = {
 		id: jsonObject["sensorId"],
 		sensorType: jsonObject["sensorType"],
+		roomName: jsonObject["roomName"],
+		roomDescription: jsonObject["roomDescription"],
 		values: {
 			timestamp: jsonObject["values"][0]["timestamp"],
-			data: jsonObject["values"][0]["data"]	
+			data: jsonObject["values"][0]["data"]
 		}
 	};
 	
@@ -179,17 +188,33 @@ function loadDataBySensorType(jsonObject, domElement) {
 	var sensorType = domElement.getElementsByClassName("sensorType")[0];
 	var sensorTime = domElement.getElementsByClassName("sensorTime")[0];
 	var sensorValue = domElement.getElementsByClassName("sensorValue")[0];
+	var roomName = domElement.getElementsByClassName("roomName")[0];
+	var roomDescription = domElement.getElementsByClassName("roomDescription")[0];
 	
 	var h1 = createNode("h1", ["text-center"], null);
-	var h3 = createNode("h3", ["text-center"], null);
+	var h4 = createNode("h4", ["text-center"], null);
 	var small = createNode("small", ["text-center"], null);
+	var well = createNode("div", ["well", "well-sm"], null);
+	var toAppend = null;
 	
-	h3.appendChild(document.createTextNode("ID: " + jsonElement.id));
-	sensorId.appendChild(h3);
+	toAppend = h1.cloneNode();
+	toAppend.appendChild(document.createTextNode(jsonElement.values.data + " " + getDataTypeBySensorType(jsonElement.sensorType)));
+	sensorValue.appendChild(toAppend);
 	
-	small.appendChild(document.createTextNode(getReadableDateString(jsonElement.values.timestamp)));
-	sensorTime.appendChild(small);
+	toAppend = h4.cloneNode();
+	toAppend.appendChild(document.createTextNode("Type: " + getSensorNameByType(jsonElement.sensorType)));
+	sensorType.appendChild(toAppend);
 	
-	h1.appendChild(h3.cloneNode().appendChild(document.createTextNode(jsonElement.values.data)));
-	sensorValue.appendChild(h1);
+	toAppend = h4.cloneNode();
+	toAppend.appendChild(document.createTextNode("Room: " + jsonElement.roomName));
+	roomName.appendChild(createNode("hr", null, null));
+	roomName.appendChild(toAppend);
+	
+	toAppend = well.cloneNode();
+	toAppend.appendChild(document.createTextNode(jsonElement.roomDescription));
+	roomDescription.appendChild(toAppend);
+	
+	toAppend = small.cloneNode();
+	toAppend.appendChild(document.createTextNode(getReadableDateString(jsonElement.values.timestamp)));
+	sensorTime.appendChild(toAppend);
 }

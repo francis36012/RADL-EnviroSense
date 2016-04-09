@@ -17,8 +17,13 @@ function startupController() {
 	runNavbar();
 	runBootstrapSwitch();
 	
-	document.getElementById("enableAll").onclick = enableAll;
-	document.getElementById("disableAll").onclick = disableAll;
+	var enableButton = document.getElementById("enableAll");
+	if (enableButton)
+		enableButton.onclick = enableAll;
+	
+	var disableButton = document.getElementById("disableAll");
+	if (disableButton)
+		disableButton.onclick = disableAll;
 	
 	$("[class='bootstrapSwitch']").on("switchChange.bootstrapSwitch", function (event, state) {
 		onSwitchChange(event, state);

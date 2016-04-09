@@ -24,64 +24,66 @@
 			<div id="page-content-wrapper">
 				<div class="container-fluid nopadding">
 					<div class="row">
-					<div class="col-xs-12 col-sm-8 col-sm-offset-2">
+						<div class="col-xs-12 col-sm-8 col-sm-offset-2">
 
-						<!-- SIDEBAR TOGGLE -->
-						<c:import url="/static/common/navbar/toggle.jsp" />
-
-						<div class="row page-header text-center">
-							<div class="col-xs-12">
-								<h1>Events</h1>
-								<!--<small>Let's get notified.</small>-->
+							<div class="row page-header text-center">
+								<div class="col-xs-12">
+									<h1>Events</h1>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12 col-sm-6 col-sm-offset-3">
+									<!-- SIDEBAR TOGGLE -->
+									<c:import url="/static/common/navbar/toggle.jsp" />	
+								</div>
 							</div>
 						</div>
 					</div>
-					</div>
 
 					<div class="row">
-					<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 nopadding">
-					<c:choose>
-						<c:when test="${events.size() > 0}">
-							<div class="panel panel-default">
-								<div class="panel-heading text-center">
-									Events
-								</div>
+						<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 nopadding">
+						<c:choose>
+							<c:when test="${events.size() > 0}">
+								<div class="panel panel-default">
+									<div class="panel-heading text-center">
+										Events
+									</div>
 
-								<div class="panel-body">
-									<div class="dataContainer">
-										<c:forEach items="${events}" var="currentEvent">
-											<form class="form" role="form">	
-												<div class="row">
-													<div class="col-xs-12">
-														<c:out value="${currentEvent.getName()}" />
+									<div class="panel-body">
+										<div class="dataContainer">
+											<c:forEach items="${events}" var="currentEvent">
+												<form class="form" role="form">	
+													<div class="row">
+														<div class="col-xs-12">
+															<c:out value="${currentEvent.getName()}" />
+														</div>
 													</div>
-												</div>
-											</form>
-										<hr />
-										</c:forEach>
+												</form>
+											<hr />
+											</c:forEach>
+										</div>
 									</div>
 								</div>
-							</div>
-						</c:when>
+							</c:when>
+							
+							<c:otherwise>
+								<div class="panel panel-default">
+									<div class="panel-heading text-center">
+									</div>
 
-						<c:otherwise>
-							<div class="panel panel-default">
-								<div class="panel-heading text-center">
-								</div>
-
-								<div class="panel-body">
-									<div class="row">
-										<div class="col-xs-12">
-											<div class="alert alert-warning">
-												<p>No events are currently stored.</p>
+									<div class="panel-body">
+										<div class="row">
+											<div class="col-xs-12">
+												<div class="alert alert-warning">
+													<p>No events are currently stored.</p>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-						</c:otherwise>
-					</c:choose>
-				</div>
+							</c:otherwise>
+						</c:choose>
+					</div>
 				</div>
 			</div>
 		</div>

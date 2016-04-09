@@ -18,26 +18,24 @@
         <div class="container-fluid">
 			
 			<div class="row">
-				<div class="col-xs-12 col-sm-6 col-sm-offset-3 page-header">
-					<!-- HEADER -->
+				<div class="col-xs-12 col-sm-8 col-sm-offset-2 page-header">
 					<div class="jumbotron text-center">
 						<img src="<c:url value='/static/images/Elements/Logo/Logo - Small.png' />" class="img-responsive center-block" />
 						<h1>
-						<strong>EnviroSense</strong>
+							<strong>EnviroSense</strong>
 						</h1>
 					</div>
 				</div>
 			</div>
 			
 			<div class="row">
-				<div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-4 nopadding">
-				
+				<div class="col-xs-12 col-sm-4 col-sm-offset-4">
 					<!-- Login Form -->
 					<form id="loginForm" action="<c:url value='/login' />" method="POST">
 						<fieldset class="input-group-vertical">
 							<div class="form-group">
 								<input type="hidden" name="<c:out value='${_csrf.parameterName}' />" value="${_csrf.token}" />
-								<input type="email" class="form-control" name="email" placeholder="Email" required />
+								<input type="email" class="form-control" name="email" placeholder="Email" required autofocus />
 							</div>
 
 							<div class="input-group form-group">
@@ -76,7 +74,7 @@
 			</div>
 								
 			<div class="row">
-				<div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-4 nopadding">
+				<div class="col-xs-12 col-sm-4 col-sm-offset-4">
 					<small>
 						<a href="<c:url value='#forgotPassword' />" id="forgotPasswordToggle" data-toggle="collapse">Forgot Password</a>
 					</small>

@@ -16,6 +16,7 @@ if (window.addEventListener) { //W3 Standards
 function startupController() {
 	runNavbar();
 	formButtonListeners();
+	document.getElementById("roomsToggle").click();
 }
 
 /* 

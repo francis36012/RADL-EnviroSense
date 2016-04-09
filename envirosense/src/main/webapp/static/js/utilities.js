@@ -51,20 +51,30 @@ function createNode(tagName, className, attributeValues) {
 /*			PLUGIN INITIALIZATION			*/
 /* ---------------------------------------- */
 function runSlick() {
-		$('.single-items').slick({
+	$('.single-items').slick({
 		dots: true,
 		infinite: false,
 		arrows: false,
 		speed: 250,
-		initialSlide: 0,
-		mobileFirst: true,
+		slidesToShow: 3,
+		slidesToScroll: 3,
 		responsive: [
 		{
-			breakpoint: 768,
-			settings: "unslick"
+			breakpoint: 1024,
+			settings: {
+				slidesToShow: 3,
+				slidesToScroll: 3
+			}
 		},
 		{
-			breakpoint: 767,
+			breakpoint: 768,
+			settings: {
+				slidesToShow: 2,
+				slidesToScroll: 2
+			}
+		},
+		{
+			breakpoint: 480,
 			settings: {
 				slidesToShow: 1,
 				slidesToScroll: 1
@@ -239,6 +249,8 @@ function createContainerBySensorType() {
 	
 	var sensorData = createNode("div", ["dataContainer"], null);
 	var sensorId = createNode("div", ["sensorId"], null);
+	var roomName = createNode("div", ["roomName"], null);
+	var roomDescription = createNode("div", ["roomDescription"], null);
 	var sensorName = createNode("div", ["sensorName"], null);
 	var sensorType = createNode("div", ["sensorType"], null);
 	var sensorTime = createNode("div", ["sensorTime"], null);
@@ -250,6 +262,8 @@ function createContainerBySensorType() {
 	sensorData.appendChild(sensorId);
 	sensorData.appendChild(sensorName);
 	sensorData.appendChild(sensorType);
+	sensorData.appendChild(roomName);
+	sensorData.appendChild(roomDescription);
 	sensorData.appendChild(horizontalLine);
 	sensorData.appendChild(sensorTime);
 	panelBody.appendChild(sensorData);
@@ -501,7 +515,7 @@ function getSensorTypeByName(sensorName) {
 			break;
 		default:
 			returnValue = "";
-			console.error("Warning: Sensor type for Name \"" + sensorType + "\" unknown.");
+			console.error("Warning: Sensor type for Name \"" + sensorName + "\" unknown.");
 	}
 	return returnValue;
 }
@@ -552,4 +566,32 @@ function getReadableDateString(timestamp) {
 		"July", "August", "September", "October", "November", "December"
 	  ];
 	return monthNames[currMonth - 1] + " " + currDate +  " " + currYear + " - " + currHour + ":" + currMinute + ":" + currSecond;
+}
+
+function getDataValueBySensorType(sensorType, dataType) {
+	switch(sensorType) {
+		case "MO":
+			dataType = dataType === true ? "Motion Detected" : "No Motion";
+			break;
+		case "DR":
+			dataType = dataType === true ? "Open" : "Closed";
+			break;
+	}
+	
+	return dataType;
+}
+
+function getDataTypeBySensorType(sensorType) {
+	var dataType = "";
+	
+	switch(sensorType) {
+		case "TE":
+			dataType = "Celcius";
+			break;
+		case "HU":
+			dataType = "%";
+			break;
+	}
+	
+	return dataType;
 }
