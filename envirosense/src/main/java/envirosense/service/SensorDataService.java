@@ -8,9 +8,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import envirosense.model.BluetoothBeacon;
+import envirosense.model.BluetoothData;
 import envirosense.model.Door;
 import envirosense.model.Humidity;
 import envirosense.model.Motion;
+import envirosense.model.ReelyActiveBluetooth;
+import envirosense.model.Room;
 import envirosense.model.Sensor;
 import envirosense.model.SensorData;
 import envirosense.model.SensorType;
@@ -18,6 +22,9 @@ import envirosense.model.Temperature;
 import envirosense.repository.DoorRepository;
 import envirosense.repository.HumidityRepository;
 import envirosense.repository.MotionRepository;
+import envirosense.repository.RaBluetoothRepository;
+import envirosense.repository.RoomRepository;
+import envirosense.repository.SensorRepsitory;
 import envirosense.repository.TemperatureRepository;
 
 @Service
@@ -42,6 +49,15 @@ public class SensorDataService {
 	/** The sensor service: Used for information about sensors from the DB*/
 	@Autowired
 	SensorService sensorService;
+	
+	@Autowired
+	RoomRepository roomRepository;
+	
+	@Autowired
+	SensorRepsitory sensorRepository;
+	
+	@Autowired
+	RaBluetoothRepository raRepository;
 
 	/**
 	 * Retrieves all data read in the room with the specified ID
@@ -55,6 +71,7 @@ public class SensorDataService {
 		results.addAll(mapHumidityData(humidityRepository.findByRoomId(roomId)));
 		results.addAll(mapDoorData(doorRepository.findByRoomId(roomId)));
 		results.addAll(mapMotionData(motionRepository.findByRoomId(roomId)));
+		results.addAll(mapRABleData(raRepository.findByRoomId(roomId)));
 
 		return results;
 	}
@@ -75,20 +92,19 @@ public class SensorDataService {
 		}
 		switch (sensor.getSensorType()) {
 			case TE:
-				return mapTemperatureData(temperatureRepository.findAll());
+				return mapTemperatureData(temperatureRepository.findBySensorId(sensorId));
 			case HU:
-				return mapHumidityData(humidityRepository.findAll());
+				return mapHumidityData(humidityRepository.findBySensorId(sensorId));
 			case DR:
-				return mapDoorData(doorRepository.findAll());
+				return mapDoorData(doorRepository.findBySensorId(sensorId));
 			case MO:
-				return mapMotionData(motionRepository.findAll());
+				return mapMotionData(motionRepository.findBySensorId(sensorId));
 			case PA:
 				// TODO
 				return new ArrayList<>();
 			case RA:
-				// TODO
+				return mapRABleData(raRepository.findBySensorId(sensorId));
 			case UK:
-				return new ArrayList<>();
 			default:
 				return new ArrayList<>();
 		}
@@ -114,9 +130,8 @@ public class SensorDataService {
 				// TODO
 				return new ArrayList<>();
 			case RA:
-				// TODO
+				return mapRABleData(raRepository.findAll());
 			case UK:
-				return new ArrayList<>();
 			default:
 				return new ArrayList<>();
 		}
@@ -135,6 +150,7 @@ public class SensorDataService {
 		results.addAll(mapHumidityData(humidityRepository.findLatestByRoomId(roomId)));
 		results.addAll(mapDoorData(doorRepository.findLatestByRoomId(roomId)));
 		results.addAll(mapMotionData(motionRepository.findLatestByRoomId(roomId)));
+		results.addAll(mapRABleData(raRepository.findLatestByRoomId(roomId)));
 
 		return results;
 	}
@@ -165,12 +181,10 @@ public class SensorDataService {
 				// TODO
 				return new ArrayList<>();
 			case RA:
-				// TODO
-				return new ArrayList<>();
+				return mapRABleData(raRepository.findLatestBySensorId(sensorId));
 			case TE:
 				return mapTemperatureData(temperatureRepository.findLatestBySensorId(sensorId));
 			case UK:
-				return new ArrayList<>();
 			default:
 				return new ArrayList<>();
 		}
@@ -195,9 +209,8 @@ public class SensorDataService {
 				// TODO
 				return new ArrayList<>();
 			case RA:
-				// TODO
+				return mapRABleData(raRepository.findLatest());
 			case UK:
-				return new ArrayList<>();
 			default:
 				return new ArrayList<>();
 		}
@@ -218,6 +231,7 @@ public class SensorDataService {
 		result.addAll(mapHumidityData(humidityRepository.findByRoomIdAndTimestampBetween(roomId, startTime, endTime)));
 		result.addAll(mapDoorData(doorRepository.findByRoomIdAndTimestampBetween(roomId, startTime, endTime)));
 		result.addAll(mapMotionData(motionRepository.findByRoomIdAndTimestampBetween(roomId, startTime, endTime)));
+		result.addAll(mapRABleData(raRepository.findByRoomIdAndTimestampBetween(roomId, startTime, endTime)));
 
 		return result;
 	}
@@ -250,12 +264,10 @@ public class SensorDataService {
 				// TODO
 				return new ArrayList<>();
 			case RA:
-				// TODO
-				return new ArrayList<>();
+				return mapRABleData(raRepository.findLatestBySensorId(sensorId));
 			case TE:
 				return mapTemperatureData(temperatureRepository.findLatestBySensorId(sensorId));
 			case UK:
-				return new ArrayList<>();
 			default:
 				return new ArrayList<>();
 		}
@@ -283,9 +295,8 @@ public class SensorDataService {
 				// TODO
 				return new ArrayList<>();
 			case RA:
-				// TODO
+				return mapRABleData(raRepository.findByTimestampBetween(startTime, endTime));
 			case UK:
-				return new ArrayList<>();
 			default:
 				return new ArrayList<>();
 		}
@@ -314,9 +325,8 @@ public class SensorDataService {
 				// TODO
 				return new ArrayList<>();
 			case RA:
-				// TODO
+				return mapRABleData(raRepository.findByRoomIdAndTimestampBetween(roomId, startTime, endTime));
 			case UK:
-				return new ArrayList<>();
 			default:
 				return new ArrayList<>();
 		}
@@ -332,6 +342,7 @@ public class SensorDataService {
 		List<Humidity> humidityData = new ArrayList<>();
 		List<Door> doorData = new ArrayList<>();
 		List<Motion> motionData = new ArrayList<>();
+		List<ReelyActiveBluetooth> raData = new ArrayList<>();
 
 		for (SensorData d : data) {
 			switch (d.getSensorType()) {
@@ -367,6 +378,14 @@ public class SensorDataService {
 				case PA:
 					break;
 				case RA:
+					try {
+						BluetoothData bleInfo = (BluetoothData)d.getData();
+						BluetoothBeacon beacon = new BluetoothBeacon(bleInfo.getBeaconId(), bleInfo.getUserEmail());
+						raData.add(new ReelyActiveBluetooth(d.getSensorId(), d.getTimestamp(), beacon, bleInfo.getRssi()));
+					} catch (Exception ex) {
+						// We are good programmers, its just that this is a pain in the .......
+						// Error inferring comments
+					}
 					break;
 				case TE:
 					try {
@@ -376,7 +395,6 @@ public class SensorDataService {
 					}
 					break;
 				case UK:
-					break;
 				default:
 					break;
 			}
@@ -385,12 +403,22 @@ public class SensorDataService {
 		humidityRepository.save(humidityData);
 		doorRepository.save(doorData);
 		motionRepository.save(motionData);
+		raRepository.save(raData);
 	}
 	
 	private List<SensorData> mapTemperatureData(List<Temperature> data) {
 		List<SensorData> mapped = new ArrayList<>();
 		data.stream().forEach((d) -> {
-			mapped.add(new SensorData(d.getSensorId(), d.getData(), d.getTimestamp(), SensorType.TE));
+			String[] roomInfo = getRoomInfo(d.getSensorId());
+			if (roomInfo.length == 2) {
+				mapped.add(new SensorData(
+						d.getSensorId(),
+						roomInfo[0],
+						roomInfo[1],
+						d.getData(),
+						d.getTimestamp(),
+						SensorType.TE));
+			}
 		});
 		return mapped;
 	}
@@ -398,7 +426,16 @@ public class SensorDataService {
 	private List<SensorData> mapHumidityData(List<Humidity> data) {
 		List<SensorData> mapped = new ArrayList<>();
 		data.stream().forEach((d) -> {
-			mapped.add(new SensorData(d.getSensorId(), d.getData(), d.getTimestamp(), SensorType.HU));
+			String[] roomInfo = getRoomInfo(d.getSensorId());
+			if (roomInfo.length == 2) {
+				mapped.add(new SensorData(
+						d.getSensorId(),
+						roomInfo[0],
+						roomInfo[1],
+						d.getData(),
+						d.getTimestamp(),
+						SensorType.HU));
+			}
 		});
 		return mapped;
 	}
@@ -406,7 +443,16 @@ public class SensorDataService {
 	private List<SensorData> mapDoorData(List<Door> data) {
 		List<SensorData> mapped = new ArrayList<>();
 		data.stream().forEach((d) -> {
-			mapped.add(new SensorData(d.getSensorId(), d.getData(), d.getTimestamp(), SensorType.DR));
+			String[] roomInfo = getRoomInfo(d.getSensorId());
+			if (roomInfo.length == 2) {
+				mapped.add(new SensorData(
+						d.getSensorId(),
+						roomInfo[0],
+						roomInfo[1],
+						d.getData(),
+						d.getTimestamp(),
+						SensorType.DR));
+			}
 		});
 		return mapped;
 	}
@@ -414,8 +460,47 @@ public class SensorDataService {
 	private List<SensorData> mapMotionData(List<Motion> data) {
 		List<SensorData> mapped = new ArrayList<>();
 		data.stream().forEach((d) -> {
-			mapped.add(new SensorData(d.getSensorId(), d.getData(), d.getTimestamp(), SensorType.MO));
+			String[] roomInfo = getRoomInfo(d.getSensorId());
+			if (roomInfo.length == 2) {
+				mapped.add(new SensorData(
+						d.getSensorId(),
+						roomInfo[0],
+						roomInfo[1],
+						d.getData(),
+						d.getTimestamp(),
+						SensorType.MO));
+			}
 		});
 		return mapped;
+	}
+
+	private List<SensorData> mapRABleData(List<ReelyActiveBluetooth> data) {
+		List<SensorData> mapped = new ArrayList<>();
+		data.stream().forEach((d) -> {
+			String[] roomInfo = getRoomInfo(d.getSensorId());
+			if (roomInfo.length == 2) {
+				mapped.add(new SensorData(d.getSensorId(),
+						roomInfo[0],
+						roomInfo[1],
+						new BluetoothData(d.getRssi(), d.getBeacon().getId(), d.getBeacon().getUser()),
+						d.getTimestamp(),
+						SensorType.RA));
+			}
+		});
+		return mapped;
+	}
+	
+	/**
+	 * Returns the name and description of the room in which the sensor with specified ID is located
+	 * @param sensorId The sensor whose room information is to be retrieved.
+	 * @return A two element array for the name and description of the room if found, or empty if not.
+	 */
+	private String[] getRoomInfo(long sensorId)  {
+		Sensor sensor = sensorRepository.findOne(sensorId);
+		if (sensor == null) {
+			return new String[]{};
+		}
+		Room room = sensor.getRoom();
+		return new String[]{room.getName(), room.getDescription()};
 	}
 }

@@ -12,14 +12,18 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class SensorData {
 	
 	private long sensorId;
+	private String roomName;
+	private String roomDescription;
 	private Object data;
 	private SensorType sensorType;
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "America/Edmonton")
 	private Timestamp timestamp;
 
-	public SensorData(long id, Object data, Timestamp timestamp, SensorType type) {
+	public SensorData(long id, String roomName, String roomDescription, Object data, Timestamp timestamp, SensorType type) {
 		this.sensorId = id;
+		this.roomName = roomName;
+		this.roomDescription = roomDescription;
 		this.data = data;
 		this.timestamp = timestamp;
 		this.sensorType = type;
@@ -53,6 +57,22 @@ public class SensorData {
 	}
 	
 	/**
+	 * Returns the name of the room in which this data was read
+	 * @return The name of the room in which this data was read
+	 */
+	public String getRoomName() {
+		return roomName;
+	}
+	
+	/**
+	 * Returns the description of the room in which this data was read
+	 * @return The description of the room in which this data was read
+	 */
+	public String getRoomDescription() {
+		return roomDescription;
+	}
+	
+	/**
 	 * Returns the sensor type of the sensor that read the data
 	 * @return The sensor type of the sensor that read the data
 	 */
@@ -66,6 +86,22 @@ public class SensorData {
 	 */
 	public void setSensorId(long sensorId) {
 		this.sensorId = sensorId;
+	}
+	
+	/**
+	 * 
+	 * @param roomName
+	 */
+	public void setRoomName(String roomName) {
+		this.roomName = roomName;
+	}
+	
+	/**
+	 * 
+	 * @param roomDescription
+	 */
+	public void setRoomDescription(String roomDescription) {
+		this.roomDescription = roomDescription;
 	}
 
 	/**
