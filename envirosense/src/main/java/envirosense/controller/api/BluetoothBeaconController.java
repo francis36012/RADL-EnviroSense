@@ -40,7 +40,7 @@ public class BluetoothBeaconController {
 	 * @return The beacon with the specified ID
 	 */
 	@RequestMapping(value = "/id/{id}", method = RequestMethod.GET)
-	public ResponseEntity<BluetoothBeacon> findById(@PathVariable("id") long id) {
+	public ResponseEntity<BluetoothBeacon> findById(@PathVariable("id") String id) {
 		BluetoothBeacon beacon = beaconRepository.findOne(id);
 		
 		if (beacon == null) {

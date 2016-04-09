@@ -14,12 +14,12 @@ public class BluetoothBeacon implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private long id;
+	private String id;
 
 	@Column(name = "user_email")
 	private String user;
 
-	public BluetoothBeacon(long id, String user) {
+	public BluetoothBeacon(String id, String user) {
 		super();
 		this.id = id;
 		this.user = user;
@@ -28,7 +28,7 @@ public class BluetoothBeacon implements Serializable {
 	public BluetoothBeacon() {
 	}
 
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 
@@ -36,7 +36,7 @@ public class BluetoothBeacon implements Serializable {
 		return user;
 	}
 
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -48,7 +48,7 @@ public class BluetoothBeacon implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int)(id ^ (id >>> 32));
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
@@ -62,7 +62,10 @@ public class BluetoothBeacon implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		BluetoothBeacon other = (BluetoothBeacon)obj;
-		if (id != other.id)
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
 			return false;
 		if (user == null) {
 			if (other.user != null)
