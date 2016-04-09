@@ -103,7 +103,7 @@ int main(int argc, char *argv[]) {
 			//Redo reading. Discrepancy too big. Probably wrong
 			currentTemp = temp;
 			currentHum = hum;
-			printf("Discrepancy too big. Reading again to make sure...\n");
+			printf("Discrepancy too big. Reading again to make sure\n");
 			continue;
 		}
 		
@@ -128,6 +128,6 @@ int main(int argc, char *argv[]) {
 
 		sleep(2);
 	}
-	//close(sockfd);
+	close(sockfd);
 	return 0;
 }

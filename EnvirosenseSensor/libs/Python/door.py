@@ -77,8 +77,8 @@ while True:
 					cTime = time.strftime("%H %M %S %d %m %Y")                      
 					s.send("A0 door closed " + cTime)                               
 	except IOError:
-		print ("")
-	time.sleep(.4)    
+		pass
+	time.sleep(.3)    
 	# A1 Port.
 	grovepi.pinMode(1,"INPUT")
 	try:
@@ -114,8 +114,8 @@ while True:
 					cTime = time.strftime("%H %M %S %d %m %Y")
 					s.send("A1 door closed " + cTime)                               
 	except IOError:
-		print ("")
-	time.sleep(.4)        
+		pass
+	time.sleep(.3)        
 	# A2 Port.
 	grovepi.pinMode(2,"INPUT")
 	try:
@@ -151,5 +151,5 @@ while True:
 					s.send("A2 door closed " + cTime)                               
 
 	except IOError:
-		print ("")
-	time.sleep(.4)
+		pass
+	time.sleep(.3)

@@ -28,6 +28,12 @@ var errorLog = function(d) {
   log_stdout.write(util.format(d) + '\n');
 };
 
+process.on('uncaughtException', function(err){
+	errorLog(err);
+	errorLog(err.stack);
+	process.exit(1);
+})
+
 /**
  * Deals with data coming from the HDC1000 sensor (Extract the humidity)
  */
@@ -109,7 +115,8 @@ var cServer = net.createServer(function(client) {
 		console.log('Client disconnected from server');
 	});
 
-	client.on('data', function(data){ 
+	client.on('data', function(data){
+		console.log('Data received: ', data.toString('utf8')); 
 		var arrData = data.toString('utf8').replace("  ", " ").split(" ");
         var port = arrData[0];
         
@@ -119,20 +126,17 @@ var cServer = net.createServer(function(client) {
             
             //Data from temp/hum sensor (HDC1000)
             if(src == 'Temp/Hum'){
-                console.log(data.toString('utf8')); 
                 dealWithTemp(arrData);   
                 dealWithHum(arrData);          
             }        
 
             //Data from PIR Motion sensor
             else if(src == 'motion'){
-                console.log(data.toString('utf8'));
                 dealWithMot(arrData);
             }
             
             //Data from door sensor
             else if(src == 'door'){
-                console.log(data.toString('utf8'));
                 dealWithDoor(arrData);
             }
         }
@@ -150,14 +154,15 @@ var cServer = net.createServer(function(client) {
 function insertAPI (data, callback) {
     var arrDate = data['timeStamp'].split(' ');
     //timestamp: '2016-10-22T10:11:28.00Z', REFERENCE
-    var timeStamp = arrDate[0]+'-'+arrDate[1]+'-'+arrDate[2]+'T'+arrDate[3]+':'+arrDate[4]+':'+arrDate[5]+'.000Z';                        
+    data['timeStamp'] = arrDate[0]+'-'+arrDate[1]+'-'+arrDate[2]+'T'+arrDate[3]+':'+arrDate[4]+':'+arrDate[5]+'.000Z';   	
+	                     
     var options = { method: 'POST',
                     url: config.API.NEWDATA,
                     headers: {  'content-type': 'application/json',
                                 'cache-control': 'no-cache',
                                 'x-csrf-token': token }, 
                         body: [ {  sensorId: data['id'],
-                                timestamp: timeStamp,
+                                timestamp: data['timeStamp'],
                                 data: data['data'],
                                 sensorType: data['shortType'] } ],
                                 json: true,
@@ -169,6 +174,7 @@ function insertAPI (data, callback) {
             callback(new Error('Error inserting ' + data['type'] + ' data to API. Timestamp: ' + timeStamp));   
         }
         else{
+        	console.log('API insert OK');
             callback();//Success
         } 
     });                
@@ -234,25 +240,31 @@ function parseDoorData(arrData, callback){
  */
 function parseMotionData(arrData, callback){       
     var motData = {shortType: null, type: null, id: 0, data: null, timeStamp: null};
-    if(arrData[2] == 'true'){
-        motData.shortType = 'MO';
-        motData.type = 'motion';
-        motData.id = config.THIS_PI.PORT_SENSORID[arrData[0]];
-        motData.data = 1;
-        motData.timeStamp = arrData[8] +	 //Year
-                    ' ' +
-                    arrData[7] + 	         //Month
-                    ' ' + 
-                    arrData[6] +	         //Day
-                    ' ' +
-                    arrData[3] +	         //Hour
-                    ' ' + 
-                    arrData[4] + 	         //Minute
-                    ' ' +
-                    arrData[5];	             //Second
-                                    
-        callback(motData);        
-    }
+	var d = null;
+	
+	if(arrData[2] == 'false')
+		d = 0;
+	else	
+		d = 1;		
+  
+	motData.shortType = 'MO';
+	motData.type = 'motion';
+	motData.id = config.THIS_PI.PORT_SENSORID[arrData[0]];
+	motData.data = d;
+	motData.timeStamp = arrData[8] +	 //Year
+				' ' +
+				arrData[7] + 	         //Month
+				' ' + 
+				arrData[6] +	         //Day
+				' ' +
+				arrData[3] +	         //Hour
+				' ' + 
+				arrData[4] + 	         //Minute
+				' ' +
+				arrData[5];	             //Second
+								
+	callback(motData);        
+    
 }
 
 /**
@@ -450,10 +462,10 @@ getLocalDBConn(function(error){
         checkLocalDB(function(error){
             if(error){
                 errorLog(error);
-            }
-            cServer.listen(config.netServer.PORT, function(){                       
-                console.log('NODE.JS server listening on port', config.netServer.PORT);                                
-            });   
+            }   
         });
+		cServer.listen(config.netServer.PORT, function(){                       
+                console.log('NODE.JS server listening on port', config.netServer.PORT);                                
+        }); 
     })              
 });

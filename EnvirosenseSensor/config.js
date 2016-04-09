@@ -20,7 +20,7 @@ var config = {};
 config.THIS_PI = {};
 
 //Sensor tables on local DB. Used to check local DB for data when Pi starts
-config.THIS_PI.SENSOR_TABLES = ["temperature", "humidity", "motion", "door"];
+config.THIS_PI.SENSOR_TABLES = ["temperature", "humidity", "motion", "door", "ra_bluetooth"];
 
 //The relationship between GrovePi port numbers and sensor ids in this PI
 /**
@@ -41,22 +41,25 @@ config.THIS_PI.SENSOR_TABLES = ["temperature", "humidity", "motion", "door"];
  * 
  *                                 Port    SensorID
  * config.THIS_PI.PORT_SENSORID = {'D2':    '3',
- *                                 'I2C-1': '1,2',  **
- *                                 'A0':    '5'};   
+ *                                 'I2C-1': '1,2',
+ *                                 'A0':    '4'};
  * 
  * 
  */
-config.THIS_PI.PORT_SENSORID = {'D2': '3',
-                                //'D3': '3',
-                                'I2C-1': '1,2',
-                                'A0': '5'}; 
+config.THIS_PI.PORT_SENSORID = {'D2': '24',
+								'D3': '20',
+								'D4': '22',
+								'I2C-1': '13,14',
+                                'A0': '16',
+                                'A1': '23'
+                                }; 
 
 config.netServer = {};
 config.netServer.PORT = 8124;
 
 config.API = {};
-config.API.LOGINPAGE = 'http://192.168.1.68:8080/envirosense/login';
-config.API.NEWDATA =   'http://192.168.1.68:8080/envirosense/api/data/new';
+config.API.LOGINPAGE = 'http://192.168.1.71:8080/envirosense/login';
+config.API.NEWDATA =   'http://192.168.1.71:8080/envirosense/api/data/new';
 config.API.EMAIL = 'breno.brezinski@edu.sait.ca';
 config.API.PASSWORD = 'password';
 

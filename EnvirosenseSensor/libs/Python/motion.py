@@ -40,7 +40,7 @@ THE SOFTWARE.
 # 	There are multiple revisions of this board with different components for setting retriggerable/non-retriggerable.
 # 	Revision 1.0 contains a switch and revision 1.2 contains a jumper hat.
 # 	The 1.0 switch board is labelled with H,L - H=retriggerable, L=non-retriggerable.
-# 	The 1.2 jumper board has a pin diagram printed on the back.
+# 	The 1.2 jumper board has a pin diagram s.sended on the back.
 	
 # 	retriggerable means the sensor will continue outputting high if motion was detected before the hold timer expires.
 # 	non-retriggerable means the sensor will output high for the specified hold time only, then output low until motion is detected again.
@@ -53,7 +53,6 @@ import socket
 s = socket.socket()
 host = "127.0.0.1"
 port = 8124
-
 s.connect((host, port))
 
 currentStateD2 = 0
@@ -84,8 +83,9 @@ while True:
 				currentStateD2 = 0
 				s.send("D2 motion false " + cTime)	        
 	except IOError:
-		print ("")
+		pass
 		
+	time.sleep (0.3)	
 	# SIG,NC,VCC,GND
 	motion=0
 	grovepi.pinMode(3,"INPUT")
@@ -106,9 +106,9 @@ while True:
 				currentStateD3 = 0
 				s.send("D3 motion false " + cTime)	        
 	except IOError:
-		print ("")
+		pass
 		
-	
+	time.sleep (0.3)
 	# SIG,NC,VCC,GND
 	motion=0
 	grovepi.pinMode(4,"INPUT")
@@ -129,9 +129,9 @@ while True:
 				currentStateD4 = 0
 				s.send("D4 motion false " + cTime)	        
 	except IOError:
-		print ("")
+		pass
 		
 		
-	time.sleep (0.5)
+	time.sleep (0.3)
     
 s.close()
