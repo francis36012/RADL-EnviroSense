@@ -5,14 +5,14 @@ var net 	    = require('net'),
     util        = require('util'),
     mysql	    = require('mysql'),
     request     = require("request"),
-    fs          = require('fs'),
-    // log_file    = fs.createWriteStream('../debug.log', {flags : 'a'}),
-    log_stdout  = process.stdout;
+    fs          = require('fs');
     
 request = request.defaults({jar: true});
+
 require('buffer');                 
                
 var months = {Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06', Jul: '07', Aug: '08', Sep: '09', Oct: '10', Nov: '11', Dec: '12'};
+var shortType = {temperature: 'TE', humidity: 'HU', motion: 'MO', door: 'DR', ra_bluetooth: 'RA'};
 var conn;
 var token;
 
@@ -20,19 +20,12 @@ var token;
  * Writes error on log file and display error msg to console
  */
 var errorLog = function(d) { 
-    //.toLocaleDateString()
   fs.appendFile('debug.log', (new Date() + ' - ' + util.format(d) + '\n'), 'utf8', function(error){
       if(error)
         console.log(error);
   });
-  log_stdout.write(util.format(d) + '\n');
+  console.log(util.format(d) + '\n');
 };
-
-process.on('uncaughtException', function(err){
-	errorLog(err);
-	errorLog(err.stack);
-	process.exit(1);
-})
 
 /**
  * Deals with data coming from the HDC1000 sensor (Extract the humidity)
@@ -171,7 +164,7 @@ function insertAPI (data, callback) {
                    };                                                                        
     request(options, function (error, response, body) {
         if (error || response.statusCode != 200) {
-            callback(new Error('Error inserting ' + data['type'] + ' data to API. Timestamp: ' + timeStamp));   
+            callback(new Error('Error inserting ' + data['type'] + ' data to API. Timestamp: ' + data['timeStamp']));   
         }
         else{
         	console.log('API insert OK');
@@ -415,7 +408,7 @@ function checkLocalDB(callback){
  */
 function parseDataFromDB(sensor, row, callback){
     var data = {shortType: null, type: null, id: 0, data: null, timeStamp: null};;
-    data.shortType = sensor.toString().substring(0,2).toUpperCase();
+    data.shortType = shortType[sensor.toString().toLowerCase()];
     data.type = sensor;
     data.id = row['sensor_id'];
     data.data = row['data'];
