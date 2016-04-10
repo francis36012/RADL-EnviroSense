@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import envirosense.model.SensorData;
 import envirosense.model.SensorType;
+import envirosense.model.dto.SensorDataDTO;
 import envirosense.service.EventHandler;
 import envirosense.service.SensorDataService;
 
@@ -37,7 +37,7 @@ public class SensorDataController {
 	@RequestMapping( value = "/new", method = RequestMethod.POST,
 		consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE
 	)
-	public ResponseEntity<String> newData(@RequestBody List<SensorData> data, BindingResult result) {
+	public ResponseEntity<String> newData(@RequestBody List<SensorDataDTO> data, BindingResult result) {
 		if (result.hasErrors()) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
@@ -53,8 +53,8 @@ public class SensorDataController {
 	@RequestMapping(
 		value = "/live/room/{roomId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE
 	)
-	public ResponseEntity<List<SensorData>> getLatestByRoom(@PathVariable("roomId") long roomId) {
-		List<SensorData> data = dataService.findLastestByRoomId(roomId);
+	public ResponseEntity<List<SensorDataDTO>> getLatestByRoom(@PathVariable("roomId") long roomId) {
+		List<SensorDataDTO> data = dataService.findLastestByRoomId(roomId);
 		
 		if (data.isEmpty()) {
 			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
@@ -69,8 +69,8 @@ public class SensorDataController {
 	@RequestMapping(value = "/live/sensortype/{sensorType}", method = RequestMethod.GET,
 		produces = MediaType.APPLICATION_JSON_VALUE
 	)
-	public ResponseEntity<List<SensorData>> getLatestBySensorType(@PathVariable("sensorType") SensorType sensorType) {
-		List<SensorData> data = dataService.findLatestBySensorType(sensorType);
+	public ResponseEntity<List<SensorDataDTO>> getLatestBySensorType(@PathVariable("sensorType") SensorType sensorType) {
+		List<SensorDataDTO> data = dataService.findLatestBySensorType(sensorType);
 		
 		if (data.isEmpty()) {
 			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);

@@ -1,11 +1,11 @@
-package envirosense.model;
+package envirosense.model.dto;
 
-public class BluetoothData {
+public class BluetoothDataDTO {
 	private int rssi;
 	private String beaconId;
 	private String userEmail;
 
-	public BluetoothData(int rssi, String beaconId, String userEmail) {
+	public BluetoothDataDTO(int rssi, String beaconId, String userEmail) {
 		super();
 		this.rssi = rssi;
 		this.beaconId = beaconId;

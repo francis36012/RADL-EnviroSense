@@ -1,7 +1,7 @@
 package envirosense.controller.api;
 
-import envirosense.model.SensorData;
 import envirosense.model.SensorType;
+import envirosense.model.dto.SensorDataDTO;
 import envirosense.service.SensorDataService;
 import java.sql.Timestamp;
 import java.util.List;
@@ -40,11 +40,11 @@ public class ReportController {
             value = "/room/{roomId}/{startDate}/{endDate}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<SensorData>> getDataByRoomId(
+    public ResponseEntity<List<SensorDataDTO>> getDataByRoomId(
             @PathVariable("roomId") long roomId,
             @PathVariable("startDate") Timestamp startDate,
             @PathVariable("endDate") Timestamp endDate) {
-        List<SensorData> sensorData = sensorDataService.findByRoomIdAndTimestampBetween(roomId, startDate, endDate);
+        List<SensorDataDTO> sensorData = sensorDataService.findByRoomIdAndTimestampBetween(roomId, startDate, endDate);
         if (sensorData.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -65,11 +65,11 @@ public class ReportController {
             value = "/type/{sensorType}/{startDate}/{endDate}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<SensorData>> getDataBySensorType(
+    public ResponseEntity<List<SensorDataDTO>> getDataBySensorType(
             @PathVariable("sensorType") SensorType sensorType,
             @PathVariable("startDate") Timestamp startDate,
             @PathVariable("endDate") Timestamp endDate) {
-        List<SensorData> sensorData = sensorDataService.findBySensorTypeAndTimestampBetween(sensorType, startDate, endDate);
+        List<SensorDataDTO> sensorData = sensorDataService.findBySensorTypeAndTimestampBetween(sensorType, startDate, endDate);
         if (sensorData.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -90,11 +90,11 @@ public class ReportController {
             value = "/sensorId/{sensorId}/{startDate}/{endDate}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<SensorData>> getDataBySensorId(
+    public ResponseEntity<List<SensorDataDTO>> getDataBySensorId(
             @PathVariable("sensorId") long sensorId,
             @PathVariable("startDate") Timestamp startDate,
             @PathVariable("endDate") Timestamp endDate) {
-        List<SensorData> sensorData = sensorDataService.findBySensorIdAndTimestampBetween(sensorId, startDate, endDate);
+        List<SensorDataDTO> sensorData = sensorDataService.findBySensorIdAndTimestampBetween(sensorId, startDate, endDate);
         if (sensorData.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -117,12 +117,12 @@ public class ReportController {
             value = "/{roomId}/{sensorType}/{startDate}/{endDate}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<SensorData>> getDataBySensorTypeAndRoomId(
+    public ResponseEntity<List<SensorDataDTO>> getDataBySensorTypeAndRoomId(
             @PathVariable("roomId") long roomId,
             @PathVariable("sensorType") SensorType sensorType,
             @PathVariable("startDate") Timestamp startDate,
             @PathVariable("endDate") Timestamp endDate) {
-        List<SensorData> sensorData = sensorDataService.findByRoomIdSensorTypeAndTimestamp(roomId, sensorType, startDate, endDate);
+        List<SensorDataDTO> sensorData = sensorDataService.findByRoomIdSensorTypeAndTimestamp(roomId, sensorType, startDate, endDate);
         if (sensorData.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

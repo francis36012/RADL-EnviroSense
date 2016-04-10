@@ -4,12 +4,14 @@ package envirosense.model;
 import java.sql.Timestamp;
 import java.util.List;
 
+import envirosense.model.dto.SensorDataDTO;
+
 public class Report {
 	/** The name of the report */
 	private final String name;
 
 	/** The dataset that makes up this report */
-	private final List<SensorData> dataSet;
+	private final List<SensorDataDTO> dataSet;
 
 	/** The earliest timestamp for the retrieved data set */
 	private final Timestamp starttime;
@@ -33,7 +35,7 @@ public class Report {
 	 * @param filterType The type data in this report
 	 * @param filterValue The filter value for this report
 	 */
-	public Report(String name, List<SensorData> dataSet, Timestamp startDate, Timestamp endDate,
+	public Report(String name, List<SensorDataDTO> dataSet, Timestamp startDate, Timestamp endDate,
 			ReportFilterType filterType, Object filterValue) {
 		this.name = name;
 		this.dataSet = dataSet;
@@ -57,7 +59,7 @@ public class Report {
 	 * 
 	 * @return The dataset that makes up this report
 	 */
-	public List<SensorData> getDataSet() {
+	public List<SensorDataDTO> getDataSet() {
 		return dataSet;
 	}
 

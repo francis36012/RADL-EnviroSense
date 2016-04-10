@@ -10,8 +10,8 @@ import java.util.List;
 
 import envirosense.model.Condition;
 import envirosense.model.Event;
-import envirosense.model.SensorData;
 import envirosense.model.User;
+import envirosense.model.dto.SensorDataDTO;
 import envirosense.repository.EventRepository;
 
 /**
@@ -36,9 +36,9 @@ public class EventHandler {
 	public EventHandler() {
 	}
 
-	public void run(List<SensorData> data) {
+	public void run(List<SensorDataDTO> data) {
 		List<Event> events = eventRepository.findByActiveTrue();
-		for (SensorData d : data) {
+		for (SensorDataDTO d : data) {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(d.getTimestamp());
 

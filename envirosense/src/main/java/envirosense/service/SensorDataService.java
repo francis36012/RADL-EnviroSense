@@ -9,16 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import envirosense.model.BluetoothBeacon;
-import envirosense.model.BluetoothData;
 import envirosense.model.Door;
 import envirosense.model.Humidity;
 import envirosense.model.Motion;
 import envirosense.model.ReelyActiveBluetooth;
 import envirosense.model.Room;
 import envirosense.model.Sensor;
-import envirosense.model.SensorData;
 import envirosense.model.SensorType;
 import envirosense.model.Temperature;
+import envirosense.model.dto.BluetoothDataDTO;
+import envirosense.model.dto.SensorDataDTO;
 import envirosense.repository.DoorRepository;
 import envirosense.repository.HumidityRepository;
 import envirosense.repository.MotionRepository;
@@ -64,8 +64,8 @@ public class SensorDataService {
 	 * @param roomId The ID of the room in which the data to be retrieved was read
 	 * @return Data read in the room with the specified ID
 	 */
-	public List<SensorData> findByRoomId(long roomId) {
-		List<SensorData> results = new ArrayList<>();
+	public List<SensorDataDTO> findByRoomId(long roomId) {
+		List<SensorDataDTO> results = new ArrayList<>();
 		
 		results.addAll(mapTemperatureData(temperatureRepository.findByRoomId(roomId)));
 		results.addAll(mapHumidityData(humidityRepository.findByRoomId(roomId)));
@@ -82,7 +82,7 @@ public class SensorDataService {
 	 * @param sensorId The ID of the sensor that read the data to be retrieved
 	 * @return A list of sensor data read by the sensor with the specified ID
 	 */
-	public List<SensorData> findBySensorId(long sensorId) {
+	public List<SensorDataDTO> findBySensorId(long sensorId) {
 		// Find the sensor
 		Sensor sensor = sensorService.findOne(sensorId);
 
@@ -116,7 +116,7 @@ public class SensorDataService {
 	 * @param sensorType The type of the sensor that read the data to be retrieved
 	 * @return A list of sensor data read by the sensor with the specified type
 	 */
-	public List<SensorData> findBySensorType(SensorType sensorType) {
+	public List<SensorDataDTO> findBySensorType(SensorType sensorType) {
 		switch (sensorType) {
 			case TE:
 				return mapTemperatureData(temperatureRepository.findAll());
@@ -143,8 +143,8 @@ public class SensorDataService {
 	 * @param roomId The ID of the room in which the data to be retrieved was read
 	 * @return The latest data read by all sensors in the room with the specified ID
 	 */
-	public List<SensorData> findLastestByRoomId(long roomId) {
-		List<SensorData> results = new ArrayList<>();
+	public List<SensorDataDTO> findLastestByRoomId(long roomId) {
+		List<SensorDataDTO> results = new ArrayList<>();
 		
 		results.addAll(mapTemperatureData(temperatureRepository.findLatestByRoomId(roomId)));
 		results.addAll(mapHumidityData(humidityRepository.findLatestByRoomId(roomId)));
@@ -161,7 +161,7 @@ public class SensorDataService {
 	 * @param sensorId The ID sensor whose latest data is to be retrieved
 	 * @return The latest data read from the sensor with the ID specified
 	 */
-	public List<SensorData> findLatestBySensorId(long sensorId) {
+	public List<SensorDataDTO> findLatestBySensorId(long sensorId) {
 		// Find the sensor
 		Sensor sensor = sensorService.findOne(sensorId);
 
@@ -195,7 +195,7 @@ public class SensorDataService {
 	 * @param sensorType The type of the sensor whose latest data is to be retrieved
 	 * @return The latest data read by sensors with specified type in all rooms
 	 */
-	public List<SensorData> findLatestBySensorType(SensorType sensorType) {
+	public List<SensorDataDTO> findLatestBySensorType(SensorType sensorType) {
 		switch (sensorType) {
 			case TE:
 				return mapTemperatureData(temperatureRepository.findLatest());
@@ -224,8 +224,8 @@ public class SensorDataService {
 	 * @param endTime The time and date to end checking (inclusive)
 	 * @return A list of sensor data that satisfy the conditions explained above.
 	 */
-	public List<SensorData> findByRoomIdAndTimestampBetween(long roomId, Timestamp startTime, Timestamp endTime) {
-		List<SensorData> result = new ArrayList<>();
+	public List<SensorDataDTO> findByRoomIdAndTimestampBetween(long roomId, Timestamp startTime, Timestamp endTime) {
+		List<SensorDataDTO> result = new ArrayList<>();
 
 		result.addAll(mapTemperatureData(temperatureRepository.findByRoomIdAndTimestampBetween(roomId, startTime, endTime)));
 		result.addAll(mapHumidityData(humidityRepository.findByRoomIdAndTimestampBetween(roomId, startTime, endTime)));
@@ -244,7 +244,7 @@ public class SensorDataService {
 	 * @param endtime The time and date to end checking (inclusive)
 	 * @return A list of sensor data that meet the criteria described above
 	 */
-	public List<SensorData> findBySensorIdAndTimestampBetween(long sensorId, Timestamp startTime, Timestamp endtime) {
+	public List<SensorDataDTO> findBySensorIdAndTimestampBetween(long sensorId, Timestamp startTime, Timestamp endtime) {
 		// Find the sensor
 		Sensor sensor = sensorService.findOne(sensorId);
 
@@ -281,7 +281,7 @@ public class SensorDataService {
 	 * @param end The time and date to end checking (inclusive)
 	 * @return A list of sensor data that satisfy the conditions outlined above.
 	 */
-	public List<SensorData> findBySensorTypeAndTimestampBetween(SensorType sensorType, Timestamp startTime, Timestamp endTime) {
+	public List<SensorDataDTO> findBySensorTypeAndTimestampBetween(SensorType sensorType, Timestamp startTime, Timestamp endTime) {
 		switch (sensorType) {
 			case TE:
 				return mapTemperatureData(temperatureRepository.findByTimestampBetween(startTime, endTime));
@@ -311,7 +311,7 @@ public class SensorDataService {
 	 * @param endTime The time to end checking (inclusive)
 	 * @return A list of sensor data matching the criteria explained above
 	 */
-	public List<SensorData> findByRoomIdSensorTypeAndTimestamp(long roomId, SensorType sensorType, Timestamp startTime, Timestamp endTime) {
+	public List<SensorDataDTO> findByRoomIdSensorTypeAndTimestamp(long roomId, SensorType sensorType, Timestamp startTime, Timestamp endTime) {
 		switch (sensorType) {
 			case TE:
 				return mapTemperatureData(temperatureRepository.findByRoomIdAndTimestampBetween(roomId, startTime, endTime));
@@ -337,14 +337,14 @@ public class SensorDataService {
 	 * 
 	 * @param data The data to be saved.
 	 */
-	public void save(List<SensorData> data) {
+	public void save(List<SensorDataDTO> data) {
 		List<Temperature> temperatureData = new ArrayList<>();
 		List<Humidity> humidityData = new ArrayList<>();
 		List<Door> doorData = new ArrayList<>();
 		List<Motion> motionData = new ArrayList<>();
 		List<ReelyActiveBluetooth> raData = new ArrayList<>();
 
-		for (SensorData d : data) {
+		for (SensorDataDTO d : data) {
 			switch (d.getSensorType()) {
 				case DR:
 					try {
@@ -379,7 +379,7 @@ public class SensorDataService {
 					break;
 				case RA:
 					try {
-						BluetoothData bleInfo = (BluetoothData)d.getData();
+						BluetoothDataDTO bleInfo = (BluetoothDataDTO)d.getData();
 						BluetoothBeacon beacon = new BluetoothBeacon(bleInfo.getBeaconId(), bleInfo.getUserEmail());
 						raData.add(new ReelyActiveBluetooth(d.getSensorId(), d.getTimestamp(), beacon, bleInfo.getRssi()));
 					} catch (Exception ex) {
@@ -406,12 +406,12 @@ public class SensorDataService {
 		raRepository.save(raData);
 	}
 	
-	private List<SensorData> mapTemperatureData(List<Temperature> data) {
-		List<SensorData> mapped = new ArrayList<>();
+	private List<SensorDataDTO> mapTemperatureData(List<Temperature> data) {
+		List<SensorDataDTO> mapped = new ArrayList<>();
 		data.stream().forEach((d) -> {
 			String[] roomInfo = getRoomInfo(d.getSensorId());
 			if (roomInfo.length == 2) {
-				mapped.add(new SensorData(
+				mapped.add(new SensorDataDTO(
 						d.getSensorId(),
 						roomInfo[0],
 						roomInfo[1],
@@ -423,12 +423,12 @@ public class SensorDataService {
 		return mapped;
 	}
 
-	private List<SensorData> mapHumidityData(List<Humidity> data) {
-		List<SensorData> mapped = new ArrayList<>();
+	private List<SensorDataDTO> mapHumidityData(List<Humidity> data) {
+		List<SensorDataDTO> mapped = new ArrayList<>();
 		data.stream().forEach((d) -> {
 			String[] roomInfo = getRoomInfo(d.getSensorId());
 			if (roomInfo.length == 2) {
-				mapped.add(new SensorData(
+				mapped.add(new SensorDataDTO(
 						d.getSensorId(),
 						roomInfo[0],
 						roomInfo[1],
@@ -440,12 +440,12 @@ public class SensorDataService {
 		return mapped;
 	}
 
-	private List<SensorData> mapDoorData(List<Door> data) {
-		List<SensorData> mapped = new ArrayList<>();
+	private List<SensorDataDTO> mapDoorData(List<Door> data) {
+		List<SensorDataDTO> mapped = new ArrayList<>();
 		data.stream().forEach((d) -> {
 			String[] roomInfo = getRoomInfo(d.getSensorId());
 			if (roomInfo.length == 2) {
-				mapped.add(new SensorData(
+				mapped.add(new SensorDataDTO(
 						d.getSensorId(),
 						roomInfo[0],
 						roomInfo[1],
@@ -457,12 +457,12 @@ public class SensorDataService {
 		return mapped;
 	}
 
-	private List<SensorData> mapMotionData(List<Motion> data) {
-		List<SensorData> mapped = new ArrayList<>();
+	private List<SensorDataDTO> mapMotionData(List<Motion> data) {
+		List<SensorDataDTO> mapped = new ArrayList<>();
 		data.stream().forEach((d) -> {
 			String[] roomInfo = getRoomInfo(d.getSensorId());
 			if (roomInfo.length == 2) {
-				mapped.add(new SensorData(
+				mapped.add(new SensorDataDTO(
 						d.getSensorId(),
 						roomInfo[0],
 						roomInfo[1],
@@ -474,15 +474,15 @@ public class SensorDataService {
 		return mapped;
 	}
 
-	private List<SensorData> mapRABleData(List<ReelyActiveBluetooth> data) {
-		List<SensorData> mapped = new ArrayList<>();
+	private List<SensorDataDTO> mapRABleData(List<ReelyActiveBluetooth> data) {
+		List<SensorDataDTO> mapped = new ArrayList<>();
 		data.stream().forEach((d) -> {
 			String[] roomInfo = getRoomInfo(d.getSensorId());
 			if (roomInfo.length == 2) {
-				mapped.add(new SensorData(d.getSensorId(),
+				mapped.add(new SensorDataDTO(d.getSensorId(),
 						roomInfo[0],
 						roomInfo[1],
-						new BluetoothData(d.getRssi(), d.getBeacon().getId(), d.getBeacon().getUser()),
+						new BluetoothDataDTO(d.getRssi(), d.getBeacon().getId(), d.getBeacon().getUser()),
 						d.getTimestamp(),
 						SensorType.RA));
 			}

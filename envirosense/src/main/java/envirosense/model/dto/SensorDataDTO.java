@@ -1,15 +1,17 @@
-package envirosense.model;
+package envirosense.model.dto;
 
 
 import java.sql.Timestamp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import envirosense.model.SensorType;
+
 /**
  * This class models a sensor data type 
  * @author Francis Agyapong 
  */
-public class SensorData {
+public class SensorDataDTO {
 	
 	private long sensorId;
 	private String roomName;
@@ -20,7 +22,7 @@ public class SensorData {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "America/Edmonton")
 	private Timestamp timestamp;
 
-	public SensorData(long id, String roomName, String roomDescription, Object data, Timestamp timestamp, SensorType type) {
+	public SensorDataDTO(long id, String roomName, String roomDescription, Object data, Timestamp timestamp, SensorType type) {
 		this.sensorId = id;
 		this.roomName = roomName;
 		this.roomDescription = roomDescription;
@@ -29,7 +31,7 @@ public class SensorData {
 		this.sensorType = type;
 	}
 	
-	public SensorData() {
+	public SensorDataDTO() {
 	}
 	
 	/**
