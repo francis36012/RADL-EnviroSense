@@ -29,7 +29,7 @@ public interface RaBluetoothRepository extends JpaRepository<ReelyActiveBluetoot
 	 */
 	@Query(value = "SELECT * FROM ra_bluetooth ra JOIN sensor s ON s.id = ra.sensor_id "
 			+ "JOIN room r ON s.room_id = r.id " + "WHERE (r.id = ?1) AND "
-			+ "(raj.timestamp >= ?2 AND ra.timestamp <= ?3)", nativeQuery = true)
+			+ "(ra.timestamp >= ?2 AND ra.timestamp <= ?3)", nativeQuery = true)
 	List<ReelyActiveBluetooth> findByRoomIdAndTimestampBetween(long roomId, Timestamp start, Timestamp end);
 
 	/**
