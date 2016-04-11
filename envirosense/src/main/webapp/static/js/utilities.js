@@ -51,6 +51,7 @@ function createNode(tagName, className, attributeValues) {
 /*			PLUGIN INITIALIZATION			*/
 /* ---------------------------------------- */
 function runSlick() {
+	
 	$('.single-items').slick({
 		dots: true,
 		infinite: false,
@@ -357,15 +358,19 @@ function createContainerByRoomId() {
 	var sensorType = createNode("div", ["sensorType"], null);
 	var sensorTime = createNode("div", ["sensorTime"], null);
 	var sensorValue = createNode("div", ["sensorValue"], null);
+	var roomName = createNode("div", ["roomName"], null);
+	var roomDescription = createNode("div", ["roomDescription"], null);
 	
 	var horizontalLine = createNode("hr", null, null);
 	
 	sensorData.appendChild(sensorId);
 	sensorData.appendChild(sensorName);
 	sensorData.appendChild(sensorType);
+	sensorData.appendChild(roomName);
+	sensorData.appendChild(roomDescription);
+	sensorData.appendChild(horizontalLine);
 	sensorData.appendChild(sensorTime);
 	sensorData.appendChild(sensorValue);
-	sensorData.appendChild(horizontalLine);
 	panelBody.appendChild(sensorData);
 	panelDiv.appendChild(panelHead);
 	panelDiv.appendChild(panelBody);
@@ -576,7 +581,7 @@ function getDataValueBySensorType(sensorType, dataType) {
 			dataType = dataType === true ? "Motion Detected" : "No Motion";
 			break;
 		case "DR":
-			dataType = dataType === true ? "Open" : "Closed";
+			dataType = dataType === false ? "Open" : "Closed";
 			break;
 	}
 	

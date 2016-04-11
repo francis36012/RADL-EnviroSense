@@ -35,9 +35,9 @@
 						</div>
 						
 						<div class="row">
-							<div class="col-xs-12 col-sm-6 col-sm-offset-3">
-								<!-- SIDEBAR TOGGLE -->
-								<c:import url="/static/common/navbar/toggle.jsp" />	
+							<div class="col-xs-12 col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4">
+							<!-- SIDEBAR TOGGLE -->
+							<c:import url="/static/common/navbar/toggle.jsp" />	
 							</div>
 						</div>
 					</div>

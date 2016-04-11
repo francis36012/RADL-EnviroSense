@@ -142,10 +142,12 @@ function reformatJsonBySensorType(jsonObject, sortKey) {
 		
 		/*
 		 * Since Google Charts isn't very stable when handling boolean values,
-		 * we have to change the JSON object's boolean values to a string value
+		 * we have to change the JSON object's boolean values to either 1 or 0 
 		 * if ever there is a boolean value present in the data.
 		 */
-		jsonObject[index]["data"] = getDataValueBySensorType(jsonObject[index]["sensorType"], jsonObject[index]["data"]);
+		if (jsonObject[index]["data"] === true || jsonObject[index]["data"] === false) {
+			jsonObject[index]["data"] = getDataValueBySensorType(jsonObject[index]["sensorType"], jsonObject[index]["data"]);
+		}
 		
 		jsonProperty.timestamp = jsonObject[index]["timestamp"];
 		jsonProperty.data = jsonObject[index]["data"];
@@ -180,7 +182,7 @@ function loadDataBySensorType(jsonObject, domElement) {
 		roomDescription: jsonObject["roomDescription"],
 		values: {
 			timestamp: jsonObject["values"][0]["timestamp"],
-			data: jsonObject["values"][0]["data"]
+			data: getDataValueBySensorType(jsonObject["sensorType"], jsonObject["values"][0]["data"])
 		}
 	};
 	
@@ -218,6 +220,6 @@ function loadDataBySensorType(jsonObject, domElement) {
 	roomDescription.appendChild(toAppend);
 	
 	toAppend = small.cloneNode();
-	toAppend.appendChild(document.createTextNode(getReadableDateString(jsonElement.values.timestamp)));
+	toAppend.appendChild(document.createTextNode(getReadableDateString(jsonElement.values.timestamp.replace(/T|Z/g, " "))));
 	sensorTime.appendChild(toAppend);
 }

@@ -156,11 +156,7 @@ function reformatJsonBySensorType(jsonObject, sortKey) {
 		values: null
 	};
 	var uniqueId = [];
-	var jsonAttributes = [{
-			sensorType: null,
-			roomName: null,
-			roomDescription: null
-		}];
+	var jsonAttributes = [];
 	var jsonData = [];
 	var returnValue = [];
 	
@@ -186,7 +182,9 @@ function reformatJsonBySensorType(jsonObject, sortKey) {
 		 * we have to change the JSON object's boolean values to a string value
 		 * if ever there is a boolean value present in the data.
 		 */
-		jsonObject[index]["data"] = getDataValueBySensorType(jsonObject[index]["sensorType"], jsonObject[index]["data"]);
+		if (jsonObject[index]["data"] === true || jsonObject[index]["data"] === false) {
+			jsonObject[index]["data"] = jsonObject[index]["data"] === true ? 1 : 0;
+		}
 		
 		jsonProperty.timestamp = jsonObject[index]["timestamp"];
 		jsonProperty.data = jsonObject[index]["data"];
@@ -228,12 +226,28 @@ function loadDataBySensorType(jsonObject, domElement) {
 	var sensorId = domElement.getElementsByClassName("sensorId")[0];
 	var sensorType = domElement.getElementsByClassName("sensorType")[0];
 	var sensorTime = domElement.getElementsByClassName("sensorTime")[0];
+	var sensorValue = domElement.getElementsByClassName("sensorValue")[0];
 	var roomName = domElement.getElementsByClassName("roomName")[0];
 	var roomDescription = domElement.getElementsByClassName("roomDescription")[0];
 	
-	sensorId.innerHTML = "ID: " + jsonElement.id;
-	sensorType.innerHTML = "Type: " + getSensorNameByType(jsonElement.sensorType);
-	roomName.innerHTML = "";
+	var h1 = createNode("h1", ["text-center"], null);
+	var h4 = createNode("h4", ["text-center"], null);
+	var small = createNode("small", ["text-center"], null);
+	var well = createNode("div", ["well", "well-sm"], null);
+	var toAppend = null;
+	
+	toAppend = h1.cloneNode();
+	toAppend.appendChild(document.createTextNode(getSensorNameByType(jsonElement.sensorType)));
+	sensorType.appendChild(toAppend);
+	
+	toAppend = h4.cloneNode();
+	toAppend.appendChild(document.createTextNode("Room: " + jsonElement.roomName));
+	roomName.appendChild(createNode("hr", null, null));
+	roomName.appendChild(toAppend);
+	
+	toAppend = well.cloneNode();
+	toAppend.appendChild(document.createTextNode(jsonElement.roomDescription));
+	roomDescription.appendChild(toAppend);
 	
 	if (window.google) {
 		generateChartBySensorType(jsonObject, sensorTime, jsonElement.sensorType);
@@ -254,6 +268,7 @@ function loadDataBySensorType(jsonObject, domElement) {
 			collapseContainer.appendChild(document.createTextNode(new Date(jsonObject.values[index]["timestamp"]) + " - "));
 			collapseContainer.appendChild(document.createTextNode(jsonObject.values[index]["data"]));
 		}
+		
 		sensorTime.appendChild(divider);
 		sensorTime.appendChild(alertDiv);
 		
@@ -296,11 +311,11 @@ function generateChartBySensorType(jsonObject, domElement, sensorType) {
 			var chart = new google.visualization.SteppedAreaChart(domElement);
 			chart.draw(data, options);
 		});
-	} else {
+	} else if(sensorType === "TE") {
 		google.charts.setOnLoadCallback(function () {
 			var data = new google.visualization.DataTable();
 			data.addColumn('datetime', 'X');
-			data.addColumn('number');
+			data.addColumn('number', 'Celcius');
 			data.addRows(rawData);
 
 			var options = {
@@ -309,10 +324,10 @@ function generateChartBySensorType(jsonObject, domElement, sensorType) {
 					format: 'MMM dd - HH:mm'
 				},
 				vAxis: {
-					title: 'Celcius',
+					title: 'Temperature',
 					viewWindow: {
-						min: 30,
-						max: -10
+						min: 40,
+						max: -20
 					}
 				},
 				legend: 'none',
@@ -324,7 +339,34 @@ function generateChartBySensorType(jsonObject, domElement, sensorType) {
 			var chart = new google.visualization.LineChart(domElement);
 			chart.draw(data, options);
 		});
-	} 
-	
+	} else {
+		google.charts.setOnLoadCallback(function () {
+			var data = new google.visualization.DataTable();
+			data.addColumn('datetime', 'X');
+			data.addColumn('number', '%');
+			data.addRows(rawData);
+
+			var options = {
+				hAxis: {
+					title: 'Time',
+					format: 'MMM dd - HH:mm'
+				},
+				vAxis: {
+					title: 'Humidity',
+					viewWindow: {
+						min: 100,
+						max: 0
+					}
+				},
+				legend: 'none',
+				colors: [
+					'#5CB85C'
+				]
+			};
+
+			var chart = new google.visualization.LineChart(domElement);
+			chart.draw(data, options);
+		});
+	}
 	return domElement;
 }
