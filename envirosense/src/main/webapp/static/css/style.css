@@ -85,6 +85,10 @@ body * {
 	margin: 0;
 }
 
+.slick-prev:before, .slick-next:before {
+	color: #C1C1C1;
+}
+
 /* OTHER ELEMENTS */
 .hidden {
 	display: none;

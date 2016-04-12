@@ -145,8 +145,9 @@ function windowResizeHandler() {
 	var resizeFunction = function () {
 		setTimeout(function () {
 			var reportForm = document.getElementById("reportForm");
+			var submitButton = reportForm.elements["submitButton"];
 			
-			if (reportForm.dataType.value !== "") {
+			if (!submitButton.disabled) {
 				runAjax(reportForm);
 			}
 		}, 300);

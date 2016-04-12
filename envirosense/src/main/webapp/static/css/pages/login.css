@@ -1,4 +1,8 @@
 /* LOGIN ELEMENTS */
+#loginForm {
+	margin-bottom: 1em;
+}
+
 #loginForm .form-group {
 	margin-bottom: -0.1em;
 }

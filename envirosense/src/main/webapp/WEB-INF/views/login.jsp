@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!--<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
 		<c:import url="/static/common/head/favicon.jsp" />
@@ -48,7 +48,7 @@
 							</div>
 						</fieldset>
 					</form>
-								
+					
 					<!-- Parameter : SUCCESS -->
 					<c:if test="${param.logout != null}">
 						<div class="alert alert-success">
@@ -70,36 +70,7 @@
 						again or contact the administrator for assistance.</p>
 						</div>
 					</c:if>
-				</div>
-			</div>
-								
-			<div class="row">
-				<div class="col-xs-12 col-sm-4 col-sm-offset-4">
-					<small>
-						<a href="<c:url value='#forgotPassword' />" id="forgotPasswordToggle" data-toggle="collapse">Forgot Password</a>
-					</small>
-
-					<div id="forgotPassword" class="collapse">
-						<br />
-						<!-- Forgot Password -->
-						<form id="formResetPassword" action="<c:url value='/resetPassword' />" method="GET">
-							<fieldset class="fieldset input-group-vertical">
-								<div class="input-group form-group">
-									<input type="email" class="form-control" name="forgotPassword" placeholder="Email" autocomplete="on" />
-									<span class="input-group-btn">
-										<button class="btn btn-default" type="submit" form="formResetPassword">
-										<i class="glyphicon glyphicon-menu-right"></i>
-										</button>
-									</span>
-								</div>
-							</fieldset>
-
-							<p class="well well-sm">
-								We will send you instructions on how to 
-								reset your password.
-							</p>
-						</form>
-					</div>
+					<hr />
 				</div>
 			</div>
 		</div>

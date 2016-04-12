@@ -87,7 +87,7 @@ function formButtonListeners() {
 		});
 	}
 		
-		for (var index = 0; index < createButtons.length; index++) {
+	for (var index = 0; index < createButtons.length; index++) {
 		createButtons[index].addEventListener("click", function(event) {
 			/*
 			 * Since modern browsers doesn't adhere to going to pre-defined

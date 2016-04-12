@@ -55,7 +55,7 @@ function runSlick() {
 	$('.single-items').slick({
 		dots: true,
 		infinite: false,
-		arrows: false,
+		arrows: true,
 		speed: 250,
 		slidesToShow: 3,
 		slidesToScroll: 3,
@@ -70,6 +70,7 @@ function runSlick() {
 		{
 			breakpoint: 768,
 			settings: {
+				arrows: false,
 				slidesToShow: 2,
 				slidesToScroll: 2
 			}
@@ -77,6 +78,7 @@ function runSlick() {
 		{
 			breakpoint: 480,
 			settings: {
+				arrows: true,
 				slidesToShow: 1,
 				slidesToScroll: 1
 			}

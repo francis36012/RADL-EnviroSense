@@ -49,8 +49,9 @@ function readyStateChangeByRoomsAndSensors(xmlHttp, formElement) {
 
 								var br = createNode("br", null, null);
 								var h3 = createNode("h3", ["text-center"], null);
-								var slickSlides = document.getElementById("slickSlides");
 								h3.appendChild(document.createTextNode(getSensorNameByType(jsonObject[index]["sensorType"])));
+								
+								var slickSlides = document.getElementById("slickSlides");
 								slickSlides.appendChild(h3);
 								slickSlides.appendChild(toAppend);
 								slickSlides.appendChild(br);
@@ -66,7 +67,11 @@ function readyStateChangeByRoomsAndSensors(xmlHttp, formElement) {
 								
 								var br = createNode("br", null, null);
 								var h3 = createNode("h3", ["text-center"], null);
-								h3.appendChild(document.createTextNode(jsonObject[index]["name"]));
+								var small = createNode("small", null, null);
+								small.appendChild(document.createTextNode(jsonObject[index]["name"]));
+								h3.appendChild(document.createTextNode(jsonObject[index]["description"] + " "));
+								h3.appendChild(small);
+								
 								var slickSlides = document.getElementById("slickSlides");
 								slickSlides.appendChild(h3);
 								slickSlides.appendChild(toAppend);

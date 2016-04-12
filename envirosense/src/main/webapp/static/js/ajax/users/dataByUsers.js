@@ -6,7 +6,7 @@ function setDataByUser(formElement) {
 			formElement.dataChoice.value = "create";
 			break;
 		case "saveUser":
-			action = "save";
+			action = "update";
 			formElement.dataChoice.value = "save";
 			break;
 		case "deleteUser":
