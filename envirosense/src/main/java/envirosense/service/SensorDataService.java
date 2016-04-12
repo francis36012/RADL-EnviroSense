@@ -3,6 +3,7 @@ package envirosense.service;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -379,10 +380,16 @@ public class SensorDataService {
 					break;
 				case RA:
 					try {
-						BluetoothDataDTO bleInfo = (BluetoothDataDTO)d.getData();
+						@SuppressWarnings("unchecked")
+						LinkedHashMap<String, Object> bleInfoMap = (LinkedHashMap<String, Object>)d.getData();
+						BluetoothDataDTO bleInfo = new BluetoothDataDTO(
+								(Integer)bleInfoMap.get("rssi"),
+								(String)bleInfoMap.get("beaconId"),
+								(String)bleInfoMap.get("userEmail"));
 						BluetoothBeacon beacon = new BluetoothBeacon(bleInfo.getBeaconId(), bleInfo.getUserEmail());
 						raData.add(new ReelyActiveBluetooth(d.getSensorId(), d.getTimestamp(), beacon, bleInfo.getRssi()));
 					} catch (Exception ex) {
+						ex.getMessage();
 						// We are good programmers, its just that this is a pain in the .......
 						// Error inferring comments
 					}
