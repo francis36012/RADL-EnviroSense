@@ -190,6 +190,10 @@ public class User {
 		return enabled;
 	}
 
+	public Set<Event> getEvents() {
+		return events;
+	}
+
 	public Set<Role> getRoles() {
 		return roles;
 	}
@@ -261,6 +265,10 @@ public class User {
 	public void setSalt(String salt) {
 		this.salt = salt;
 	}
+	
+	public void setEvents(Set<Event> events) {
+		this.events = events;
+	}
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
@@ -296,4 +304,5 @@ public class User {
 	public String getSalt() {
 		return salt;
 	}
+
 }

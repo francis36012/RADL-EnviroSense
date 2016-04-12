@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import envirosense.model.User;
+import envirosense.model.dto.UserDTO;
 import envirosense.repository.UserRepository;
 
 /**
@@ -31,17 +32,52 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User save(User user) {
 		User dbUser = userRepository.findByEmailIgnoreCase(user.getEmail());
-
-		// new user
-		if (dbUser == null) {
-			user.setSalt(byteToHex(generateRandom(32)));
-			user.setPassword(passwordEncoder.encodePassword(user.getPassword(), user.getSalt()));
+		// email already exists
+		if (dbUser != null) {
+			return null;
 		}
+
+		user.setSalt(byteToHex(generateRandom(32)));
+		user.setPassword(passwordEncoder.encodePassword(user.getPassword(), user.getSalt()));
+		user.setEnabled(true);
 		return userRepository.save(user);
 	}
 	
+	@Override
 	public List<User> save(List<User> users) {
 		return userRepository.save(users);
+	}
+	
+	@Override
+	public User update(UserDTO userDTO) {
+		if (userDTO.getEmail() == null) {
+			return null;
+		}
+		User dbUser = userRepository.findByEmailIgnoreCase(userDTO.getEmail());
+		
+		String dtoFirstname = userDTO.getFirstname();
+		String dtoLastname = userDTO.getLastname();
+		String dtoPassword = userDTO.getPassword();
+		String dtoPhone = userDTO.getPhone();
+		String dtoSlack = userDTO.getPhone();
+
+		if (dtoFirstname != null) {
+			dbUser.setFirstname(dtoFirstname);
+		}
+		if (dtoLastname != null) {
+			dbUser.setLastname(dtoLastname);
+		}
+		if (dtoPassword != null) {
+			dbUser.setSalt(byteToHex(generateRandom(32)));
+			dbUser.setPassword(passwordEncoder.encodePassword(dtoPassword, dbUser.getSalt()));
+		}
+		if (dtoPhone != null) {
+			dbUser.setPhone(dtoPhone);
+		}
+		if (dtoSlack != null) {
+			dbUser.setSlackId(dtoSlack);
+		}
+		return userRepository.save(dbUser);
 	}
 	
 	@Override

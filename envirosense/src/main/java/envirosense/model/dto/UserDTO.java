@@ -21,20 +21,8 @@ public class UserDTO {
 	public UserDTO() {
 	}
 
-	/**
-	 * Creates a user object
-	 * 
-	 * @param firstname The first name of the user object to be created
-	 * @param lastname The last name of the user object to be created
-	 * @param email The email address of the user object to be created
-	 * @param phone The phone number of the user object to be created
-	 * @param slackId The slack ID (or username) of the user object to be created
-	 * @param password The password of the user object to be created
-	 * @param enabled A boolean flag indicating whether the user object to be created is enabled
-	 * @param roles The roles associated with the user
-	 */
 	public UserDTO(String firstname, String lastname, String email, String phone, String slackId,
-			String password, boolean enabled, Set<Role> roles) {
+			String password, boolean enabled, Set<Event> events, Set<Role> roles) {
 		this.email = email;
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -42,6 +30,7 @@ public class UserDTO {
 		this.slackId = slackId;
 		this.password = password;
 		this.enabled = enabled;
+		this.events = events;
 		this.roles = roles;
 	}
 
@@ -57,6 +46,7 @@ public class UserDTO {
 		this.slackId = user.getSlackId();
 		this.password = user.getPassword();
 		this.enabled = user.getEnabled();
+		this.events = user.getEvents();
 		this.roles = user.getRoles();
 	}
 
@@ -130,5 +120,26 @@ public class UserDTO {
 
 	public void setEvents(Set<Event> events) {
 		this.events = events;
+	}
+	
+	public static UserDTO mapNoPassword(final User user) {
+		UserDTO userDTO = new UserDTO();
+		userDTO.email = user.getEmail();
+		userDTO.firstname = user.getFirstname();
+		userDTO.lastname = user.getLastname();
+		userDTO.phone = user.getPhone();
+		userDTO.slackId = user.getSlackId();
+		userDTO.enabled = user.getEnabled();
+		userDTO.events = user.getEvents();
+		userDTO.roles = user.getRoles();
+		
+		return userDTO;
+	}
+	
+	public static User mapNewUser(final UserDTO userDTO) {
+		User user = new User(userDTO.firstname, userDTO.lastname, userDTO.email,
+				userDTO.phone, userDTO.slackId, userDTO.password, null,
+				userDTO.enabled, userDTO.roles);
+		return user;
 	}
 }

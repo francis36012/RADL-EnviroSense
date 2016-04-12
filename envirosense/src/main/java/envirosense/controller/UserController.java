@@ -4,16 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import envirosense.model.User;
+import envirosense.model.dto.UserDTO;
 import envirosense.service.UserService;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * Administrative CRUD Controllers for managing users
@@ -28,14 +29,27 @@ public class UserController {
     UserService userService;
 
     /**
-     * Save or update a user to the database
+     * Save a user to the database
      *
-     * @param user the user to be saved or updated
+     * @param user the user to be saved
      * @return the user management page
      */
     @RequestMapping(value = {"/save"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ModelAndView saveUser(@RequestBody User user) {
+    public ModelAndView saveUser(@RequestBody  UserDTO userDTO) {
+    	User user = UserDTO.mapNewUser(userDTO);
         userService.save(user);
+        return new ModelAndView("admin/users");
+    }
+    
+    /**
+     * Update a user to the database
+     *
+     * @param user the user to be updated
+     * @return the user management page
+     */
+    @RequestMapping(value = {"/update"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ModelAndView updateUser(@RequestBody UserDTO user) {
+    	userService.update(user);
         return new ModelAndView("admin/users");
     }
 

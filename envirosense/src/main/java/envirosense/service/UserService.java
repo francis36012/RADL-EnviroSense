@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import envirosense.model.User;
+import envirosense.model.dto.UserDTO;
 
 /**
  * Interface for the Services of a User
@@ -18,6 +19,13 @@ public interface UserService {
 	 * @return The saved user
 	 */
 	public User save(User user);
+	
+	/**
+	 * Updates an existing user using information in userDTO
+	 * @param userDTO The DTO containing the updated information
+	 * @return The update user object
+	 */
+	public User update(UserDTO userDTO);
 
 	/**
 	 * Save the list of users provided to the database
