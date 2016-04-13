@@ -31,11 +31,15 @@ function readyStateChangeBySensorType(xmlHttp, formElement) {
 		 */
 		
 		var sensorType = formElement.type.value;
-		var dataContainer = document.getElementById(sensorType).getElementsByClassName("dataContainer");
+		var dataContainer = document.getElementById(sensorType);
+		if (dataContainer) {
+			dataContainer = dataContainer.getElementsByClassName("dataContainer");
+		} else {
+			return;
+		}
 		
 		if (xmlHttp.status === 200) {
 			if (xmlHttp.readyState === 4) {
-				try {
 					var jsonObject = JSON.parse(xmlHttp.responseText);
 					if (jsonObject.length > 0) {
 						jsonObject = reformatJsonBySensorType(jsonObject, "sensorId");
@@ -65,14 +69,6 @@ function readyStateChangeBySensorType(xmlHttp, formElement) {
 						 * "404 Not Found" or "204 No Data Found" status.
 						 */
 					}
-				} catch (errorEvent) {
-					/*
-					 * Most likely, this error is thrown because the resources
-					 * (DOM elements) has been modified by the other AJAX call
-					 * and when this tries to access those modified resources,
-					 * it's not compatible.
-					 */
-				}
 			}
 		} else if (xmlHttp.status === 404) {
 			/*
@@ -104,10 +100,7 @@ function readyStateChangeBySensorType(xmlHttp, formElement) {
 			}
 		}
 	} catch (errorEvent) {
-		/*
-		 * Do something.
-		 */
-		throw errorEvent;
+		
 	}
 }
 

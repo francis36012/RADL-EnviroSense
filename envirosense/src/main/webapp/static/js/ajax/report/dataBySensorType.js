@@ -282,7 +282,7 @@ function generateChartBySensorType(jsonObject, domElement, sensorType) {
 	for (var index = 0; index < jsonObject.values.length; index++) {
 		rawData.push([new Date(jsonObject.values[index]["timestamp"].replace(/T|Z/g, " ")), jsonObject.values[index]["data"]]);
 	}
-	if (sensorType === "MO" || sensorType === "DR") {
+	if (sensorType === "DR") {
 		google.charts.setOnLoadCallback(function () {
 			var data = new google.visualization.DataTable();
 			data.addColumn('datetime', 'X');
@@ -296,7 +296,36 @@ function generateChartBySensorType(jsonObject, domElement, sensorType) {
 				},
 				vAxis: {
 					title: 'Event',
-					ticks: [0, 1],
+					ticks: ["Close", "Open"],
+					viewWindow: {
+						min: 0,
+						max: 1
+					}
+				},
+				legend: 'none',
+				colors: [
+					'#5CB85C'
+				]
+			};
+
+			var chart = new google.visualization.SteppedAreaChart(domElement);
+			chart.draw(data, options);
+		});
+	} else if (sensorType === "MO") {
+		google.charts.setOnLoadCallback(function () {
+			var data = new google.visualization.DataTable();
+			data.addColumn('datetime', 'X');
+			data.addColumn('number', 'Event');
+			data.addRows(rawData);
+
+			var options = {
+				hAxis: {
+					title: 'Time',
+					format: 'MMM dd - HH:mm'
+				},
+				vAxis: {
+					title: 'Event',
+					ticks: ["None", "Detected"],
 					viewWindow: {
 						min: 0,
 						max: 1

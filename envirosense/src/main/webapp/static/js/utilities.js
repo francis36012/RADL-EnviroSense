@@ -583,7 +583,7 @@ function getDataValueBySensorType(sensorType, dataType) {
 			dataType = dataType === true ? "Motion Detected" : "No Motion";
 			break;
 		case "DR":
-			dataType = dataType === false ? "Open" : "Closed";
+			dataType = dataType === true ? "Open" : "Closed";
 			break;
 	}
 	
