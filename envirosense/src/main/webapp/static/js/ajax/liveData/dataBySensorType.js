@@ -35,33 +35,42 @@ function readyStateChangeBySensorType(xmlHttp, formElement) {
 		
 		if (xmlHttp.status === 200) {
 			if (xmlHttp.readyState === 4) {
-				var jsonObject = JSON.parse(xmlHttp.responseText);
-				if (jsonObject.length > 0) {
-					jsonObject = reformatJsonBySensorType(jsonObject, "sensorId");
+				try {
+					var jsonObject = JSON.parse(xmlHttp.responseText);
+					if (jsonObject.length > 0) {
+						jsonObject = reformatJsonBySensorType(jsonObject, "sensorId");
 
-					if (jsonObject.length > dataContainer.length) {
-						while (jsonObject.length > dataContainer.length) {
-							$("#" + sensorType).slick("slickAdd", createContainerBySensorType());
-						}
-					} else if (jsonObject.length < dataContainer.length) {
-						while (dataContainer.length > jsonObject.length) {
-							if (!$("#" + sensorType).slick("slickRemove", false)) {
-								dataContainer[0].parentNode.parentNode.remove();
+						if (jsonObject.length > dataContainer.length) {
+							while (jsonObject.length > dataContainer.length) {
+								$("#" + sensorType).slick("slickAdd", createContainerBySensorType());
+							}
+						} else if (jsonObject.length < dataContainer.length) {
+							while (dataContainer.length > jsonObject.length) {
+								if (!$("#" + sensorType).slick("slickRemove", false)) {
+									dataContainer[0].parentNode.parentNode.remove();
+								}
 							}
 						}
+
+						clearPanels(document.getElementById(sensorType).getElementsByClassName("dataContainer"));
+						for (var index = 0; index < jsonObject.length; index++) {
+							loadDataBySensorType(jsonObject[index], dataContainer[index]);
+						}
+
+					} else {
+						/*
+						 * There's a response that had been receieved but it has
+						 * no length. We can safely assume that it has no value, 
+						 * however, we cannot assume that the server returned a
+						 * "404 Not Found" or "204 No Data Found" status.
+						 */
 					}
-					
-					clearPanels(document.getElementById(sensorType).getElementsByClassName("dataContainer"));
-					for (var index = 0; index < jsonObject.length; index++) {
-						loadDataBySensorType(jsonObject[index], dataContainer[index]);
-					}
-					
-				} else {
+				} catch (errorEvent) {
 					/*
-					 * There's a response that had been receieved but it has
-					 * no length. We can safely assume that it has no value, 
-					 * however, we cannot assume that the server returned a
-					 * "404 Not Found" or "204 No Data Found" status.
+					 * Most likely, this error is thrown because the resources
+					 * (DOM elements) has been modified by the other AJAX call
+					 * and when this tries to access those modified resources,
+					 * it's not compatible.
 					 */
 				}
 			}
@@ -186,6 +195,7 @@ function loadDataBySensorType(jsonObject, domElement) {
 		}
 	};
 	
+	// IF not Reely actinve
 	var sensorId = domElement.getElementsByClassName("sensorId")[0];
 	var sensorType = domElement.getElementsByClassName("sensorType")[0];
 	var sensorTime = domElement.getElementsByClassName("sensorTime")[0];
@@ -195,16 +205,37 @@ function loadDataBySensorType(jsonObject, domElement) {
 	
 	var h1 = createNode("h1", ["text-center"], null);
 	var h4 = createNode("h4", ["text-center"], null);
+	var h5 = createNode("h5", ["text-center"], null);
 	var small = createNode("small", ["text-center"], null);
 	var well = createNode("div", ["well", "well-sm"], null);
+	var br = createNode("br", null, null);
 	var toAppend = null;
 	
-	toAppend = h1.cloneNode();
-	toAppend.appendChild(document.createTextNode(jsonElement.values.data + " "));
-	var subText = small.cloneNode();
-	subText.appendChild(document.createTextNode(getDataTypeBySensorType(jsonElement.sensorType)));
-	toAppend.appendChild(subText);
-	sensorValue.appendChild(toAppend);
+	if (jsonElement.sensorType === "RA") {
+		toAppend = h1.cloneNode();
+		toAppend.appendChild(document.createTextNode(jsonElement.values.data.rssi));
+		
+		var subText = small.cloneNode();
+		subText.appendChild(document.createTextNode(getDataTypeBySensorType(jsonElement.sensorType)));
+		toAppend.appendChild(subText);
+		toAppend.appendChild(br.cloneNode());
+		
+		var subText1 = h5.cloneNode();
+		subText1.appendChild(document.createTextNode(jsonElement.values.data.userEmail));
+		toAppend.appendChild(subText1);
+		
+		sensorValue.appendChild(toAppend);
+	} else {
+		toAppend = h1.cloneNode();
+		toAppend.appendChild(document.createTextNode(jsonElement.values.data));
+		
+		sensorValue.appendChild(toAppend);
+		
+		var subText = small.cloneNode();
+		subText.appendChild(document.createTextNode(" " + getDataTypeBySensorType(jsonElement.sensorType)));
+		toAppend.appendChild(subText);
+	}
+	
 	
 	toAppend = h4.cloneNode();
 	toAppend.appendChild(document.createTextNode("Type: " + getSensorNameByType(jsonElement.sensorType)));

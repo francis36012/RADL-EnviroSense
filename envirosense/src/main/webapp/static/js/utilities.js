@@ -78,7 +78,7 @@ function runSlick() {
 		{
 			breakpoint: 480,
 			settings: {
-				arrows: true,
+				arrows: false,
 				slidesToShow: 1,
 				slidesToScroll: 1
 			}
@@ -599,6 +599,9 @@ function getDataTypeBySensorType(sensorType) {
 			break;
 		case "HU":
 			dataType = "%";
+			break;
+		case "RA":
+			dataType = "RSSI";
 			break;
 	}
 	

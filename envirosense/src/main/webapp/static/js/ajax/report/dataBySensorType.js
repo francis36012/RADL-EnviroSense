@@ -295,7 +295,7 @@ function generateChartBySensorType(jsonObject, domElement, sensorType) {
 					format: 'MMM dd - HH:mm'
 				},
 				vAxis: {
-					title: 'Motion',
+					title: 'Event',
 					ticks: [0, 1],
 					viewWindow: {
 						min: 0,
@@ -339,7 +339,7 @@ function generateChartBySensorType(jsonObject, domElement, sensorType) {
 			var chart = new google.visualization.LineChart(domElement);
 			chart.draw(data, options);
 		});
-	} else {
+	} else if(sensorType === "HU") {
 		google.charts.setOnLoadCallback(function () {
 			var data = new google.visualization.DataTable();
 			data.addColumn('datetime', 'X');
@@ -367,6 +367,46 @@ function generateChartBySensorType(jsonObject, domElement, sensorType) {
 			var chart = new google.visualization.LineChart(domElement);
 			chart.draw(data, options);
 		});
+	} else if (sensorType === "RA") {
+		var alertMessage = createNode("p", null, null);
+		alertMessage.innerHTML = "Chart for Reely Active sensors are not supported yet.";
+		var alertDiv = createNode("div", ["alert", "alert-warning"], null);
+		alertDiv.appendChild(alertMessage);
+		
+		var collapseToggle = createNode("a", null, [["href", "#dataset" + jsonObject["sensorId"]], ["data-toggle", "collapse"]]);
+		collapseToggle.innerHTML = "Show Data";
+		var collapseContainer = createNode("div", ["collapse"], [["id", "dataset" + jsonObject["sensorId"]]]);
+		
+		for (var index = 0; index < jsonObject.values.length; index++) {
+			collapseContainer.appendChild(createNode("br", null, null));
+			collapseContainer.appendChild(document.createTextNode(new Date(jsonObject.values[index]["timestamp"]) + " - "));
+			collapseContainer.appendChild(document.createTextNode(jsonObject.values[index]["data"]["rssi"]));
+		}
+		
+		domElement.appendChild(alertDiv);
+		
+		domElement.appendChild(collapseToggle);
+		domElement.appendChild(collapseContainer);
+	} else {
+		var alertMessage = createNode("p", null, null);
+		alertMessage.innerHTML = "Google Charts don't understand the data specified.";
+		var alertDiv = createNode("div", ["alert", "alert-warning"], null);
+		alertDiv.appendChild(alertMessage);
+		
+		var collapseToggle = createNode("a", null, [["href", "#dataset" + jsonObject["sensorId"]], ["data-toggle", "collapse"]]);
+		collapseToggle.innerHTML = "Show Data";
+		var collapseContainer = createNode("div", ["collapse"], [["id", "dataset" + jsonObject["sensorId"]]]);
+		
+		for (var index = 0; index < jsonObject.values.length; index++) {
+			collapseContainer.appendChild(createNode("br", null, null));
+			collapseContainer.appendChild(document.createTextNode(new Date(jsonObject.values[index]["timestamp"]) + " - "));
+			collapseContainer.appendChild(document.createTextNode(jsonObject.values[index]["data"]));
+		}
+		
+		domElement.appendChild(alertDiv);
+		
+		domElement.appendChild(collapseToggle);
+		domElement.appendChild(collapseContainer);
 	}
 	return domElement;
 }
