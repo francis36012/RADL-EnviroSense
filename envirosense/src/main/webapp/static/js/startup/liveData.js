@@ -54,7 +54,7 @@ function formButtonListeners() {
 		var mainForm = createForm("liveDataAllRoomsAndSensors", "room", "all");
 		runAjax(mainForm);
 		
-		var counterInterval = setTimeout(function () {
+		var counterInterval = setTimeout(function anonymousRoom() {
 			var slickSlides = document.getElementById("slickSlides").getElementsByClassName("single-items");
 
 			if (slickSlides.length > 0) {
@@ -71,6 +71,8 @@ function formButtonListeners() {
 						}
 					}, 1000, mainForm);
 				}
+			} else {
+				setTimeout(anonymousRoom, 300);
 			}
 		}, 300);
 	});
@@ -98,7 +100,7 @@ function formButtonListeners() {
 		var mainForm = createForm("liveDataAllRoomsAndSensors", "sensor", "all");
 		runAjax(mainForm);
 		
-		var counterInterval = setTimeout(function () {
+		var counterInterval = setTimeout(function anonymousSensor() {
 			var slickSlides = document.getElementById("slickSlides").getElementsByClassName("single-items");
 			
 			if (slickSlides.length > 0) {
@@ -120,6 +122,8 @@ function formButtonListeners() {
 						}
 					}, 1000, mainForm);
 				}
+			} else {
+				setTimeout(anonymousSensor, 300);
 			}
 		}, 300);
 	});
