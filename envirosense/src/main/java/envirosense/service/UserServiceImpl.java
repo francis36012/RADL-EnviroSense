@@ -2,6 +2,7 @@ package envirosense.service;
 
 
 import java.security.SecureRandom;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -42,6 +43,7 @@ public class UserServiceImpl implements UserService {
 		user.setPassword(passwordEncoder.encodePassword(user.getPassword(), user.getSalt()));
 		user.setEnabled(true);
 		Set<Role> roles = user.getRoles();
+		roles = (roles == null) ? new HashSet<>() : roles;
 		roles.add(new Role("USER"));
 		user.setRoles(roles);
 		return userRepository.save(user);
