@@ -43,17 +43,13 @@
 					</div>
 						
 					<div class="row">
-						<div id="slickSlides" class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 nopadding">
-							<div class="row">
-								<div class="col-xs-12">
-									<div class="panel panel-default">
-										<div class="panel-heading">
-										</div>
-										<div class="panel-body">
-											<div class="alert alert-warning">
-												You are not allowed to view this content.
-											</div>
-										</div>
+						<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 nopadding">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+								</div>
+								<div class="panel-body">
+									<div class="alert alert-warning">
+										You are not allowed to view this content.
 									</div>
 								</div>
 							</div>

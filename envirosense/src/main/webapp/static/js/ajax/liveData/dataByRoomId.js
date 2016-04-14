@@ -96,9 +96,6 @@ function readyStateChangeByRoomId(xmlHttp, formElement) {
 			}
 		}
 	} catch (errorEvent) {
-		/*
-		 * Do something.
-		 */
 		throw errorEvent;
 	}
 }

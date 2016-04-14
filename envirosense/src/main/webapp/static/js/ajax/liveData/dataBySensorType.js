@@ -76,6 +76,23 @@ function readyStateChangeBySensorType(xmlHttp, formElement) {
 			 * message "Something went wrong. Please check connection to
 			 * server."
 			 */
+			while (dataContainer.length > 1) {
+				if (!$("#" + sensorType).slick("slickRemove", false)) {
+					dataContainer[0].parentNode.parentNode.remove();
+				}
+			}
+			
+			var messagePanel = createContainerBySensorType();
+			var messageText = createNode("div", ["alert", "alert-warning"], null);
+			messageText.innerHTML = "Server responded with a 404 Not Found.";
+			var messageContainer = messagePanel.getElementsByClassName("sensorValue")[0];
+			messageContainer.appendChild(messageText);
+			
+			if (dataContainer.length === 1) {
+				dataContainer[0] = messagePanel;
+			} else {
+				$("#" + sensorType).slick("slickAdd", messagePanel);
+			}
 		} else if (xmlHttp.status === 204) {
 			/*
 			 * No data was found. We create a panel with the error message
@@ -100,7 +117,12 @@ function readyStateChangeBySensorType(xmlHttp, formElement) {
 			}
 		}
 	} catch (errorEvent) {
-		
+		/*
+		 * This error is most likely because of the race condition on which
+		 * AJAX call gets the resource. Whenever a room and sensor makes an
+		 * AJAX call at the same time, it's a race on who would get the DOM
+		 * elements and fill it in with their data.
+		 */
 	}
 }
 

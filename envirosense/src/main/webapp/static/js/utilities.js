@@ -63,6 +63,7 @@ function runSlick() {
 		{
 			breakpoint: 1024,
 			settings: {
+				arrows: false,
 				slidesToShow: 3,
 				slidesToScroll: 3
 			}
