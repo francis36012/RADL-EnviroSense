@@ -70,7 +70,7 @@ CREATE TABLE envirosense.condition_time (
 	thursday BIT(1) NOT NULL,
 	friday BIT(1) NOT NULL,
 	saturday BIT(1) NOT NULL,
-	date_time Date NOT NULL,
+	date_time TIMESTAMP NOT NULL,
 	all_hours BIT(1) NOT NULL,
 	time_check VARCHAR(10) NOT NULL,
 	CONSTRAINT pk_conditiontime PRIMARY KEY (id)
