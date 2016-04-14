@@ -59,11 +59,19 @@ function formDefaultValues() {
 	var today = new Date();
 	var lastWeek = new Date(new Date(today).setDate(today.getDate() - 7));
 	
-	var dateRegex = /T|Z|[.]\d{3}/g;
+	/*
+	 * Firefox doesn't support native HTML5 date picker, so the user might have to 
+	 * manually type in the date in plain text whenever they're using Firefox.
+	 * 
+	 * Firefox doesn't support setting the value of the date and time in these 
+	 * textboxes either. So far, only Google Chrome masterrace is the one
+	 * that supports most of the functionalities implemented in our front-end.
+	 */
+	var dateRegex = /:\d{2}.\d{3}Z/;
 	var fromDate = reportForm.fromDate;
-	fromDate.value = lastWeek.toISOString().replace(/T|Z|[.]\d{3}/g, " ");
+	fromDate.value = lastWeek.toISOString().replace(dateRegex, "");
 	var toDate = reportForm.toDate;
-	toDate.value = today.toISOString().replace(/T|Z|[.]\d{3}/g, " ");
+	toDate.value = today.toISOString().replace(dateRegex, "");
 }
 
 /**
