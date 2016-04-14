@@ -184,7 +184,7 @@ function loadDataBySensorType(jsonObject, domElement) {
 		roomDescription: jsonObject["roomDescription"],
 		values: {
 			timestamp: jsonObject["values"][0]["timestamp"],
-			data: getDataValueBySensorType(jsonObject["sensorType"], jsonObject["values"][0]["data"])
+			data: jsonObject["values"][0]["data"]
 		}
 	};
 	
