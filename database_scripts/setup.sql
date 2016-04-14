@@ -9,7 +9,7 @@ CREATE USER 'esapp'@'localhost' IDENTIFIED BY 'password';
 
 use envirosense;
 GRANT ALL PRIVILEGES ON envirosense.* TO 'esdev'@'localhost';
-GRANT UPDATE, DELETE, INSERT, SELECT ON envirosense.* TO 'esapp'@'localhost';
+GRANT UPDATE, DELETE, INSERT, SELECT, ALTER ON envirosense.* TO 'esapp'@'localhost';
 
 -- REVOKE ALL PRIVILEGES ON *.* FROM 'esdev'@'%'; -- If network access is not needed
 FLUSH PRIVILEGES;
