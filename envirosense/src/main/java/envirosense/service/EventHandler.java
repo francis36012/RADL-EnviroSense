@@ -15,7 +15,7 @@ import envirosense.model.dto.SensorDataDTO;
 import envirosense.repository.EventRepository;
 
 /**
- * @author Francis Agyapong <francis.agyapong@edu.sait.ca>
+ * Filter incoming and send notifications for the ones that satisfy an events conditions.
  */
 @Component
 @Scope("singleton")
@@ -36,6 +36,10 @@ public class EventHandler {
 	public EventHandler() {
 	}
 
+	/**
+	 * Runs the handler on the specified data
+	 * @param data The data on which the handler will run
+	 */
 	public void run(List<SensorDataDTO> data) {
 		List<Event> events = eventRepository.findByActiveTrue();
 		for (SensorDataDTO d : data) {

@@ -3,15 +3,24 @@ package envirosense.model;
 
 /**
  * A ConditionModifier represents a logical operator used when evaluating conditions
- * 
- * @author Francis Agyapong <francis.agyapong@edu.sait.ca>
  */
 public enum ConditionModifier {
+	/** Greater */
 	GT("Greater"),
+	
+	/** Greater or equal */
 	GE("GreaterOrEqual"),
+	
+	/** Less or equal */
 	LE("LessOrEqual"),
+	
+	/** Less */
 	LT("Less"),
+	
+	/** Equal */
 	EQ("Equal"),
+	
+	/** Not equal */
 	NE("NotEqual");
 	
 	String modifier;

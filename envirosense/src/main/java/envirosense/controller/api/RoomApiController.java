@@ -22,6 +22,10 @@ public class RoomApiController {
 	@Autowired
 	RoomService roomService;
 	
+	/**
+	 * Retrieves and returns all rooms in the system
+	 * @return All rooms and an HTTP status code
+	 */
 	@RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Room>> getAllRooms() {
 		List<Room> rooms = roomService.findAll();
@@ -32,6 +36,11 @@ public class RoomApiController {
 		return new ResponseEntity<>(rooms, HttpStatus.OK);
 	}
 	
+	/**
+	 * Retrieves and returns the room with the specified ID
+	 * @param id The ID of the room to retrieve
+	 * @return The retrieved room and an HTTP status code
+	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Room> getOne(@PathVariable("id") long id) {
 		Room room = roomService.findOne(id);

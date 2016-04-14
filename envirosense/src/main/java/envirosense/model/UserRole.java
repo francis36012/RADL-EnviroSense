@@ -12,8 +12,6 @@ import javax.persistence.Transient;
 
 /**
  * A UserRole is used to determine which actions a user can perform on the system.
- * 
- * @author Francis Agyapong <francis.agyapong@edu.sait.ca>
  */
 @Entity
 @Table(name = "user_role")

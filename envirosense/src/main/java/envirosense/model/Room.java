@@ -9,8 +9,6 @@ import javax.persistence.Table;
 
 /**
  * This class models a room in the system's environment
- * 
- * @author Francis Agyapong <francis.agyapong@edu.sait.ca>
  */
 @Entity
 @Table(name = "room")

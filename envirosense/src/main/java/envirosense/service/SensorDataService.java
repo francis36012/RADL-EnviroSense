@@ -278,8 +278,8 @@ public class SensorDataService {
 	 * Retrieves all sensor data from all sensors with type specified that was read between the specified time range
 	 * 
 	 * @param sensorType The type of the sensor
-	 * @param start The time and date to start checking (inclusive)
-	 * @param end The time and date to end checking (inclusive)
+	 * @param startTime The time and date to start checking (inclusive)
+	 * @param endTime The time and date to end checking (inclusive)
 	 * @return A list of sensor data that satisfy the conditions outlined above.
 	 */
 	public List<SensorDataDTO> findBySensorTypeAndTimestampBetween(SensorType sensorType, Timestamp startTime, Timestamp endTime) {
@@ -413,6 +413,11 @@ public class SensorDataService {
 		raRepository.save(raData);
 	}
 	
+	/**
+	 * Maps a list of temperature data to a list of SensorDataDTO
+	 * @param data The temperature data to map
+	 * @return A list of SensorDataDTO
+	 */
 	private List<SensorDataDTO> mapTemperatureData(List<Temperature> data) {
 		List<SensorDataDTO> mapped = new ArrayList<>();
 		data.stream().forEach((d) -> {
@@ -430,6 +435,11 @@ public class SensorDataService {
 		return mapped;
 	}
 
+	/**
+	 * Maps a list of humidity data to a list of SensorDataDTO
+	 * @param data The humidity data to map
+	 * @return A list of SensorDataDTO
+	 */
 	private List<SensorDataDTO> mapHumidityData(List<Humidity> data) {
 		List<SensorDataDTO> mapped = new ArrayList<>();
 		data.stream().forEach((d) -> {
@@ -447,6 +457,11 @@ public class SensorDataService {
 		return mapped;
 	}
 
+	/**
+	 * Maps a list of door data to a list of SensorDataDTO
+	 * @param data The door data to map
+	 * @return A list of SensorDataDTO
+	 */
 	private List<SensorDataDTO> mapDoorData(List<Door> data) {
 		List<SensorDataDTO> mapped = new ArrayList<>();
 		data.stream().forEach((d) -> {
@@ -464,6 +479,11 @@ public class SensorDataService {
 		return mapped;
 	}
 
+	/**
+	 * Maps a list of motion data to a list of SensorDataDTO
+	 * @param data The motion data to map
+	 * @return A list of SensorDataDTO
+	 */
 	private List<SensorDataDTO> mapMotionData(List<Motion> data) {
 		List<SensorDataDTO> mapped = new ArrayList<>();
 		data.stream().forEach((d) -> {
@@ -481,6 +501,11 @@ public class SensorDataService {
 		return mapped;
 	}
 
+	/**
+	 * Maps a list of ReelyActive data to a list of SensorDataDTO
+	 * @param data The ReelyActive data to map
+	 * @return A list of SensorDataDTO
+	 */
 	private List<SensorDataDTO> mapRABleData(List<ReelyActiveBluetooth> data) {
 		List<SensorDataDTO> mapped = new ArrayList<>();
 		data.stream().forEach((d) -> {

@@ -9,6 +9,10 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ReportViewController {
 
+	/**
+	 * Returns the reports view
+	 * @return Reports view
+	 */
 	@RequestMapping(value = "/report", method = RequestMethod.GET)
 	public ModelAndView reportPage() {
 		ModelAndView mv = new ModelAndView("report");

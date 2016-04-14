@@ -21,6 +21,10 @@ public class SensorApiController {
 	@Autowired
 	SensorService sensorService;
 
+	/**
+	 * Retrieves and returns all sensors in the system
+	 * @return All sensors and an HTTP status code
+	 */
 	@RequestMapping(value = "/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Sensor>> allSensors() {
 		List<Sensor> sensors = sensorService.findAll();
@@ -30,6 +34,11 @@ public class SensorApiController {
 		return new ResponseEntity<>(sensors, HttpStatus.OK);
 	}
 
+	/**
+	 * Retrieves and returns the sensor with specified ID
+	 * @param id The ID of the sensor to retrieve
+	 * @return Retrieved sensor and an HTTP status code
+	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Sensor> sensor(@PathVariable("id") long id) {
 		Sensor sensor = sensorService.findOne(id);
@@ -39,6 +48,11 @@ public class SensorApiController {
 		return new ResponseEntity<>(sensor, HttpStatus.OK);
 	}
 
+	/**
+	 * Retrieves and returns the sensor with specified type
+	 * @param type The type of the sensor to retrieve
+	 * @return Retrieved sensor and an HTTP status code
+	 */
 	@RequestMapping(value = "/type/{type}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Sensor>> sensor(@PathVariable("type") String type) {
 		List<Sensor> sensors = sensorService.findByType(type);

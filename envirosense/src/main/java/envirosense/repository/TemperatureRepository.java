@@ -58,7 +58,7 @@ public interface TemperatureRepository extends JpaRepository<Temperature, Sensor
 	/**
 	 * Retrieves all temperature data that was read in the room with the ID specified
 	 * 
-	 * @param sensorId The ID of the room in which the data was read
+	 * @param roomId The ID of the room in which the data was read
 	 * @return A list of temperature data that satisfy the conditions outlined above
 	 */
 	@Query(value = "SELECT * FROM temperature t JOIN sensor s ON s.id = t.sensor_id WHERE s.room_id = ?1", nativeQuery = true)
@@ -77,6 +77,7 @@ public interface TemperatureRepository extends JpaRepository<Temperature, Sensor
 
 	/**
 	 * Retrieves the latest temperature data stored in the database.
+	 * @param sensorId The ID of the room in which the data was read
 	 * @return A List of temperature data that satisfy the conditions given above.
 	 */
 	@Query(

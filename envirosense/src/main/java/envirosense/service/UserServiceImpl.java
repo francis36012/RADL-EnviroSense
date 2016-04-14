@@ -10,6 +10,7 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import envirosense.model.Role;
 import envirosense.model.User;
 import envirosense.model.dto.UserDTO;
 import envirosense.repository.UserRepository;
@@ -40,6 +41,9 @@ public class UserServiceImpl implements UserService {
 		user.setSalt(byteToHex(generateRandom(32)));
 		user.setPassword(passwordEncoder.encodePassword(user.getPassword(), user.getSalt()));
 		user.setEnabled(true);
+		Set<Role> roles = user.getRoles();
+		roles.add(new Role("USER"));
+		user.setRoles(roles);
 		return userRepository.save(user);
 	}
 	
@@ -59,7 +63,8 @@ public class UserServiceImpl implements UserService {
 		String dtoLastname = userDTO.getLastname();
 		String dtoPassword = userDTO.getPassword();
 		String dtoPhone = userDTO.getPhone();
-		String dtoSlack = userDTO.getPhone();
+		String dtoSlack = userDTO.getSlackId();
+		boolean enabled = userDTO.isEnabled();
 
 		if (dtoFirstname != null) {
 			dbUser.setFirstname(dtoFirstname);
@@ -77,6 +82,7 @@ public class UserServiceImpl implements UserService {
 		if (dtoSlack != null) {
 			dbUser.setSlackId(dtoSlack);
 		}
+		dbUser.setEnabled(enabled);
 		return userRepository.save(dbUser);
 	}
 	

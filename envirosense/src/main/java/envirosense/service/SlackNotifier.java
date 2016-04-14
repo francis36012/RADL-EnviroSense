@@ -11,8 +11,6 @@ import net.gpedro.integrations.slack.SlackMessage;
 
 /**
  * This service class is used for sending messages to users via Slack
- * 
- * @author Francis Agyapong <francis.agyapong@edu.sait.ca>
  */
 @Service("slackNotifier")
 public class SlackNotifier implements CommunicationMethod {

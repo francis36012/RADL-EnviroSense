@@ -17,6 +17,10 @@ public class EventController {
 	@Autowired
 	EventService eventService;
 	
+	/**
+	 * Returns the events view for the admin
+	 * @return Events view for the admin
+	 */
 	@RequestMapping(value = "/admin/events", method = RequestMethod.GET)
 	public ModelAndView adminAllEvents() {
 		ModelAndView mv = new ModelAndView("admin/events");
@@ -25,6 +29,11 @@ public class EventController {
 		return mv;
 	}
 	
+	/**
+	 * Returns the events view for the logged in user
+	 * @param principal The logged in user
+	 * @return Events view
+	 */
 	@RequestMapping(value = "/events", method = RequestMethod.GET)
 	public ModelAndView userAllEvents(Principal principal) {
 		ModelAndView mv = new ModelAndView("events");

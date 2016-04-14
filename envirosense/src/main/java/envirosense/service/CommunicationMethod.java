@@ -6,8 +6,6 @@ import envirosense.model.User;
 /**
  * A service for sending messages to users.
  * Information for the message destination is can be found in a user object.
- * 
- * @author Francis Agyapong
  */
 public interface CommunicationMethod {
 

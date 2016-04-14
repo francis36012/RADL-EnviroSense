@@ -69,7 +69,7 @@ public interface UserService {
 	
 	/**
 	 * Returns all users whose last name match the last name provided
-	 * @param firstname The last name to check form
+	 * @param lastname The last name to check form
 	 * @return All users whose last name match the last name provided
 	 */
 	public Set<User> findByLastname(String lastname);

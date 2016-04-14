@@ -9,10 +9,13 @@ import org.springframework.stereotype.Repository;
 import envirosense.model.Sensor;
 import envirosense.model.SensorType;
 
-/**
- * @author Francis Agyapong
- */
 @Repository
 public interface SensorRepsitory extends JpaRepository<Sensor, Long> {
+
+	/**
+	 * Retrieves and returns all sensors of the specified specified type
+	 * @param type The type of the sensors to retrieve
+	 * @return The retrieved sensors
+	 */
 	List<Sensor> findBySensorType(SensorType type);
 }

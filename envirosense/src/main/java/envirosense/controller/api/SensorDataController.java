@@ -32,7 +32,7 @@ public class SensorDataController {
 	/**
 	 * @param data The body of this request (must be a list of sensor data)
 	 * @param result The result of binding the request body to the parameter type
-	 * @return
+	 * @return ResponseEntity with HTTP status of the request
 	 */
 	@RequestMapping( value = "/new", method = RequestMethod.POST,
 		consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE
@@ -47,8 +47,9 @@ public class SensorDataController {
 	}
 	
 	/**
-	 * @param roomId
-	 * @return
+	 * Controller for retrieving data read from sensors in the specified room
+	 * @param roomId The ID of the room the information from
+	 * @return A ResponseEntity containing the retrieved data and an HTTP status code
 	 */
 	@RequestMapping(
 		value = "/live/room/{roomId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE
@@ -63,8 +64,9 @@ public class SensorDataController {
 	}
 
 	/**
-	 * @param sensorType
-	 * @return
+	 * Controller for retrieving data read from sensors of the specified type
+	 * @param sensorType The type of the sensor
+	 * @return Data read by sensors with the specified type
 	 */
 	@RequestMapping(value = "/live/sensortype/{sensorType}", method = RequestMethod.GET,
 		produces = MediaType.APPLICATION_JSON_VALUE

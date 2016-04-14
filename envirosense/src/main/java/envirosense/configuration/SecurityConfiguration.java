@@ -19,7 +19,7 @@ import com.allanditzel.springframework.security.web.csrf.CsrfTokenResponseHeader
 import envirosense.service.UserDetailsAuthService;
 
 /**
- * @author Francis Agyapong <francis.agyapong@edu.sait.ca>
+ * Security configuration
  */
 @Configuration
 @EnableWebSecurity

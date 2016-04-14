@@ -2,7 +2,7 @@ package envirosense.model;
 
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,8 +18,6 @@ import javax.persistence.Table;
  * depends on the modifier.
  * 
  * @see envirosense.model.ConditionModifier
- * 
- * @author Francis Agyapong <francis.agyapong@edu.sait.ca>
  */
 @Entity
 @Table(name = "condition_time")
@@ -39,7 +37,7 @@ public class ConditionTime implements Serializable {
 	private boolean saturday;
 	
 	@Column(name = "date_time")
-	private Date dateTime;
+	private Timestamp dateTime;
 	
 	@Column(name = "all_hours")
 	private boolean allHours;
@@ -48,6 +46,19 @@ public class ConditionTime implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private ConditionModifier timeCheck;
 	
+	/**
+	 * Creates a new condition time using the specified parameters
+	 * @param sunday Sunday check
+	 * @param monday Monday check
+	 * @param tuesday Tuesday check
+	 * @param wednesday Wednesday check
+	 * @param thursday Thursday check
+	 * @param friday Friday check
+	 * @param saturday Saturday check
+	 * @param dateTime When to check
+	 * @param allHours Check at all hours
+	 * @param timeCheck Time modifier
+	 */
 	public ConditionTime(
 		boolean sunday,
 		boolean monday,
@@ -56,7 +67,7 @@ public class ConditionTime implements Serializable {
 		boolean thursday,
 		boolean friday,
 		boolean saturday,
-		Date dateTime,
+		Timestamp dateTime,
 		boolean allHours,
 		ConditionModifier timeCheck
 	) {
@@ -108,7 +119,7 @@ public class ConditionTime implements Serializable {
 		return saturday;
 	}
 
-	public Date getDateTime() {
+	public Timestamp getDateTime() {
 		return dateTime;
 	}
 
@@ -152,7 +163,7 @@ public class ConditionTime implements Serializable {
 		this.saturday = saturday;
 	}
 
-	public void setDateTime(Date dateTime) {
+	public void setDateTime(Timestamp dateTime) {
 		this.dateTime = dateTime;
 	}
 

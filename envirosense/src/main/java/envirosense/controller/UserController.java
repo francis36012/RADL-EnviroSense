@@ -165,8 +165,8 @@ public class UserController {
     }
     
     /**
-     * TODO: Documentation
-     * @return
+     * Controller for getting and showing all users
+     * @return All users in the system
      */
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ModelAndView getAllUsers() {

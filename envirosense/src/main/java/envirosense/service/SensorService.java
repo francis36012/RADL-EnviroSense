@@ -10,9 +10,6 @@ import envirosense.model.Sensor;
 import envirosense.model.SensorType;
 import envirosense.repository.SensorRepsitory;
 
-/**
- * @author Francis Agyapong
- */
 @Service
 public class SensorService {
 	@Autowired

@@ -58,7 +58,7 @@ public interface MotionRepository extends JpaRepository<Motion, SensorDataPK> {
 	/**
 	 * Retrieves all motion data that was read in the room with the ID specified
 	 * 
-	 * @param sensorId The ID of the room in which the data was read
+	 * @param roomId The ID of the room in which the data was read
 	 * @return A list of motion data that satisfy the conditions outlined above
 	 */ @Query(value = "SELECT * FROM motion m JOIN sensor s ON s.id = m.sensor_id WHERE s.room_id = ?1", nativeQuery = true)
 	List<Motion> findByRoomId(long roomId);
@@ -76,6 +76,7 @@ public interface MotionRepository extends JpaRepository<Motion, SensorDataPK> {
 
 	/**
 	 * Retrieves the latest motion data stored in the database.
+	 * @param sensorId The ID of the room in which the data was read
 	 * @return A List of motion data that satisfy the conditions given above.
 	 */
 	@Query(
