@@ -23,8 +23,8 @@ public class EventHandler {
 	@Autowired
 	EventRepository eventRepository;
 	
-	@Autowired
-	EmailNotifier emailNotifier;
+	//@Autowired
+	//EmailNotifier emailNotifier;
 	
 	@Autowired
 	SlackNotifier slackNotifier;
@@ -79,7 +79,7 @@ public class EventHandler {
 		if (event.isUsePhone()) {
 		}
 		if (event.isUseEmail()) {
-			result = emailNotifier.sendMessage(user, event.getMessage());
+			//result = emailNotifier.sendMessage(user, event.getMessage());
 		}
 		return result;
 	}

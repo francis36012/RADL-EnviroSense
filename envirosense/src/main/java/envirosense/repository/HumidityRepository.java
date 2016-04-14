@@ -90,7 +90,7 @@ public interface HumidityRepository extends JpaRepository<Humidity, SensorDataPK
 	 * @return A List of humidity data that satisfy the conditions given above.
 	 */
 	@Query(
-		value = "SELECT * FROM humidity WHERE (sensor_id, timestamp) IN (SELECT sensor_id, timestamp FROM humidity GROUP BY sensor_id HAVING MAX(timestamp))",
+		value = "SELECT sensor_id, data, MAX(timestamp) AS timestamp FROM humidity GROUP BY sensor_id",
 		nativeQuery = true
 	)
 	List<Humidity> findLatest();
