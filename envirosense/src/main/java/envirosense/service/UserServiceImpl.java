@@ -71,17 +71,17 @@ public class UserServiceImpl implements UserService {
 		if (dtoFirstname != null && !dtoFirstname.equals("")) {
 			dbUser.setFirstname(dtoFirstname);
 		}
-		if (dtoLastname != null && !dtoFirstname.equals("")) {
+		if (dtoLastname != null && !dtoLastname.equals("")) {
 			dbUser.setLastname(dtoLastname);
 		}
-		if (dtoPassword != null && !dtoFirstname.equals("")) {
+		if (dtoPassword != null && !dtoPassword.equals("")) {
 			dbUser.setSalt(byteToHex(generateRandom(32)));
 			dbUser.setPassword(passwordEncoder.encodePassword(dtoPassword, dbUser.getSalt()));
 		}
-		if (dtoPhone != null && !dtoFirstname.equals("")) {
+		if (dtoPhone != null && !dtoPhone.equals("")) {
 			dbUser.setPhone(dtoPhone);
 		}
-		if (dtoSlack != null && !dtoFirstname.equals("")) {
+		if (dtoSlack != null && !dtoSlack.equals("")) {
 			dbUser.setSlackId(dtoSlack);
 		}
 		dbUser.setEnabled(enabled);

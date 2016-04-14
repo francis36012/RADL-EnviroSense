@@ -87,7 +87,7 @@ public interface RaBluetoothRepository extends JpaRepository<ReelyActiveBluetoot
 	 * @return A List of presence data that satisfy the conditions given above.
 	 */
 	@Query(
-		value = "SELECT sensor_id, beacon_id, rssi, MAX(timestamp) AS timestamp FROM ra_bluetooth GROUP BY sensor_id",
+		value = "SELECT sensor_id, beacon_id, rssi, timestamp FROM ra_bluetooth WHERE (sensor_id, timestamp) IN (select sensor_id, MAX(timestamp) FROM ra_bluetooth GROUP BY sensor_id)",
 		nativeQuery = true
 	)
 	List<ReelyActiveBluetooth> findLatest();
