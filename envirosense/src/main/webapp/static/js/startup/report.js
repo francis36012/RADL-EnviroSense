@@ -59,11 +59,11 @@ function formDefaultValues() {
 	var today = new Date();
 	var lastWeek = new Date(new Date(today).setDate(today.getDate() - 7));
 	
-	var dateRegex = /:\d{2}.\d{3}Z/;
+	var dateRegex = /T|Z|[.]\d{3}/g;
 	var fromDate = reportForm.fromDate;
-	fromDate.value = lastWeek.toISOString().split(dateRegex)[0];
+	fromDate.value = lastWeek.toISOString().replace(/T|Z|[.]\d{3}/g, " ");
 	var toDate = reportForm.toDate;
-	toDate.value = today.toISOString().split(dateRegex)[0];
+	toDate.value = today.toISOString().replace(/T|Z|[.]\d{3}/g, " ");
 }
 
 /**

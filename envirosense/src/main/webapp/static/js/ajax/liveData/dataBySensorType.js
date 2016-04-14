@@ -244,6 +244,6 @@ function loadDataBySensorType(jsonObject, domElement) {
 	roomDescription.appendChild(toAppend);
 	
 	toAppend = small.cloneNode();
-	toAppend.appendChild(document.createTextNode(getReadableDateString(jsonElement.values.timestamp.replace(/T|Z/g, " "))));
+	toAppend.appendChild(document.createTextNode(getReadableDateString(jsonElement.values.timestamp.replace(/T|Z|[.]\d{3}/g, " "))));
 	sensorTime.appendChild(toAppend);
 }

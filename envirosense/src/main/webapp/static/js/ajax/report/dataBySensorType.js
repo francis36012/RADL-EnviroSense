@@ -9,10 +9,23 @@ function getDataBySensorType(formElement) {
 	 * create a date object, it's returning NaN.
 	 */
 	var sensorType = getSensorTypeByName(formElement.dataType.value);
-	var startTime = formElement.fromDate.value.replace(/T|Z/g, " ");
-	var endTime = formElement.toDate.value.replace(/T|Z/g, " ");
+	var startTime = formElement.fromDate.value.replace(/T|Z|[.]\d{3}/g, " ");
+	var endTime = formElement.toDate.value.replace(/T|Z|[.]\d{3}/g, " ");
 	var buttonLoader = formElement.submitButton;
 	
+	/*
+	 * Chrome is very flexible when instantiating date objects. One of the main
+	 * problems with other browsers, most notably Firefox, is that you can only
+	 * construct a date object in a specific format; yyyy-mm-ddThh:mm:ssZ. The
+	 * conflict with Firfox and Chrome in terms of this issue is that when 
+	 * Firfox construct a date object based on this date format, it treats it
+	 * in the browser's local time. In Chrome on the other hand, it treats it
+	 * as a GST and the hour values are completely offset, meaning that 
+	 * there must be a distinction between Firfox and Chrome, and convert the 
+	 * time accordingly.
+	 * 
+	 * For right now, we are in compliance with Chrome.
+	 */
 	startTime = getDateString(new Date(startTime));
 	endTime = getDateString(new Date(endTime));
 	
@@ -265,7 +278,7 @@ function loadDataBySensorType(jsonObject, domElement) {
 		
 		for (var index = 0; index < jsonObject.values.length; index++) {
 			collapseContainer.appendChild(createNode("br", null, null));
-			collapseContainer.appendChild(document.createTextNode(new Date(jsonObject.values[index]["timestamp"]) + " - "));
+			collapseContainer.appendChild(document.createTextNode(new Date(jsonObject.values[index]["timestamp"].replace(/T|Z|[.]\d{3}/g, " ")) + " - "));
 			collapseContainer.appendChild(document.createTextNode(jsonObject.values[index]["data"]));
 		}
 		
@@ -280,7 +293,7 @@ function loadDataBySensorType(jsonObject, domElement) {
 function generateChartBySensorType(jsonObject, domElement, sensorType) {
 	var rawData = [];
 	for (var index = 0; index < jsonObject.values.length; index++) {
-		rawData.push([new Date(jsonObject.values[index]["timestamp"].replace(/T|Z/g, " ")), jsonObject.values[index]["data"]]);
+		rawData.push([new Date(jsonObject.values[index]["timestamp"].replace(/T|Z|[.]\d{3}/g, " ")), jsonObject.values[index]["data"]]);
 	}
 	if (sensorType === "DR") {
 		google.charts.setOnLoadCallback(function () {
@@ -408,7 +421,7 @@ function generateChartBySensorType(jsonObject, domElement, sensorType) {
 		
 		for (var index = 0; index < jsonObject.values.length; index++) {
 			collapseContainer.appendChild(createNode("br", null, null));
-			collapseContainer.appendChild(document.createTextNode(new Date(jsonObject.values[index]["timestamp"]) + " - "));
+			collapseContainer.appendChild(document.createTextNode(new Date(jsonObject.values[index]["timestamp"].replace(/T|Z|[.]\d{3}/g, " ")) + " - "));
 			collapseContainer.appendChild(document.createTextNode(jsonObject.values[index]["data"]["rssi"]));
 		}
 		
@@ -428,7 +441,7 @@ function generateChartBySensorType(jsonObject, domElement, sensorType) {
 		
 		for (var index = 0; index < jsonObject.values.length; index++) {
 			collapseContainer.appendChild(createNode("br", null, null));
-			collapseContainer.appendChild(document.createTextNode(new Date(jsonObject.values[index]["timestamp"]) + " - "));
+			collapseContainer.appendChild(document.createTextNode(new Date(jsonObject.values[index]["timestamp"].replace(/T|Z|[.]\d{3}/g, " ")) + " - "));
 			collapseContainer.appendChild(document.createTextNode(jsonObject.values[index]["data"]));
 		}
 		
