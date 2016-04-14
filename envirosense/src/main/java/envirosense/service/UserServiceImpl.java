@@ -66,20 +66,20 @@ public class UserServiceImpl implements UserService {
 		String dtoSlack = userDTO.getSlackId();
 		boolean enabled = userDTO.isEnabled();
 
-		if (dtoFirstname != null) {
+		if (dtoFirstname != null && !dtoFirstname.equals("")) {
 			dbUser.setFirstname(dtoFirstname);
 		}
-		if (dtoLastname != null) {
+		if (dtoLastname != null && !dtoFirstname.equals("")) {
 			dbUser.setLastname(dtoLastname);
 		}
-		if (dtoPassword != null) {
+		if (dtoPassword != null && !dtoFirstname.equals("")) {
 			dbUser.setSalt(byteToHex(generateRandom(32)));
 			dbUser.setPassword(passwordEncoder.encodePassword(dtoPassword, dbUser.getSalt()));
 		}
-		if (dtoPhone != null) {
+		if (dtoPhone != null && !dtoFirstname.equals("")) {
 			dbUser.setPhone(dtoPhone);
 		}
-		if (dtoSlack != null) {
+		if (dtoSlack != null && !dtoFirstname.equals("")) {
 			dbUser.setSlackId(dtoSlack);
 		}
 		dbUser.setEnabled(enabled);
