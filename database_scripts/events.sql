@@ -30,7 +30,7 @@ VALUES
 -- condition_time 2
 INSERT INTO envirosense.condition_time
 VALUES
-	(2, b'1', b'1', b'1', b'1', b'1', b'1', b'1', '2016-02-29 19:00:00', b'1', 'GE');
+	(2, b'1', b'1', b'1', b'1', b'1', b'1', b'1', '2016-02-29 19:00:00', b'0', 'GE');
 
 -- Motion detected by motion sensor 3 (server room), 12, and 24 (working area)
 -- condition 1

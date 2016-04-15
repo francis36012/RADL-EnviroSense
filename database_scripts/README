@@ -1,0 +1,9 @@
+The SQL scripts should be executed in the following order:
+1. setup.sql
+2. tables.sql
+
+If you want the test data, the following scripts should be executed (after the ones above):
+1. testusers.sql
+2. roomsAndSensors.sql
+3. data.sql
+4. events.sql
