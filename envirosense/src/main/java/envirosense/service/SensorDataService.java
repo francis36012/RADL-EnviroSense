@@ -3,8 +3,10 @@ package envirosense.service;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,6 +61,11 @@ public class SensorDataService {
 	
 	@Autowired
 	RaBluetoothRepository raRepository;
+	
+	// This is to speed up room lookup when fetching data. Not the best solution
+	// A better solution will be to restructure the data classes to allow hibernate to optimize
+	// the queries
+	private Map<Long, Room> roomInfoCache = new HashMap<>();
 
 	/**
 	 * Retrieves all data read in the room with the specified ID
@@ -528,11 +535,20 @@ public class SensorDataService {
 	 * @return A two element array for the name and description of the room if found, or empty if not.
 	 */
 	private String[] getRoomInfo(long sensorId)  {
+		Room room;
+
+		room = roomInfoCache.get(sensorId);
+		if (room != null) {
+			return new String[]{room.getName(), room.getDescription()};
+		}
+
 		Sensor sensor = sensorRepository.findOne(sensorId);
 		if (sensor == null) {
 			return new String[]{};
 		}
-		Room room = sensor.getRoom();
+		room = sensor.getRoom();
+
+		roomInfoCache.put(sensorId, room);
 		return new String[]{room.getName(), room.getDescription()};
 	}
 }
