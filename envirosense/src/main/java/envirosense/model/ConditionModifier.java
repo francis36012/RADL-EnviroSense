@@ -36,4 +36,23 @@ public enum ConditionModifier {
 	public String getConditionModifier() {
 		return modifier;
 	}
+	
+	public String getModifierSymbol() {
+		switch (this) {
+			case EQ:
+				return "=";
+			case GE:
+				return ">=";
+			case GT:
+				return ">";
+			case LE:
+				return "<=";
+			case LT:
+				return "<";
+			case NE:
+				return "!=";
+			default:
+				return "";
+		}
+	}
 }

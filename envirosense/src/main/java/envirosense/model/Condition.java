@@ -252,4 +252,85 @@ public class Condition implements Serializable {
 		}
 		return false;
 	}
+	
+	@Override
+	public String toString() {
+		SensorType sType = sensor.getSensorType();
+		
+		if (sType == SensorType.TE) {
+			double data = Double.parseDouble(value);
+			if (conditionTime.isAllHours()) {
+				return String.format(
+					"temperature in %s is %s %.2f",
+					sensor.getRoom().getName(),
+					modifier.getModifierSymbol(),
+					data
+				);
+			} else {
+				return String.format(
+					"temperature in %s is %s %.2f and time %s",
+					sensor.getRoom().getName(),
+					modifier.getModifierSymbol(),
+					data,
+					conditionTime.toString()
+				);
+			}
+
+		} else if (sType == SensorType.HU) {
+			double data = Double.parseDouble(value);
+			if (conditionTime.isAllHours()) {
+				return String.format(
+					"humidity in %s is %s %.2f",
+					sensor.getRoom().getName(),
+					modifier.getModifierSymbol(),
+					data,
+					conditionTime.toString()
+				);
+			} else {
+				return String.format(
+					"humidity in %s is %s %.2f and time %s",
+					sensor.getRoom().getName(),
+					modifier.getModifierSymbol(),
+					data,
+					conditionTime.toString()
+				);
+				
+			}
+		} else if (sType == SensorType.MO) {
+			boolean data = Boolean.parseBoolean(value);
+			if (conditionTime.isAllHours()) {
+				return String.format(
+					"motion %s in %s",
+					(data == true) ? "detected" : "not detected",
+					sensor.getRoom().getName()
+				);
+			} else {
+				return String.format(
+					"motion %s in %s and time %s",
+					(data == true) ? "detected" : "not detected",
+					sensor.getRoom().getName(),
+					conditionTime.toString()
+				);
+			}
+		} else if (sType == SensorType.DR) {
+			boolean data = Boolean.parseBoolean(value);
+			if (conditionTime.isAllHours()) {
+				return String.format(
+					"door is %s in %s",
+					(data == true) ? "open" : "closed",
+					sensor.getRoom().getName(),
+					conditionTime.toString()
+				);
+			} else {
+				return String.format(
+					"door is %s in %s and time %s",
+					(data == true) ? "open" : "closed",
+					sensor.getRoom().getName(),
+					conditionTime.toString()
+				);
+			}
+		} else if (sType == SensorType.RA) {
+		}
+		return "";
+	}
 }

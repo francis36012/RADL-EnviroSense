@@ -174,4 +174,12 @@ public class ConditionTime implements Serializable {
 	public void setTimeCheck(ConditionModifier timeCheck) {
 		this.timeCheck = timeCheck;
 	}
+	
+	@Override
+	public String toString() {
+		if (allHours) {
+			return "";
+		}
+		return String.format("%s %s", timeCheck.getModifierSymbol(), dateTime.toString());
+	}
 }
