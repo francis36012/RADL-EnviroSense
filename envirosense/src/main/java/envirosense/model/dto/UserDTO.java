@@ -16,7 +16,6 @@ public class UserDTO {
 	private String password;
 	private boolean enabled;
 	private Set<Role> roles;
-	private Set<Event> events;
 
 	public UserDTO() {
 	}
@@ -30,7 +29,6 @@ public class UserDTO {
 		this.slackId = slackId;
 		this.password = password;
 		this.enabled = enabled;
-		this.events = events;
 		this.roles = roles;
 	}
 
@@ -46,7 +44,6 @@ public class UserDTO {
 		this.slackId = user.getSlackId();
 		this.password = user.getPassword();
 		this.enabled = user.getEnabled();
-		this.events = user.getEvents();
 		this.roles = user.getRoles();
 	}
 
@@ -82,10 +79,6 @@ public class UserDTO {
 		return roles;
 	}
 
-	public Set<Event> getEvents() {
-		return events;
-	}
-
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}
@@ -118,10 +111,6 @@ public class UserDTO {
 		this.roles = roles;
 	}
 
-	public void setEvents(Set<Event> events) {
-		this.events = events;
-	}
-	
 	public static UserDTO mapNoPassword(final User user) {
 		UserDTO userDTO = new UserDTO();
 		userDTO.email = user.getEmail();
@@ -130,7 +119,6 @@ public class UserDTO {
 		userDTO.phone = user.getPhone();
 		userDTO.slackId = user.getSlackId();
 		userDTO.enabled = user.getEnabled();
-		userDTO.events = user.getEvents();
 		userDTO.roles = user.getRoles();
 		
 		return userDTO;

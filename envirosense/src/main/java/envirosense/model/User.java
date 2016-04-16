@@ -78,11 +78,6 @@ public class User {
 			   inverseJoinColumns = {@JoinColumn(name = "user_role")})
 	private Set<Role> roles;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "user_event", joinColumns = {@JoinColumn(name = "user_email")},
-			   inverseJoinColumns = {@JoinColumn(name = "event_id")})
-	private Set<Event> events;
-
 	/**
 	 * Creates a user object
 	 * 
@@ -190,10 +185,6 @@ public class User {
 		return enabled;
 	}
 
-	public Set<Event> getEvents() {
-		return events;
-	}
-
 	public Set<Role> getRoles() {
 		return roles;
 	}
@@ -266,10 +257,6 @@ public class User {
 		this.salt = salt;
 	}
 	
-	public void setEvents(Set<Event> events) {
-		this.events = events;
-	}
-
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}

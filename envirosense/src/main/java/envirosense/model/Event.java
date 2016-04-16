@@ -37,12 +37,20 @@ public class Event implements Serializable {
 	
 	private boolean active;
 
-	@ManyToMany(mappedBy = "events", fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(
+		name = "user_event",
+		joinColumns = {@JoinColumn(name = "event_id")},
+		inverseJoinColumns = {@JoinColumn(name = "user_email")}
+	)
 	private Set<User> owners;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "event_condition", joinColumns = {@JoinColumn(name = "event_id")},
-			   inverseJoinColumns = {@JoinColumn(name = "condition_id")})
+	@JoinTable(
+		name = "event_condition",
+		joinColumns = {@JoinColumn(name = "event_id")},
+		inverseJoinColumns = {@JoinColumn(name = "condition_id")}
+	)
 	private Set<Condition> conditions;
 
 	public Event(long id, String name, String message, boolean useSlack, boolean useEmail,
