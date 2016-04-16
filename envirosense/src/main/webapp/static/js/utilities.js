@@ -18,7 +18,6 @@ if (window.google) {
  * the creation of DOM Elements, and getting Sensor Name by ID.
  * 
  */
-
 function createNode(tagName, className, attributeValues) {
 	var newElement = document.createElement(tagName);
 
@@ -27,7 +26,7 @@ function createNode(tagName, className, attributeValues) {
 			index < className.length;
 			index++) {
 				newElement.classList.add(className[index]);
-			}
+		}
 	}
 
 	if (attributeValues !== undefined && attributeValues !== null)
@@ -260,15 +259,13 @@ function createContainerBySensorType() {
 	var sensorTime = createNode("div", ["sensorTime"], null);
 	var sensorValue = createNode("div", ["sensorValue"], null);
 	
-	var horizontalLine = createNode("hr", null, null);
+	roomName.appendChild(roomDescription);
 	
 	sensorData.appendChild(sensorValue);
 	sensorData.appendChild(sensorId);
 	sensorData.appendChild(sensorName);
 	sensorData.appendChild(sensorType);
 	sensorData.appendChild(roomName);
-	sensorData.appendChild(roomDescription);
-	sensorData.appendChild(horizontalLine);
 	sensorData.appendChild(sensorTime);
 	panelBody.appendChild(sensorData);
 	panelDiv.appendChild(panelHead);
@@ -364,14 +361,13 @@ function createContainerByRoomId() {
 	var roomName = createNode("div", ["roomName"], null);
 	var roomDescription = createNode("div", ["roomDescription"], null);
 	
-	var horizontalLine = createNode("hr", null, null);
+	roomName.appendChild(roomDescription);
+	
 	
 	sensorData.appendChild(sensorId);
 	sensorData.appendChild(sensorName);
 	sensorData.appendChild(sensorType);
 	sensorData.appendChild(roomName);
-	sensorData.appendChild(roomDescription);
-	sensorData.appendChild(horizontalLine);
 	sensorData.appendChild(sensorTime);
 	sensorData.appendChild(sensorValue);
 	panelBody.appendChild(sensorData);
@@ -607,4 +603,12 @@ function getDataTypeBySensorType(sensorType) {
 	}
 	
 	return dataType;
+}
+
+function displayLoader() {
+	
+}
+
+function hideLoader() {
+	
 }

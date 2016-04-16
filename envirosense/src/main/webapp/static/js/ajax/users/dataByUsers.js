@@ -70,48 +70,37 @@ function onReadyStateChangeByUsers(xmlHttp, formElement, laddaButton) {
 
 			if (xmlHttp.readyState === 4) {
 				laddaButton.setProgress(1);
-				
-				if (formElement.dataChoice.value === "delete" || formElement.dataChoice.value === "create") {
-					window.location.reload();
-				}
-				
-				laddaButton.setProgress(1);
-				setTimeout(function() {
-					laddaButton.stop();
-				}, 500);
+				window.location.reload();
 			}
-		} else if (xmlHttp.status === 404) {
-			var errorPanel = document.getElementById("errorMessage");
-			if (!errorPanel) {
-				errorPanel= document.createPanel();
-				errorPanel.setAttribute("id", "errorMessage");
-			}
-			
-			var errorMessage = createNode("div", ["well", "well-sm"], null);
-			errorMessage.innerHTML = "Something went wrong. 404 Not found.";
-			errorPanel.getElementsByClassName("panel-body")[0].appendChild(errorMessage);
-			document.body.appendChild(errorPanel);
-			
-			laddaButton.setProgress(1);
+		} else if (xmlHttp.status !== 0) {
+			laddaButton.setProgress(0);
 			setTimeout(function() {
 				laddaButton.stop();
-			}, 500);
-		} else if (xmlHttp.statux === 500) {
-			var errorPanel = document.getElementById("errorMessage");
-			if (!errorPanel) {
-				errorPanel= document.createPanel();
-				errorPanel.setAttribute("id", "errorMessage");
+			}, 300);
+			
+			var errorTitle = document.getElementById("popupMessage").getElementsByClassName("modal-title")[0];
+			errorTitle.innerHTML = "";
+			errorTitle.appendChild(document.createTextNode("Something went wrong..."));
+			
+			var errorMessage = document.getElementsByClassName("modal-body")[0];
+			errorMessage.innerHTML = "";
+			errorMessage.appendChild(document.createTextNode("Please contact administrator."));
+			
+			var toAppend = createNode("h3", ["well", "well-sm", "text-center"], null);
+			switch(xmlHttp.status) {
+				case 403:
+					toAppend.appendChild(document.createTextNode("Status 403 - Forbidden"));
+					break;
+				case 404:
+					toAppend.appendChild(document.createTextNode("Status 404 - Not Found"));
+					break;
+				case 500:
+					toAppend.appendChild(document.createTextNode("Status 500 - Internal Server Error"));
+					break;
 			}
-			
-			var errorMessage = createNode("div", ["well", "well-sm"], null);
-			errorMessage.innerHTML = "Something went wrong. Interval server error. Please contact administrator.";
-			errorPanel.getElementsByClassName("panel-body")[0].appendChild(errorMessage);
-			document.body.appendChild(errorPanel);
-			
-			laddaButton.setProgress(1);
-			setTimeout(function() {
-				laddaButton.stop();
-			}, 500);
+
+			errorMessage.appendChild(toAppend);
+			$("#popupMessage").modal("show");
 		}
 	} catch (errorEvent) {
 		throw errorEvent;

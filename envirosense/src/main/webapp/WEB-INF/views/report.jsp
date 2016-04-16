@@ -103,7 +103,9 @@
 			</div>
 			</div>
 		</div>
-
+							
+		<c:import url="/static/common/popup.jsp" />
+		
 		<!-- Javascript : Google Charts -->
 		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
@@ -115,9 +117,6 @@
 
 		<!--Javasciprt : AJAX By Sensor Type -->
 		<script type="text/javascript" src="<c:url value='/static/js/ajax/report/dataBySensorType.js' />"></script>
-
-		<!--Javasciprt : AJAX By All Sensors -->
-		<script type="text/javascript" src="<c:url value='/static/js/ajax/report/dataByAllSensors.js' />"></script>
 		
 		<!--Javasciprt : AJAX By All Rooms -->
 		<script type="text/javascript" src="<c:url value='/static/js/ajax/report/dataByRoomId.js' />"></script>

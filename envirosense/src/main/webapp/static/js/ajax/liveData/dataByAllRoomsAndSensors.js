@@ -82,10 +82,19 @@ function readyStateChangeByRoomsAndSensors(xmlHttp, formElement) {
 				}
 				runSlick();
 			}
-		} else if (xmlHttp.status === 404) {
-			//Can't connect
+		} else if (xmlHttp.status !== 0) {
+			/*
+			 * Having to reach this line of code means that there is something 
+			 * wrong that happenned that is unexpected.
+			 */
 		}
 	} catch (errorEvent) {
+		/*
+		 * This error is most likely because of the race condition on which
+		 * AJAX call gets the resource. Whenever a room and sensor makes an
+		 * AJAX call at the same time, it's a race on who would get the DOM
+		 * elements and fill it in with their data.
+		 */
 		throw errorEvent;
 	}
 }

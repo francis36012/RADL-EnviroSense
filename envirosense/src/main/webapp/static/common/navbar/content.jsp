@@ -18,15 +18,15 @@
 		<li>
 			<a href="#adminLinks" data-toggle="collapse">Admin</a>
 			<div id="adminLinks" class="collapse">
-				<a href="<c:url value='/admin/events' />"><h4>Events</h4></a>
-				<a href="<c:url value='/admin/users/all' />"><h4>Users</h4></a>
+				<a href="<c:url value='/admin/events' />"><h5>Events</h5></a>
+				<a href="<c:url value='/admin/users/all' />"><h5>Users</h5></a>
 			</div>
 			<img src="<c:url value='/static/images/Elements/Divider.png' />" class="img-responsive" />
 		</li>
 		
 		<li>
 			<a href="<c:url value='javascript:{}' />" onclick="document.getElementById('formLogout').submit();">
-				<h4>Logout</h4>
+				Logout
 			</a>
 		</li>
 	</ul>

@@ -38,6 +38,7 @@ body * {
 }
 
 #sidebar-wrapper .sidebar-nav > li:last-child a {
+	font-size: 25px;
 	padding: .1em 25px .1em 0;
 }
 
@@ -77,7 +78,7 @@ body * {
 }
 
 .slick-dots {
-	opacity: 0.3;
+	
 }
 
 #slickSlides {
@@ -86,10 +87,34 @@ body * {
 }
 
 .slick-prev:before, .slick-next:before {
-	color: #C1C1C1;
+	color: #000000;
 }
 
 /* OTHER ELEMENTS */
+.page-header h1 {
+	font-size: 4em;
+}
+h1 {
+	font-size: 3.5em;
+	font-weight: bold;
+}
+
+h2 {
+	font-size: 3.2em;
+}
+
+h3 {
+	font-size: 2em;
+}
+
+h4 {
+	font-size: 1em;
+}
+
+h5 {
+	font-size: .75em;
+}
+
 .hidden {
 	display: none;
 }

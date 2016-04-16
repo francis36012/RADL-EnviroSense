@@ -46,7 +46,7 @@
 							<c:when test="${events.size() > 0}">
 								<div class="panel panel-default">
 									<div class="panel-heading text-center">
-										Events
+										You are notified by the following events:
 									</div>
 
 									<div class="panel-body">
@@ -88,6 +88,8 @@
 			</div>
 		</div>
 	</div>
+								
+	<c:import url="/static/common/popup.jsp" />
 						
 	<!--Javasciprt : AJAX Controller -->
 	<script type="text/javascript" src="<c:url value='/static/js/ajax/ajaxController.js' />"></script>

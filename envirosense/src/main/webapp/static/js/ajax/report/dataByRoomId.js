@@ -64,13 +64,11 @@ function readyStateChangeByRoomId(xmlHttp, laddaButton) {
 					
 					if (jsonObject.length > dataContainer.length) {
 						while (jsonObject.length > dataContainer.length) {
-							$('.single-items').slick("slickAdd", createContainerByRoomId());
+							$('.single-items')[0].appendChild(createContainerBySensorType());
 						}
 					} else if (jsonObject.length < dataContainer.length) {
 						while (dataContainer.length > jsonObject.length) {
-							if (!$('.single-items').slick("slickRemove", false)) {
-								dataContainer[0].parentNode.parentNode.remove();
-							}
+							dataContainer[0].parentNode.parentNode.remove();
 						}
 					}
 					
@@ -105,33 +103,40 @@ function readyStateChangeByRoomId(xmlHttp, laddaButton) {
 					 */
 				}
 			}
-		} else if (xmlHttp.status === 404) {
+		} else if (xmlHttp.status !== 0) {
 			/*
-			 * Status 404 was returned. We create a panel with the error
-			 * message "Something went wrong. Please check connection to
-			 * server."
+			 * Having to reach this line of code means that there is something 
+			 * wrong that happenned that is unexpected.
 			 */
 			
-			laddaButton.setProgress(1);
+			laddaButton.setProgress(0);
 			setTimeout(function() {
 				laddaButton.stop();
-			}, 500);
+			}, 300);
 			
-		} else if (xmlHttp.status === 204) {
-			/*
-			 * No data was found. We create a panel with the error message
-			 * "No data was found with that criteria."
-			 */
-			while (dataContainer.length > 0) {
-				if (!$('.single-items').slick("slickRemove", false)) {
-					dataContainer[0].parentNode.parentNode.remove();
-				}
+			var errorTitle = document.getElementById("popupMessage").getElementsByClassName("modal-title")[0];
+			errorTitle.innerHTML = "";
+			errorTitle.appendChild(document.createTextNode("Something went wrong..."));
+			
+			var errorMessage = document.getElementsByClassName("modal-body")[0];
+			errorMessage.innerHTML = "";
+			errorMessage.appendChild(document.createTextNode("Please contact administrator."));
+			
+			var toAppend = createNode("h3", ["well", "well-sm", "text-center"], null);
+			switch(xmlHttp.status) {
+				case 403:
+					toAppend.appendChild(document.createTextNode("Status 403 - Forbidden"));
+					break;
+				case 404:
+					toAppend.appendChild(document.createTextNode("Status 404 - Not Found"));
+					break;
+				case 500:
+					toAppend.appendChild(document.createTextNode("Status 500 - Internal Server Error"));
+					break;
 			}
-			
-			laddaButton.setProgress(1);
-			setTimeout(function() {
-				laddaButton.stop();
-			}, 500);
+
+			errorMessage.appendChild(toAppend);
+			$("#popupMessage").modal("show");
 		}
 	} catch (errorEvent) {
 		setTimeout(function() {

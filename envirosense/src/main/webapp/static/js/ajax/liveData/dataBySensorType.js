@@ -70,38 +70,13 @@ function readyStateChangeBySensorType(xmlHttp, formElement) {
 						 */
 					}
 			}
-		} else if (xmlHttp.status === 404) {
-			/*
-			 * Status 404 was returned. We create a panel with the error
-			 * message "Something went wrong. Please check connection to
-			 * server."
-			 */
-			while (dataContainer.length > 1) {
-				if (!$("#" + sensorType).slick("slickRemove", false)) {
-					dataContainer[0].parentNode.parentNode.remove();
-				}
-			}
-			
-			var messagePanel = createContainerBySensorType();
-			var messageText = createNode("div", ["alert", "alert-warning"], null);
-			messageText.innerHTML = "Server responded with a 404 Not Found.";
-			var messageContainer = messagePanel.getElementsByClassName("sensorValue")[0];
-			messageContainer.appendChild(messageText);
-			
-			if (dataContainer.length === 1) {
-				dataContainer[0] = messagePanel;
-			} else {
-				$("#" + sensorType).slick("slickAdd", messagePanel);
-			}
 		} else if (xmlHttp.status === 204) {
 			/*
 			 * No data was found. We create a panel with the error message
 			 * "No data was found with that criteria."
 			 */
 			while (dataContainer.length > 1) {
-				if (!$("#" + sensorType).slick("slickRemove", false)) {
-					dataContainer[0].parentNode.parentNode.remove();
-				}
+				dataContainer[0].parentNode.parentNode.remove();
 			}
 			
 			var messagePanel = createContainerBySensorType();
@@ -115,6 +90,12 @@ function readyStateChangeBySensorType(xmlHttp, formElement) {
 			} else {
 				$("#" + sensorType).slick("slickAdd", messagePanel);
 			}
+			
+		} else if (xmlHttp.status !== 0) {
+			/*
+			 * Having to reach this line of code means that there is something 
+			 * wrong that happenned that is unexpected.
+			 */
 		}
 	} catch (errorEvent) {
 		/*
@@ -123,6 +104,7 @@ function readyStateChangeBySensorType(xmlHttp, formElement) {
 		 * AJAX call at the same time, it's a race on who would get the DOM
 		 * elements and fill it in with their data.
 		 */
+		throw errorEvent;
 	}
 }
 
@@ -219,25 +201,31 @@ function loadDataBySensorType(jsonObject, domElement) {
 	var roomDescription = domElement.getElementsByClassName("roomDescription")[0];
 	
 	var h1 = createNode("h1", ["text-center"], null);
-	var h4 = createNode("h4", ["text-center"], null);
-	var h5 = createNode("h5", ["text-center"], null);
-	var small = createNode("small", ["text-center"], null);
-	var well = createNode("div", ["well", "well-sm"], null);
+	var h3 = createNode("h3", ["text-center"], null);
+	var small = createNode("small", null, null);
 	var br = createNode("br", null, null);
 	var toAppend = null;
+	var subText = null;
 	
 	if (jsonElement.sensorType === "RA") {
-		toAppend = h1.cloneNode();
-		toAppend.appendChild(document.createTextNode(jsonElement.values.data.rssi));
+		var beforeDomain = jsonElement.values.data.userEmail.split("@")[0];
+		var afterDomain = jsonElement.values.data.userEmail.split("@")[1];
 		
-		var subText = small.cloneNode();
-		subText.appendChild(document.createTextNode(getDataTypeBySensorType(jsonElement.sensorType)));
+		toAppend = h1.cloneNode();
+		toAppend.appendChild(document.createTextNode(beforeDomain));
+		
+		subText = small.cloneNode();
+		subText.appendChild(document.createTextNode("@" + afterDomain));
 		toAppend.appendChild(subText);
 		toAppend.appendChild(br.cloneNode());
 		
-		var subText1 = h5.cloneNode();
-		subText1.appendChild(document.createTextNode(jsonElement.values.data.userEmail));
-		toAppend.appendChild(subText1);
+		subText = h3.cloneNode();
+		subText.appendChild(document.createTextNode(jsonElement.values.data.rssi));
+		toAppend.appendChild(subText);
+		
+		subText = small.cloneNode();
+		subText.appendChild(document.createTextNode(getDataTypeBySensorType(jsonElement.sensorType)));
+		toAppend.appendChild(subText);
 		
 		sensorValue.appendChild(toAppend);
 	} else {
@@ -251,19 +239,21 @@ function loadDataBySensorType(jsonObject, domElement) {
 		toAppend.appendChild(subText);
 	}
 	
-	
-	toAppend = h4.cloneNode();
-	toAppend.appendChild(document.createTextNode("Type: " + getSensorNameByType(jsonElement.sensorType)));
+	toAppend = h3.cloneNode();
+	toAppend.appendChild(document.createTextNode(getSensorNameByType(jsonElement.sensorType)));
+	sensorType.appendChild(createNode("hr", null, null));
 	sensorType.appendChild(toAppend);
 	
-	toAppend = h4.cloneNode();
-	toAppend.appendChild(document.createTextNode("Room: " + jsonElement.roomName));
-	roomName.appendChild(createNode("hr", null, null));
-	roomName.appendChild(toAppend);
+	toAppend = h3.cloneNode();
+	toAppend.appendChild(document.createTextNode(jsonElement.roomName));
 	
-	toAppend = well.cloneNode();
-	toAppend.appendChild(document.createTextNode(jsonElement.roomDescription));
-	roomDescription.appendChild(toAppend);
+	subText = small.cloneNode();
+	subText.appendChild(createNode("br", null, null));
+	subText.appendChild(document.createTextNode(jsonElement.roomDescription));
+	toAppend.appendChild(subText);
+	
+	roomName.appendChild(toAppend);
+	roomName.appendChild(createNode("hr", null, null));
 	
 	toAppend = small.cloneNode();
 	toAppend.appendChild(document.createTextNode(getReadableDateString(jsonElement.values.timestamp.replace(/T|Z|[.]\d{3}/g, " "))));

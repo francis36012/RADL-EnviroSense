@@ -72,6 +72,148 @@
 										</form>
 									</div>
 								</div>
+								
+								
+
+								<div class="panel panel-default">
+									<div class="panel-heading text-center">
+										Create User
+									</div>
+
+									<div class="panel-body">
+										<a href="#createUser" class="btn btn-default btn-block" data-toggle="collapse">
+											<span class="glyphicon glyphicon-plus"></span>
+										</a>
+
+
+										<form class="form userForm" role="form">
+											<div class="row">
+												<div class="col-xs-12">
+														<div id="createUser" class="collapse">
+															<br />
+
+															<fieldset class="fieldset form-group">
+																<div class="row">
+																	<div class="col-xs-12">
+																		<input type="text" name="firstname" class="form-control input-md" />
+																	</div>
+																</div>
+
+																<div class="row">
+																	<div class="col-xs-4 col-xs-offset-8 col-md-3 col-md-offset-9 text-muted text-right">
+																		First Name
+																	</div>
+																</div>
+															</fieldset>
+
+															<fieldset class="fieldset form-group">
+																<div class="row">
+																	<div class="col-xs-12">
+																		<input type="text" name="lastname" class="form-control input-md" />
+																	</div>
+																</div>
+
+																<div class="row">
+																	<div class="col-xs-4 col-xs-offset-8 col-md-3 col-md-offset-9 text-muted text-right">
+																		Last Name
+																	</div>
+																</div>
+															</fieldset>
+
+															<fieldset class="fieldset form-group">
+																<div class="row">
+																	<div class="col-xs-12">
+																		<input type="email" name="email" class="form-control input-md" />
+																	</div>
+																</div>
+
+																<div class="row">
+																	<div class="col-xs-4 col-xs-offset-8 col-md-3 col-md-offset-9 text-muted text-right">
+																		Email
+																	</div>
+																</div>
+															</fieldset>
+
+															<fieldset class="fieldset form-group">
+																<div class="row">
+																	<div class="col-xs-12">
+																		<input type="text" name="slackId" class="form-control input-md" />
+																	</div>
+																</div>
+
+																<div class="row">
+																	<div class="col-xs-4 col-xs-offset-8 col-md-3 col-md-offset-9 text-muted text-right">
+																		Slack
+																	</div>
+																</div>
+															</fieldset>
+
+															<fieldset class="fieldset form-group">
+																<div class="row">
+																	<div class="col-xs-12">
+																		<input type="text" name="phone" class="form-control input-md" />
+																	</div>
+																</div>
+
+																<div class="row">
+																	<div class="col-xs-4 col-xs-offset-8 col-md-3 col-md-offset-9 text-muted text-right">
+																		Phone
+																	</div>
+																</div>
+															</fieldset>
+
+															<fieldset class="fieldset form-group">
+																<div class="row">
+																	<div class="col-xs-12">
+																		<input type="password" name="password" class="form-control input-md" />
+																	</div>
+																</div>
+
+																<div class="row">
+																	<div class="col-xs-4 col-xs-offset-8 col-md-3 col-md-offset-9 text-muted text-right">
+																		Password
+																	</div>
+																</div>
+															</fieldset>
+
+															<fieldset>
+																<input type="checkbox" name="enabled" checked="checked" style="display:none" />
+															</fieldset>
+
+															<fieldset class="fieldset form-group">
+																<div class="row">
+																	<div class="col-xs-12">
+																		<div class="btn-group btn-group-justified">
+																			<a name="revert" class="btn btn-default btn-block ladda-button" 
+																				data-spinner-color="#333" 
+																				data-style="slide-down">
+																				Revert
+																			</a>
+
+																			<a name="create" class="btn btn-success btn-block ladda-button" 
+																				data-spinner-color="#333" 
+																				data-style="slide-down">
+																				Save
+																			</a>
+																		</div>
+																	</div>
+																</div>
+															</fieldset>
+
+															<div class="row">
+																<div class="col-xs-12">
+																	<a href="#createUser" class="btn btn-default btn-sm btn-block" data-toggle="collapse">
+																		<span class="glyphicon glyphicon-menu-up"></span>
+																	</a>
+																</div>
+															</div>
+														</div>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+
 
 								<div class="panel panel-default">
 									<div class="panel-heading text-center">
@@ -251,152 +393,14 @@
 								</div>
 							</c:otherwise>
 						</c:choose>
-								
-						<div class="panel panel-default">
-							<div class="panel-heading text-center">
-								Create User
-							</div>
-
-							<div class="panel-body">
-								<a href="#createUser" class="btn btn-default btn-block" data-toggle="collapse">
-									<span class="glyphicon glyphicon-plus"></span>
-								</a>
-
-
-								<form class="form userForm" role="form">
-									<div class="row">
-										<div class="col-xs-12">
-												<div id="createUser" class="collapse">
-													<br />
-															
-													<fieldset class="fieldset form-group">
-														<div class="row">
-															<div class="col-xs-12">
-																<input type="text" name="firstname" class="form-control input-md" />
-															</div>
-														</div>
-
-														<div class="row">
-															<div class="col-xs-4 col-xs-offset-8 col-md-3 col-md-offset-9 text-muted text-right">
-																First Name
-															</div>
-														</div>
-													</fieldset>
-
-													<fieldset class="fieldset form-group">
-														<div class="row">
-															<div class="col-xs-12">
-																<input type="text" name="lastname" class="form-control input-md" />
-															</div>
-														</div>
-
-														<div class="row">
-															<div class="col-xs-4 col-xs-offset-8 col-md-3 col-md-offset-9 text-muted text-right">
-																Last Name
-															</div>
-														</div>
-													</fieldset>
-
-													<fieldset class="fieldset form-group">
-														<div class="row">
-															<div class="col-xs-12">
-																<input type="email" name="email" class="form-control input-md" />
-															</div>
-														</div>
-
-														<div class="row">
-															<div class="col-xs-4 col-xs-offset-8 col-md-3 col-md-offset-9 text-muted text-right">
-																Email
-															</div>
-														</div>
-													</fieldset>
-
-													<fieldset class="fieldset form-group">
-														<div class="row">
-															<div class="col-xs-12">
-																<input type="text" name="slackId" class="form-control input-md" />
-															</div>
-														</div>
-
-														<div class="row">
-															<div class="col-xs-4 col-xs-offset-8 col-md-3 col-md-offset-9 text-muted text-right">
-																Slack
-															</div>
-														</div>
-													</fieldset>
-
-													<fieldset class="fieldset form-group">
-														<div class="row">
-															<div class="col-xs-12">
-																<input type="text" name="phone" class="form-control input-md" />
-															</div>
-														</div>
-
-														<div class="row">
-															<div class="col-xs-4 col-xs-offset-8 col-md-3 col-md-offset-9 text-muted text-right">
-																Phone
-															</div>
-														</div>
-													</fieldset>
-													
-													<fieldset class="fieldset form-group">
-														<div class="row">
-															<div class="col-xs-12">
-																<input type="password" name="password" class="form-control input-md" />
-															</div>
-														</div>
-
-														<div class="row">
-															<div class="col-xs-4 col-xs-offset-8 col-md-3 col-md-offset-9 text-muted text-right">
-																Password
-															</div>
-														</div>
-													</fieldset>
-													
-													<fieldset>
-														<input type="checkbox" name="enabled" checked="checked" style="display:none" />
-													</fieldset>
-													
-													<fieldset class="fieldset form-group">
-														<div class="row">
-															<div class="col-xs-12">
-																<div class="btn-group btn-group-justified">
-																	<a name="revert" class="btn btn-default btn-block ladda-button" 
-																		data-spinner-color="#333" 
-																		data-style="slide-down">
-																		Revert
-																	</a>
-
-																	<a name="create" class="btn btn-success btn-block ladda-button" 
-																		data-spinner-color="#333" 
-																		data-style="slide-down">
-																		Save
-																	</a>
-																</div>
-															</div>
-														</div>
-													</fieldset>
-
-													<div class="row">
-														<div class="col-xs-12">
-															<a href="#createUser" class="btn btn-default btn-sm btn-block" data-toggle="collapse">
-																<span class="glyphicon glyphicon-menu-up"></span>
-															</a>
-														</div>
-													</div>
-												</div>
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
-								
 					</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
+		
+		<c:import url="/static/common/popup.jsp" />
+		
 		<!--Javasciprt : Utilities -->
 		<script type="text/javascript" src="<c:url value='/static/js/utilities.js' />"></script>
 						

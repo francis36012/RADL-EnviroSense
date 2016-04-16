@@ -79,13 +79,11 @@ function readyStateChangeBySensorType(xmlHttp, laddaButton) {
 					
 					if (jsonObject.length > dataContainer.length) {
 						while (jsonObject.length > dataContainer.length) {
-							$('.single-items').slick("slickAdd", createContainerBySensorType());
+							$('.single-items')[0].appendChild(createContainerBySensorType());
 						}
 					} else if (jsonObject.length < dataContainer.length) {
 						while (dataContainer.length > jsonObject.length) {
-							if (!$('.single-items').slick("slickRemove", false)) {
-								dataContainer[0].parentNode.parentNode.remove();
-							}
+							dataContainer[0].parentNode.parentNode.remove();
 						}
 					}
 					
@@ -117,32 +115,62 @@ function readyStateChangeBySensorType(xmlHttp, laddaButton) {
 					}, 500);
 				}
 			}
-		} else if (xmlHttp.status === 404) {
-			/*
-			 * Status 404 was returned. We create a panel with the error
-			 * message "Something went wrong. Please check connection to
-			 * server."
-			 */
-			
-			setTimeout(function() {
-				laddaButton.stop();
-			}, 500);
 		} else if (xmlHttp.status === 204) {
 			/*
 			 * No data was found. We create a panel with the error message
 			 * "No data was found with that criteria."
 			 */
-			while (dataContainer.length > 0) {
-				if (!$('.single-items').slick("slickRemove", false)) {
-					dataContainer[0].parentNode.parentNode.remove();
-				}
+			while ($('.single-items')[0].children.length > 0) {
+				$('.single-items')[0].children[0].remove();
 			}
+
+			var messagePanel = createContainerBySensorType();
+			var messageText = createNode("div", ["alert", "alert-warning"], null);
+			messageText.innerHTML = "No data is currently stored at specified options.";
+			var messageContainer = messagePanel.getElementsByClassName("sensorValue")[0];
+			messageContainer.appendChild(messageText);
 			
+			$('.single-items')[0].appendChild(messagePanel);
+
 			setTimeout(function() {
 				laddaButton.stop();
 			}, 500);
+			
+		} else if (xmlHttp.status !== 0) {
+			/*
+			 * Having to reach this line of code means that there is something 
+			 * wrong that happenned that is unexpected.
+			 */
+			
+			laddaButton.setProgress(0);
+			setTimeout(function() {
+				laddaButton.stop();
+			}, 300);
+			
+			var errorTitle = document.getElementById("popupMessage").getElementsByClassName("modal-title")[0];
+			errorTitle.innerHTML = "";
+			errorTitle.appendChild(document.createTextNode("Something went wrong..."));
+			
+			var errorMessage = document.getElementsByClassName("modal-body")[0];
+			errorMessage.innerHTML = "";
+			errorMessage.appendChild(document.createTextNode("Please contact administrator."));
+			
+			var toAppend = createNode("h3", ["well", "well-sm", "text-center"], null);
+			switch(xmlHttp.status) {
+				case 403:
+					toAppend.appendChild(document.createTextNode("Status 403 - Forbidden"));
+					break;
+				case 404:
+					toAppend.appendChild(document.createTextNode("Status 404 - Not Found"));
+					break;
+				case 500:
+					toAppend.appendChild(document.createTextNode("Status 500 - Internal Server Error"));
+					break;
+			}
+
+			errorMessage.appendChild(toAppend);
+			$("#popupMessage").modal("show");
 		}
-		
 	} catch (errorEvent) {
 		setTimeout(function() {
 			laddaButton.stop();
@@ -244,6 +272,7 @@ function loadDataBySensorType(jsonObject, domElement) {
 	var roomDescription = domElement.getElementsByClassName("roomDescription")[0];
 	
 	var h1 = createNode("h1", ["text-center"], null);
+	var h3 = createNode("h3", ["text-center"], null);
 	var h4 = createNode("h4", ["text-center"], null);
 	var small = createNode("small", ["text-center"], null);
 	var well = createNode("div", ["well", "well-sm"], null);
@@ -253,14 +282,16 @@ function loadDataBySensorType(jsonObject, domElement) {
 	toAppend.appendChild(document.createTextNode(getSensorNameByType(jsonElement.sensorType)));
 	sensorType.appendChild(toAppend);
 	
-	toAppend = h4.cloneNode();
-	toAppend.appendChild(document.createTextNode("Room: " + jsonElement.roomName));
-	roomName.appendChild(createNode("hr", null, null));
-	roomName.appendChild(toAppend);
+	toAppend = h3.cloneNode();
+	toAppend.appendChild(document.createTextNode(jsonElement.roomName));
 	
-	toAppend = well.cloneNode();
-	toAppend.appendChild(document.createTextNode(jsonElement.roomDescription));
-	roomDescription.appendChild(toAppend);
+	var subText1 = small.cloneNode();
+	subText1.appendChild(document.createTextNode(jsonElement.roomDescription));
+	toAppend.appendChild(createNode("br", null, null));
+	toAppend.appendChild(subText1);
+	
+	roomName.appendChild(toAppend);
+	roomName.appendChild(createNode("hr", null, null));
 	
 	if (window.google) {
 		generateChartBySensorType(jsonObject, sensorTime, jsonElement.sensorType);
@@ -274,13 +305,21 @@ function loadDataBySensorType(jsonObject, domElement) {
 		
 		var collapseToggle = createNode("a", null, [["href", "#dataset" + jsonElement.id], ["data-toggle", "collapse"]]);
 		collapseToggle.innerHTML = "Show Data";
-		var collapseContainer = createNode("div", ["collapse"], [["id", "dataset" + jsonElement.id]]);
 		
+		var mainTable = createNode("table", ["table", "table-default"], null);
 		for (var index = 0; index < jsonObject.values.length; index++) {
-			collapseContainer.appendChild(createNode("br", null, null));
-			collapseContainer.appendChild(document.createTextNode(new Date(jsonObject.values[index]["timestamp"].replace(/T|Z|[.]\d{3}/g, " ")) + " - "));
-			collapseContainer.appendChild(document.createTextNode(jsonObject.values[index]["data"]));
+			var tableCol1 = createNode("td", null, null);
+			tableCol1.appendChild(document.createTextNode(getReadableDateString(new Date(jsonObject.values[index]["timestamp"].replace(/T|Z|[.]\d{3}/g, " ")))));
+			var tableCol2 = createNode("td", null, null);
+			tableCol2.appendChild(document.createTextNode(jsonObject.values[index]["data"] + " Celcius"));
+			
+			var tableRow = createNode("tr", null, null);
+			tableRow.appendChild(tableCol1);
+			tableRow.appendChild(tableCol2);
+			mainTable.appendChild(tableRow);
 		}
+		var collapseContainer = createNode("div", ["collapse"], [["id", "dataset" + jsonElement.id]]);
+		collapseContainer.appendChild(mainTable);
 		
 		sensorTime.appendChild(divider);
 		sensorTime.appendChild(alertDiv);
@@ -305,14 +344,22 @@ function generateChartBySensorType(jsonObject, domElement, sensorType) {
 			var options = {
 				hAxis: {
 					title: 'Time',
-					format: 'MMM dd - HH:mm'
+					format: 'MMM dd - HH:mm',
+					textStyle: {
+						fontSize: 10
+					}
 				},
 				vAxis: {
-					title: 'Event',
-					ticks: ["Close", "Open"],
+					ticks: [{v:1, f:"Open"}, {v:0, f:"Closed"}],
+					textStyle: {
+						fontSize: 15
+					},
 					viewWindow: {
 						min: 0,
 						max: 1
+					},
+					gridlines: {
+						count: 5
 					}
 				},
 				legend: 'none',
@@ -334,14 +381,22 @@ function generateChartBySensorType(jsonObject, domElement, sensorType) {
 			var options = {
 				hAxis: {
 					title: 'Time',
-					format: 'MMM dd - HH:mm'
+					format: 'MMM dd - HH:mm',
+					textStyle: {
+						fontSize: 10
+					}
 				},
 				vAxis: {
-					title: 'Event',
-					ticks: ["None", "Detected"],
+					textStyle: {
+						fontSize: 15
+					},
+					ticks: [{v:0, f:"None"}, {v:1, f:"Detected"}],
 					viewWindow: {
 						min: 0,
 						max: 1
+					},
+					gridlines: {
+						count: 5
 					}
 				},
 				legend: 'none',
@@ -361,15 +416,24 @@ function generateChartBySensorType(jsonObject, domElement, sensorType) {
 			data.addRows(rawData);
 
 			var options = {
+				height: 400,
 				hAxis: {
 					title: 'Time',
-					format: 'MMM dd - HH:mm'
+					format: 'MMM dd - HH:mm',
+					textStyle: {
+						fontSize: 10
+					}
 				},
 				vAxis: {
-					title: 'Temperature',
+					textStyle: {
+						fontSize: 20
+					},
 					viewWindow: {
 						min: 40,
 						max: -20
+					},
+					gridlines: {
+						count: 5
 					}
 				},
 				legend: 'none',
@@ -389,15 +453,24 @@ function generateChartBySensorType(jsonObject, domElement, sensorType) {
 			data.addRows(rawData);
 
 			var options = {
+				height: 400,
 				hAxis: {
 					title: 'Time',
-					format: 'MMM dd - HH:mm'
+					format: 'MMM dd - HH:mm',
+					textStyle: {
+						fontSize: 10
+					}
 				},
 				vAxis: {
-					title: 'Humidity',
 					viewWindow: {
 						min: 100,
 						max: 0
+					},
+					gridlines: {
+						count: 5
+					},
+					textStyle: {
+						fontSize: 20
 					}
 				},
 				legend: 'none',
@@ -441,7 +514,7 @@ function generateChartBySensorType(jsonObject, domElement, sensorType) {
 		
 		for (var index = 0; index < jsonObject.values.length; index++) {
 			collapseContainer.appendChild(createNode("br", null, null));
-			collapseContainer.appendChild(document.createTextNode(new Date(jsonObject.values[index]["timestamp"].replace(/T|Z|[.]\d{3}/g, " ")) + " - "));
+			collapseContainer.appendChild(document.createTextNode(getReadableDateString(new Date(jsonObject.values[index]["timestamp"].replace(/T|Z|[.]\d{3}/g, " ")))));
 			collapseContainer.appendChild(document.createTextNode(jsonObject.values[index]["data"]));
 		}
 		

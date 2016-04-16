@@ -4,6 +4,13 @@
  * submits.
  */
 
+/*
+ * This on start function will run the necessary work even before the page is
+ * loaded like the side bar functionality.
+ */
+runNavbar();
+
+
 /**
  * This is used to bind an "On Load" event onto the window object.
  */
@@ -14,7 +21,6 @@ if (window.addEventListener) { //W3 Standards
 }
 
 function startupController() {
-	runNavbar();
 	formButtonListeners();
 	document.getElementById("roomsToggle").click();
 }
