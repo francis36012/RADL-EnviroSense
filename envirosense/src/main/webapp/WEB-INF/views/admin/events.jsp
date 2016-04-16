@@ -8,6 +8,7 @@
 		<c:import url="/static/common/head/jquery.jsp" />
 		<c:import url="/static/common/head/bootstrap.jsp" />
 		<c:import url="/static/common/head/bootstrapSwitch.jsp" />
+		<c:import url="/static/common/head/bootstrapLadda.jsp" />
 		<c:import url="/static/common/head/style.jsp" />
 		<c:import url="/static/common/head/navbar.jsp" />
 

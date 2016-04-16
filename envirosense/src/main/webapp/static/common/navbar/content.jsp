@@ -11,15 +11,28 @@
 			</div>
 			<img src="<c:url value='/static/images/Elements/Divider.png' />" class="img-responsive" />
 		</li>
-		<li><a href="<c:url value='/' />">Live Data</a></li>
-		<li><a href="<c:url value='/report' />">Report</a></li>
-		<li><a href="<c:url value='/events' />">Events</a></li>
+		<li><a href="<c:url value='/' />" class="ladda-button" data-spinner-color="#CCCCCC" data-style="slide-down">
+				Live Data
+			</a>
+		</li>
+		<li><a href="<c:url value='/report' />" class="ladda-button" data-spinner-color="#CCCCCC" data-style="slide-down">
+				Report
+			</a>
+		</li>
+		<li><a href="<c:url value='/events' />" class="ladda-button" data-spinner-color="#CCCCCC" data-style="slide-down">
+				Events
+			</a>
+		</li>
 		
 		<li>
 			<a href="#adminLinks" data-toggle="collapse">Admin</a>
 			<div id="adminLinks" class="collapse">
-				<a href="<c:url value='/admin/events' />"><h5>Events</h5></a>
-				<a href="<c:url value='/admin/users/all' />"><h5>Users</h5></a>
+				<a href="<c:url value='/admin/events' />" class="ladda-button" data-spinner-color="#CCCCCC" data-style="slide-down">
+					<h5>Events</h5>
+				</a>
+				<a href="<c:url value='/admin/users/all' />" class="ladda-button" data-spinner-color="#CCCCCC" data-style="slide-down">
+					<h5>Users</h5>
+				</a>
 			</div>
 			<img src="<c:url value='/static/images/Elements/Divider.png' />" class="img-responsive" />
 		</li>
@@ -35,6 +48,5 @@
 		<input type="hidden" name="<c:out value='${_csrf.parameterName}' />" value="${_csrf.token}" />		
 	</form>
 </div>
-
 
 <!-- <div id="page-content-wrapper"> -->

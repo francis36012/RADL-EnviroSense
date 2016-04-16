@@ -103,6 +103,27 @@ function readyStateChangeByRoomId(xmlHttp, laddaButton) {
 					 */
 				}
 			}
+		} else if (xmlHttp.status === 204) {
+			/*
+			 * No data was found. We create a panel with the error message
+			 * "No data was found with that criteria."
+			 */
+			while (dataContainer.length > 1) {
+				dataContainer[0].parentNode.parentNode.remove();
+			}
+			
+			var messagePanel = createContainerBySensorType();
+			var messageText = createNode("div", ["alert", "alert-warning"], null);
+			messageText.innerHTML = "No data is currently stored for the specified room.";
+			var messageContainer = messagePanel.getElementsByClassName("sensorValue")[0];
+			messageContainer.appendChild(messageText);
+			
+			if (dataContainer.length === 1) {
+				dataContainer[0] = messagePanel;
+			} else {
+				$("#" + sensorType).slick("slickAdd", messagePanel);
+			}
+			
 		} else if (xmlHttp.status !== 0) {
 			/*
 			 * Having to reach this line of code means that there is something 

@@ -19,6 +19,9 @@
 
 	<body>
 		<div id="wrapper">
+			<div id="screenLoader">
+				<img src="<c:url value='/static/images/Elements/Spinner.gif' />" />
+			</div>
 
 			<!-- SIDEBAR CONTENT -->
 			<c:import url="/static/common/navbar/content.jsp" />

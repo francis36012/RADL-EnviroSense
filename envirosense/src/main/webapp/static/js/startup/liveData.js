@@ -49,6 +49,7 @@ function formButtonListeners() {
 		sensorsToggle.classList.remove("disabled");
 		sensorsToggle.classList.remove("btn-success");
 		
+		showLoader();
 		clearTimeout(sensorInterval);
 		sensorInterval = 0;
 		
@@ -89,6 +90,7 @@ function formButtonListeners() {
 		roomsToggle.classList.remove("disabled")
 		roomsToggle.classList.remove("btn-success");
 		
+		showLoader();
 		clearTimeout(roomInterval);
 		roomInterval = 0;
 		

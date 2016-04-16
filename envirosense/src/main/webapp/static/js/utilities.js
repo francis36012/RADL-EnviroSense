@@ -93,6 +93,15 @@ function runNavbar() {
 		e.preventDefault();
 		$("#wrapper").toggleClass("toggled");
 	});
+	
+	var laddaButtons = document.getElementById("sidebar-wrapper").getElementsByClassName("ladda-button");
+	for (var index = 0; index < laddaButtons.length; index++) {
+		laddaButtons[index].onclick = function() {
+			Ladda.stopAll();
+			var laddaButton = Ladda.create(this);
+			laddaButton.start();
+		}
+	}
 }
 
 function runBootstrapSwitch() {
@@ -605,10 +614,24 @@ function getDataTypeBySensorType(sensorType) {
 	return dataType;
 }
 
-function displayLoader() {
+function showLoader() {
+	/*
+	 * We use the Set Timeout function because having it display right away
+	 * doesn't trigger the CSS animation.
+	 */
+	var screenLoader = document.getElementById("screenLoader");
 	
+	screenLoader.style.opacity = 1;
+	setTimeout(function () {
+		screenLoader.style.display = 'block';
+	}, 250);
 }
 
 function hideLoader() {
+	var screenLoader = document.getElementById("screenLoader");
 	
+	screenLoader.style.opacity = 0;
+	setTimeout(function () {
+		screenLoader.style.display = 'none';
+	}, 250);
 }

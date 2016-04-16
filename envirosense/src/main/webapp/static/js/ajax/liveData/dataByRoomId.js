@@ -57,6 +57,7 @@ function readyStateChangeByRoomId(xmlHttp, formElement) {
 						loadDataBySensorType(jsonObject[index], dataContainer[index]);
 					}
 					
+					hideLoader();
 				} else {
 					/*
 					 * There's a response that had been receieved but it has
@@ -77,7 +78,7 @@ function readyStateChangeByRoomId(xmlHttp, formElement) {
 			
 			var messagePanel = createContainerBySensorType();
 			var messageText = createNode("div", ["alert", "alert-warning"], null);
-			messageText.innerHTML = "No data is currently stored.";
+			messageText.innerHTML = "No data is currently stored for any rooms.";
 			var messageContainer = messagePanel.getElementsByClassName("sensorValue")[0];
 			messageContainer.appendChild(messageText);
 			

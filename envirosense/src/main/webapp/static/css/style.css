@@ -90,6 +90,26 @@ body * {
 	color: #000000;
 }
 
+/* SCREEN LOADER */
+#screenLoader {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	background-color: rgba(0, 0, 0, 0.3);
+	z-index: 10;
+	
+	-webkit-transition: opacity .25s linear;
+	-moz-transition: opacity .25s linear;
+	-ms-transition: opacity .25s linear;
+	-o-transition: opacity .25s linear;
+	transition: opacity .25s linear;
+}
+
+#screenLoader img {
+	margin-top: 20em;
+}
+
 /* OTHER ELEMENTS */
 .page-header h1 {
 	font-size: 4em;

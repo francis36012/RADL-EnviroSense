@@ -60,7 +60,7 @@ function readyStateChangeBySensorType(xmlHttp, formElement) {
 						for (var index = 0; index < jsonObject.length; index++) {
 							loadDataBySensorType(jsonObject[index], dataContainer[index]);
 						}
-
+						hideLoader();
 					} else {
 						/*
 						 * There's a response that had been receieved but it has
