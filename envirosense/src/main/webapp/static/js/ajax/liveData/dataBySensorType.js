@@ -60,7 +60,6 @@ function readyStateChangeBySensorType(xmlHttp, formElement) {
 						for (var index = 0; index < jsonObject.length; index++) {
 							loadDataBySensorType(jsonObject[index], dataContainer[index]);
 						}
-						hideLoader();
 					} else {
 						/*
 						 * There's a response that had been receieved but it has
@@ -69,6 +68,7 @@ function readyStateChangeBySensorType(xmlHttp, formElement) {
 						 * "404 Not Found" or "204 No Data Found" status.
 						 */
 					}
+					hideLoader();
 			}
 		} else if (xmlHttp.status === 204) {
 			/*
@@ -90,6 +90,8 @@ function readyStateChangeBySensorType(xmlHttp, formElement) {
 			} else {
 				$("#" + sensorType).slick("slickAdd", messagePanel);
 			}
+			
+			hideLoader();
 			
 		} else if (xmlHttp.status !== 0) {
 			/*
