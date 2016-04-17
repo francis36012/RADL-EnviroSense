@@ -49,7 +49,6 @@ function startupController() {
 			formDefaultValues();
 			formSubmitListeners();
 			dropdownListeners();
-			windowResizeHandler();
 		} else {
 			setTimeout(reportInterval, 100);
 		}
