@@ -87,7 +87,7 @@ function formButtonListeners() {
 	sensorsToggle.addEventListener("click", function () {
 		sensorsToggle.classList.add("disabled");
 		sensorsToggle.classList.add("btn-success");
-		roomsToggle.classList.remove("disabled")
+		roomsToggle.classList.remove("disabled");
 		roomsToggle.classList.remove("btn-success");
 		
 		showLoader();

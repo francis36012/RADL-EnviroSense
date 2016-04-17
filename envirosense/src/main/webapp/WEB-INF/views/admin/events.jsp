@@ -46,6 +46,7 @@
 						<c:choose>
 							<c:when test="${events.size() > 0}">
 								<input type="hidden" id="csrfProtection" name="<c:out value='${_csrf.parameterName}' />" value="${_csrf.token}" />
+								<c:set var="eventCounter" value="1" />
 								<div class="panel panel-default">
 									<div class="panel-heading text-center">
 										Settings
@@ -82,7 +83,9 @@
 												<form class="form" role="form">	
 													<div class="row">
 														<div class="col-xs-8 col-sm-9">
-															<c:out value="${currentEvent.getName()}" />
+															<a href="#collapse-<c:out value='${eventCounter}' />" data-toggle="collapse">
+																<c:out value="${currentEvent.getName()}" />
+															</a>
 														</div>
 
 														<div class="col-xs-4 col-sm-3">
@@ -98,8 +101,25 @@
 															/>
 														</div>
 													</div>
+													<div class="row">
+														<div class="col-xs-12">
+															<div id="collapse-<c:out value='${eventCounter}' />" class="collapse">
+																<br />
+
+																<ul class="list-group">
+																<c:forEach items="${currentEvent.getConditions()}" var="eventCondition">
+																	<li class="list-group-item">
+																		<c:out value="${eventCondition.toString()}" />
+																	</li>
+																</c:forEach>
+																</ul>
+															</div>
+														</div>
+													</div>
 												</form>
-											<hr />
+													
+												<hr />
+												<c:set var="eventCounter" value="${eventCounter + 1}" />
 											</c:forEach>
 										</div>
 									</div>

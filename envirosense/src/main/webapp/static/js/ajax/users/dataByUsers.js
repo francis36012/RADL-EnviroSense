@@ -70,7 +70,9 @@ function onReadyStateChangeByUsers(xmlHttp, formElement, laddaButton) {
 
 			if (xmlHttp.readyState === 4) {
 				laddaButton.setProgress(1);
-				setTimeout(window.location.reload, 500);
+				setTimeout(function() {
+					window.location.reload();
+				}, 300);
 			}
 		} else if (xmlHttp.status !== 0) {
 			laddaButton.setProgress(0);

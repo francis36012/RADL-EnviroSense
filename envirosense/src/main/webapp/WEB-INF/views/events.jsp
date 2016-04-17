@@ -56,11 +56,18 @@
 												<form class="form" role="form">	
 													<div class="row">
 														<div class="col-xs-12">
-															<c:out value="${currentEvent.getName()}" />
+															<h3><c:out value="${currentEvent.getName()}" /></h3>
+															<ul class="list-group">
+															<c:forEach items="${currentEvent.getConditions()}" var="eventCondition">
+																<li class="list-group-item">
+																	<c:out value="${eventCondition.toString()}" />
+																</li>
+															</c:forEach>
+															</ul>
 														</div>
 													</div>
 												</form>
-											<hr />
+												<hr />
 											</c:forEach>
 										</div>
 									</div>
