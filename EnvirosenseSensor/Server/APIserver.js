@@ -160,7 +160,7 @@ function insertAPI (data, callback) {
                                 sensorType: data['shortType'] } ],
                                 json: true,
                                 followAllRedirects: true,
-                                timeout: 2000   
+                                timeout: 4000   
                    };                                                                        
     request(options, function (error, response, body) {
         if (error || response.statusCode != 200) {
@@ -320,7 +320,7 @@ function connectAPI(callback){
                         url: config.API.LOGINPAGE,
                         headers: { 'cache-control': 'no-cache' },
                         followAllRedirects: true,
-                        timeout: 3000
+                        timeout: 4000
                     };
     request(options, function (error, response, body) {
         if (error || response.statusCode != 200) {
