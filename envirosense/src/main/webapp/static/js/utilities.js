@@ -118,6 +118,19 @@ function runJqueryUI() {
     });
 }
 
+function runDateTimePicker() {
+	/*
+	 * We use the ISO Standard formatting for the date
+	 * when being displayed to the textbox, excluding the T
+	 * and the Z because they look bad and screw up date
+	 * object construction on Firfox and other browsers.
+	 */
+	$(".datetimepicker").datetimepicker({
+		format: 'yyyy-mm-dd hh:ii:ss',
+		autoclose: true
+	});
+}
+
 
 /* ---------------------------------------- */
 /*			CONTAINER CREATION				*/

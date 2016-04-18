@@ -22,8 +22,10 @@ function onReadyStateChangeByEvents(xmlHttp) {
 	 * 3: Server is processing 
 	 * 4: Request is finished and data is ready
 	 */
-	if (xmlHttp.status !== 0) {
+	if (xmlHttp.status === 200) {
 		
+	}
+	else if (xmlHttp.status !== 0) {
 		var errorTitle = document.getElementById("popupMessage").getElementsByClassName("modal-title")[0];
 		errorTitle.innerHTML = "";
 		errorTitle.appendChild(document.createTextNode("Something went wrong..."));

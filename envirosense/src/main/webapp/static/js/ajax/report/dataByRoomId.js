@@ -108,8 +108,8 @@ function readyStateChangeByRoomId(xmlHttp, laddaButton) {
 			 * No data was found. We create a panel with the error message
 			 * "No data was found with that criteria."
 			 */
-			while (dataContainer.length > 1) {
-				dataContainer[0].parentNode.parentNode.remove();
+			while ($('.single-items')[0].children.length > 0) {
+				$('.single-items')[0].children[0].remove();
 			}
 			
 			var messagePanel = createContainerBySensorType();
@@ -118,11 +118,11 @@ function readyStateChangeByRoomId(xmlHttp, laddaButton) {
 			var messageContainer = messagePanel.getElementsByClassName("sensorValue")[0];
 			messageContainer.appendChild(messageText);
 			
-			if (dataContainer.length === 1) {
-				dataContainer[0] = messagePanel;
-			} else {
-				$("#" + sensorType).slick("slickAdd", messagePanel);
-			}
+			$('.single-items')[0].appendChild(messagePanel);
+			
+			setTimeout(function() {
+				laddaButton.stop();
+			}, 500);
 			
 		} else if (xmlHttp.status !== 0) {
 			/*

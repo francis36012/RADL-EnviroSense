@@ -148,6 +148,8 @@
 			</div>
 		</div>
 	</div>
+	
+	<c:import url="/static/common/popup.jsp" />
 						
 	<!--Javasciprt : AJAX Controller -->
 	<script type="text/javascript" src="<c:url value='/static/js/ajax/ajaxController.js' />"></script>

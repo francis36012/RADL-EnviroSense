@@ -9,6 +9,7 @@
  * loaded like the side bar functionality.
  */
 runNavbar();
+runDateTimePicker();
 
 /**
  * This is used to bind an "On Load" event onto the window object.
@@ -20,6 +21,9 @@ if (window.addEventListener) { //W3 Standards
 }
 
 function startupController() {
+	formDefaultValues();
+	formSubmitListeners();
+	
 	/*
 	 * Generate the settings panel for SLICK.
 	 * What this do is to create a settigns panel composed of the data
@@ -37,17 +41,16 @@ function startupController() {
 	runAjax(settingsForm);
 	settingsForm = createForm("reportSettings", "room", null);
 	runAjax(settingsForm);
-
+	
 	/*
-	 * Since AJAX is asynchronous and the form creation is based on an AJAX
-	 * call, the form might not finish being created yet, so before getting the 
-	 * settings form, we must make sure it exist first.
+	 * Since AJAX is asynchronous and the dropdown list is filled in through an
+	 * AJAX call, we must firstly check if the list is populated already. Once
+	 * it is, we then apply a click listener to the dropdown to apply the correct
+	 * value in the dropdown.
 	 */
 	var formCheck = setTimeout(function reportInterval() {
-		if (document.getElementById("reportForm") !== null) {
+		if (document.getElementsByClassName("dropdown-menu")[0].children.length > 0) {
 			clearTimeout(formCheck);
-			formDefaultValues();
-			formSubmitListeners();
 			dropdownListeners();
 		} else {
 			setTimeout(reportInterval, 100);
@@ -69,11 +72,11 @@ function formDefaultValues() {
 	 * textboxes either. So far, only Google Chrome masterrace is the one
 	 * that supports most of the functionalities implemented in our front-end.
 	 */
-	var dateRegex = /:\d{2}.\d{3}Z/;
+	var dateRegex = /[T]|.\d{3}Z/g;
 	var fromDate = reportForm.fromDate;
-	fromDate.value = lastWeek.toISOString().replace(dateRegex, "");
+	fromDate.value = lastWeek.toISOString().replace(dateRegex, " ");
 	var toDate = reportForm.toDate;
-	toDate.value = today.toISOString().replace(dateRegex, "");
+	toDate.value = today.toISOString().replace(dateRegex, " ");
 }
 
 /**

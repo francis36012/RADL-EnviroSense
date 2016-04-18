@@ -10,6 +10,7 @@
 		<c:import url="/static/common/head/bootstrap.jsp" />
 		<c:import url="/static/common/head/bootstrapSwitch.jsp" />
 		<c:import url="/static/common/head/bootstrapLadda.jsp" />
+		<c:import url="/static/common/head/bootstrapDatePicker.jsp" />
 		<c:import url="/static/common/head/slick.jsp" />
 		<c:import url="/static/common/head/style.jsp" />
 		<c:import url="/static/common/head/navbar.jsp" />
@@ -63,18 +64,18 @@
 										</ul>
 									</div>
 								</div>
-
+								
 								<div class="row form-group">
 									<label class="col-xs-2 control-label" for="fromDate">From</label>
 									<div class="col-xs-10">
-										<input class="form-control" name="fromDate" type="datetime-local" />
+										<input type="text" class="form-control datetimepicker" name="fromDate" />
 									</div>
 								</div>
-
+								
 								<div class="row form-group">
 									<label class="col-xs-2 control-label" for="toDate">To</label>
 									<div class="col-xs-10">
-										<input class="form-control" name="toDate" type="datetime-local" />
+										<input type="text" class="form-control datetimepicker" name="toDate" />
 									</div>
 								</div>
 

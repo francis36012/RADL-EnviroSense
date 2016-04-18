@@ -126,7 +126,7 @@ function readyStateChangeBySensorType(xmlHttp, laddaButton) {
 
 			var messagePanel = createContainerBySensorType();
 			var messageText = createNode("div", ["alert", "alert-warning"], null);
-			messageText.innerHTML = "No data is currently stored at specified options.";
+			messageText.innerHTML = "No data is currently stored at specified sensor type.";
 			var messageContainer = messagePanel.getElementsByClassName("sensorValue")[0];
 			messageContainer.appendChild(messageText);
 			
