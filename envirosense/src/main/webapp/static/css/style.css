@@ -111,29 +111,34 @@ body * {
 }
 
 /* OTHER ELEMENTS */
-.page-header h1 {
-	font-size: 4em;
-}
-h1 {
-	font-size: 3.5em;
-	font-weight: bold;
-}
 
-h2 {
-	font-size: 3.2em;
-}
+/* Bootstrap overrides because the headings are not
+visible enough to big screens */
+@media (min-width: 768px) {
+	.page-header h1 {
+		font-size: 4em;
+	}
+	h1 {
+		font-size: 3.5em;
+		font-weight: bold;
+	}
 
-h3 {
-	font-size: 2em;
-}
+	h2 {
+		font-size: 3.2em;
+	}
 
-h4 {
-	font-size: 1em;
-}
+	h3 {
+		font-size: 2em;
+	}
 
-h5 {
-	font-size: .75em;
-}
+	h4 {
+		font-size: 1em;
+	}
+
+	h5 {
+		font-size: .75em;
+	}	
+} 
 
 .hidden {
 	display: none;

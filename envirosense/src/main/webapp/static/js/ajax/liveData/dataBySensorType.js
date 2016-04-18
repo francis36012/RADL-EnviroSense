@@ -203,30 +203,34 @@ function loadDataBySensorType(jsonObject, domElement) {
 	var roomDescription = domElement.getElementsByClassName("roomDescription")[0];
 	
 	var h1 = createNode("h1", ["text-center"], null);
+	var h2 = createNode("h2", ["text-center"], null);
 	var h3 = createNode("h3", ["text-center"], null);
+	var h4 = createNode("h4", ["text-center"], null);
+	var bold = createNode("b", null, null);
 	var small = createNode("small", null, null);
 	var br = createNode("br", null, null);
 	var toAppend = null;
 	var subText = null;
 	
 	if (jsonElement.sensorType === "RA") {
-		var beforeDomain = jsonElement.values.data.userEmail.split("@")[0];
 		var afterDomain = jsonElement.values.data.userEmail.split("@")[1];
+		var beforeDomain = bold.cloneNode();
+		beforeDomain.appendChild(document.createTextNode(jsonElement.values.data.userEmail.split("@")[0]));
 		
-		toAppend = h1.cloneNode();
-		toAppend.appendChild(document.createTextNode(beforeDomain));
+		toAppend = h3.cloneNode();
+		toAppend.appendChild(beforeDomain);
 		
 		subText = small.cloneNode();
+		subText.appendChild(createNode("br", null, null));
 		subText.appendChild(document.createTextNode("@" + afterDomain));
 		toAppend.appendChild(subText);
 		toAppend.appendChild(br.cloneNode());
 		
-		subText = h3.cloneNode();
+		subText = h4.cloneNode();
 		subText.appendChild(document.createTextNode(jsonElement.values.data.rssi));
-		toAppend.appendChild(subText);
-		
-		subText = small.cloneNode();
-		subText.appendChild(document.createTextNode(getDataTypeBySensorType(jsonElement.sensorType)));
+		var subText2 = small.cloneNode();
+		subText2.appendChild(document.createTextNode(getDataTypeBySensorType(jsonElement.sensorType)));
+		subText.appendChild(subText2);
 		toAppend.appendChild(subText);
 		
 		sensorValue.appendChild(toAppend);
