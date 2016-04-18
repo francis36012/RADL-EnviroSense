@@ -2,7 +2,7 @@
 set -e
 node /home/pi/Desktop/EnvirosenseSensor/Server/APIserver.js & 
 pid[0]=$!
-sleep 10
+sleep 15
 python /home/pi/Desktop/EnvirosenseSensor/libs/Python/motion.py &
 pid[1]=$!
 /home/pi/Desktop/EnvirosenseSensor/libs/C/temphum &
