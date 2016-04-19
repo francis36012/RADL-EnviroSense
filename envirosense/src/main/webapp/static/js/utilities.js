@@ -634,10 +634,10 @@ function showLoader() {
 	 */
 	var screenLoader = document.getElementById("screenLoader");
 	
-	screenLoader.style.opacity = 1;
+	screenLoader.style.display = 'block';
 	setTimeout(function () {
-		screenLoader.style.display = 'block';
-	}, 250);
+	screenLoader.style.opacity = 1;
+	}, 1);
 }
 
 function hideLoader() {
