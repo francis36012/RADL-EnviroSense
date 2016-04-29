@@ -106,7 +106,7 @@ public class Condition implements Serializable {
 			double conditionData = 0;
 			
 			try {
-				incomingData = (double)data;
+				incomingData = Double.parseDouble((String)data);
 				conditionData = Double.parseDouble(value);
 			} catch (ClassCastException | NumberFormatException ex) {
 				return false;
