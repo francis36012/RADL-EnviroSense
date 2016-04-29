@@ -23,13 +23,14 @@ dependencies {
 
 	compile "javax.servlet:javax.servlet-api:3.1.0"
 	compile "javax.servlet:jstl:1.2"
+	compile "javax.transaction:jta:1.1"
 	
 	compile "org.springframework:spring-context-support:4.2.3.RELEASE"
 	compile "com.sun.mail:javax.mail:1.5.5"
 
-	compile "com.fasterxml.jackson.core:jackson-core:2.7.0"
-	compile "com.fasterxml.jackson.core:jackson-databind:2.7.0"
-	compile "com.fasterxml.jackson.core:jackson-annotations:2.7.0"
+	compile "com.fasterxml.jackson.core:jackson-core:2.7.2"
+	compile "com.fasterxml.jackson.core:jackson-databind:2.7.2"
+	compile "com.fasterxml.jackson.core:jackson-annotations:2.7.2"
 
     compile "org.slf4j:slf4j-api:1.7.13"
     compile "org.slf4j:slf4j-log4j12:1.7.16"
