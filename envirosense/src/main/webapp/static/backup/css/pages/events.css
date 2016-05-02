@@ -1,0 +1,9 @@
+.form-control {
+	border: 0px solid #CCC !important;
+	border-bottom: 1px solid #CCC !important;
+	border-radius: 0px;
+}
+
+.eventsList:hover {
+	cursor: pointer;
+}

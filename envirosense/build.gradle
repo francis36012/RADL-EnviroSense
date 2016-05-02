@@ -1,0 +1,57 @@
+apply plugin: "java"
+apply plugin: "war"
+apply plugin: "eclipse"
+
+repositories {
+	mavenCentral()
+    jcenter()
+}
+
+dependencies {
+	compile "org.springframework:spring-core:4.2.3.RELEASE"
+	compile "org.springframework:spring-context:4.2.3.RELEASE"
+	compile "org.springframework:spring-web:4.2.3.RELEASE"
+	compile "org.springframework:spring-webmvc:4.2.3.RELEASE"
+	compile "org.springframework.data:spring-data-jpa:1.9.2.RELEASE"
+	compile "org.springframework.security:spring-security-core:4.0.3.RELEASE"
+	compile "org.springframework.security:spring-security-config:4.0.3.RELEASE"
+	compile "org.springframework.security:spring-security-web:4.0.3.RELEASE"
+
+	compile "org.hibernate:hibernate-core:5.0.6.Final"
+	compile "org.hibernate:hibernate-entitymanager:5.0.6.Final"
+	compile "mysql:mysql-connector-java:5.1.38"
+
+	compile "javax.servlet:javax.servlet-api:3.1.0"
+	compile "javax.servlet:jstl:1.2"
+	compile "javax.transaction:jta:1.1"
+	
+	compile "org.springframework:spring-context-support:4.2.3.RELEASE"
+	compile "com.sun.mail:javax.mail:1.5.5"
+
+	compile "com.fasterxml.jackson.core:jackson-core:2.7.2"
+	compile "com.fasterxml.jackson.core:jackson-databind:2.7.2"
+	compile "com.fasterxml.jackson.core:jackson-annotations:2.7.2"
+
+    compile "org.slf4j:slf4j-api:1.7.13"
+    compile "org.slf4j:slf4j-log4j12:1.7.16"
+    
+    compile "com.allanditzel:spring-security-csrf-token-filter:1.1"
+    compile "net.gpedro.integrations.slack:slack-webhook:1.1.1"
+
+    testCompile "junit:junit:4.12"
+}
+
+def applicationName = "envirosense"
+def applicationContext = "envirosense"
+
+task glassfishDeploy(type: Exec, dependsOn: 'war') {
+	workingDir "$System.env.GLASSFISH_HOME" + "${File.separator}" + "bin"
+
+	if (System.properties["os.name"].toLowerCase().contains("windows")) {
+		commandLine "cmd", "/c", "asadmin.bat"
+	} else {
+		commandLine "./asadmin"
+	}
+
+	args "deploy", "--contextroot", "${applicationContext}", "--name", "${applicationName}", "--force", "${war.archivePath}"
+}

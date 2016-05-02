@@ -1,0 +1,50 @@
+body {
+	background-image: url("../images/Backgrounds/Background - Noise 2.png");
+	background-repeat: repeat;
+	font-family: "Open Sans" !important;
+}
+
+body * {
+	box-sizing: border-box;
+}
+
+#wrapper {
+	padding: 1.1em;
+	padding-top: 0;
+}
+
+/* OTHER ELEMENTS */
+.hidden {
+	display: none;
+}
+
+textarea {
+	width: 100%;
+	max-width: 100%;
+	min-width: 100%;
+}
+
+.centered {
+	width: 100%;
+	margin: auto;
+}
+
+.nopadding {
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+/* REMOVE BLUE GLOW */
+*:focus {
+	outline: none;
+}
+
+textarea:focus, input:focus {
+	outline: none;
+}
+
+input, textarea {
+	outline: none;
+	box-shadow: none !important;
+	border: 1px solid #ccc !important;
+}

@@ -1,0 +1,179 @@
+@font-face {
+	font-family: "Open Sans";
+	src: url("../external/Fonts/Open Sans/OpenSans-Light.ttf");
+}
+
+body {
+	background-image: url("../images/Backgrounds/Background - Noise 2.png");
+	background-repeat: repeat;
+	font-family: "Open Sans" !important;
+}
+
+body * {
+	box-sizing: border-box;
+}
+
+#wrapper {
+	padding: 1.1em;
+	padding-top: 0;
+}
+
+#page-content-wrapper > .container-fluid{
+	max-width: 1280px;
+}
+
+/* SIDEBAR ELEMENTS */
+#sidebar-wrapper {
+	background-image: url("../images/Backgrounds/Background - Noise 3.png") !important;
+	box-shadow: inset -1em 0em 1.5em -1em rgba(0, 0, 0, 0.7);
+	overflow-x: hidden;
+}
+
+#sidebar-wrapper .sidebar-nav {
+	margin-top: 1em;
+}
+
+#sidebar-wrapper .sidebar-nav > li:first-child img:first-child {
+	margin-bottom: 25px;
+}
+
+#sidebar-wrapper .sidebar-nav > li:last-child a {
+	font-size: 25px;
+	padding: .1em 25px .1em 0;
+}
+
+#sidebar-wrapper .sidebar-nav li a {
+	padding-right: 25px;
+	font-size: 2em;
+	font-weight: lighter;
+	line-height: 2em;
+}
+
+#sidebar-wrapper #adminLinks a {
+	padding: .1em 25px .1em 0;
+}
+
+#page-content-wrapper {
+	position: absolute !important;
+}
+
+/* SLICK ELEMENTS */
+.slick-slider { //
+	background-image: url("../images/Backgrounds/Background - Noise 1.png");
+	background-repeat: repeat;
+	border-radius: 3px;
+}
+
+.slick-slide {
+	height: 100%;
+	overflow-y: auto;
+}
+
+.slick-slide::-webkit-scrollbar {
+	display: none;
+}
+
+.slick-list * {
+	
+}
+
+.slick-dots {
+	
+}
+
+#slickSlides {
+	width: 100%;
+	margin: 0;
+}
+
+.slick-prev:before, .slick-next:before {
+	color: #000000;
+}
+
+/* SCREEN LOADER */
+#screenLoader {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	background-color: rgba(0, 0, 0, 0.3);
+	z-index: 10;
+	
+	-webkit-transition: opacity .25s linear;
+	-moz-transition: opacity .25s linear;
+	-ms-transition: opacity .25s linear;
+	-o-transition: opacity .25s linear;
+	transition: opacity .25s linear;
+}
+
+#screenLoader img {
+	margin-top: 20em;
+}
+
+/* OTHER ELEMENTS */
+
+/* Bootstrap overrides because the headings are not
+visible enough to big screens */
+@media (min-width: 768px) {
+	.page-header h1 {
+		font-size: 4em;
+	}
+	h1 {
+		font-size: 3.5em;
+		font-weight: bold;
+	}
+
+	h2 {
+		font-size: 3.2em;
+	}
+
+	h3 {
+		font-size: 2em;
+	}
+
+	h4 {
+		font-size: 1em;
+	}
+
+	h5 {
+		font-size: .75em;
+	}	
+} 
+
+.hidden {
+	display: none;
+}
+
+textarea {
+	width: 100%;
+	max-width: 100%;
+	min-width: 100%;
+}
+
+.centered {
+	width: 100%;
+	margin: auto;
+}
+
+.nopadding {
+	padding: 0 !important;
+}
+
+.panel {
+	margin: 3.33% 3.33%;
+}
+
+/* REMOVE BLUE GLOW */
+*:focus {
+	outline: none;
+}
+
+textarea:focus, input:focus {
+	outline: none;
+}
+
+input, textarea {
+	outline: none;
+	box-shadow: none !important;
+	border: 1px solid #ccc !important;
+}

@@ -1,0 +1,22 @@
+{
+  "name": "reelyactive",
+  "version": "0.1.0",
+  "description": "A package that reads data coming from the reelyactive hub and sends it over the envirosense HTTP API",
+  "main": "reelyactive.js",
+  "dependencies": {
+    "request": "^2.72.0",
+    "barnowl": "^0.4.17",
+    "requests": "^0.1.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "reelyactive",
+    "bluetooth",
+    "envirosense"
+  ],
+  "author": "Sergio Diaz",
+  "license": "MIT"
+}

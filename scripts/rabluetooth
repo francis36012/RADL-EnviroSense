@@ -1,0 +1,35 @@
+#!/bin/sh
+#### BEGIN INIT INFO
+# Provides: reelyactive.js (Server to receive packets from the ReelyActive HUB)
+# Required-Start: $local_fs $network $syslog $time
+# Required-Stop: $local_fs $network $syslog $time
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: ReelyActive Server
+# Description: This file will start reelyactive server and stop when systems shutdown
+#
+#### END INIT INFO
+
+REELYACTIVE_DIR=/home/envirosense
+NODEBIN=/usr/bin/nodejs
+start() {
+	sleep 50s
+
+	local CMD="$NODEBIN $REELYACTIVE_DIR/reelyactive.js"
+	su -c "$CMD" root
+	echo "reelyactive.js started"
+}
+
+case "$1" in
+	start)
+		start
+	;;
+	stop)
+	;;
+	uninstall)
+	;;
+	restart)
+	;;
+	*)
+	;;
+esac
